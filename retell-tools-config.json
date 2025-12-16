@@ -1,0 +1,391 @@
+{
+  "tools": [
+    {
+      "tool_id": "tool-customer-lookup",
+      "tool_name": "lookup_customer",
+      "tool_type": "function",
+      "description": "Look up customer information by phone number, email, or certificate number. Returns customer details and all associated certificates with deposit status and travel dates.",
+      "url": "https://your-api-domain.com/api/customer/lookup",
+      "method": "GET",
+      "parameters": {
+        "phone": {
+          "type": "string",
+          "description": "Customer phone number in E.164 format (e.g., +13105551234)",
+          "required": false
+        },
+        "email": {
+          "type": "string",
+          "description": "Customer email address",
+          "required": false
+        },
+        "certificate": {
+          "type": "string",
+          "description": "Certificate number (e.g., ABCD123456)",
+          "required": false
+        }
+      },
+      "response_format": {
+        "found": "boolean",
+        "customer": {
+          "customer_id": "number",
+          "phone": "string",
+          "email": "string",
+          "first_name": "string",
+          "last_name": "string",
+          "full_name": "string",
+          "certificates": "array"
+        }
+      }
+    },
+    {
+      "tool_id": "tool-certificate-details",
+      "tool_name": "get_certificate_details",
+      "tool_type": "function",
+      "description": "Get detailed information about a specific certificate including deposit status, travel dates, and current bookings.",
+      "url": "https://your-api-domain.com/api/certificate/{certificate_number}",
+      "method": "GET",
+      "parameters": {
+        "certificate_number": {
+          "type": "string",
+          "description": "Certificate number to look up (e.g., ABCD123456)",
+          "required": true,
+          "in_path": true
+        }
+      },
+      "response_format": {
+        "found": "boolean",
+        "certificate": {
+          "certificate_number": "string",
+          "package_type": "string",
+          "destination": "string",
+          "customer": "object",
+          "deposit": "object",
+          "status": "string",
+          "dates": "object",
+          "booking": "object"
+        }
+      }
+    },
+    {
+      "tool_id": "tool-check-refund-status",
+      "tool_name": "check_refund_status",
+      "tool_type": "function",
+      "description": "Check if a refund has been requested for a certificate and get its current status and expected completion date.",
+      "url": "https://your-api-domain.com/api/refunds/{certificate_number}",
+      "method": "GET",
+      "parameters": {
+        "certificate_number": {
+          "type": "string",
+          "description": "Certificate number to check refund status for",
+          "required": true,
+          "in_path": true
+        }
+      },
+      "response_format": {
+        "has_refund": "boolean",
+        "refund": {
+          "amount": "number",
+          "status": "string",
+          "requested_date": "string",
+          "processed_date": "string",
+          "expected_arrival_date": "string"
+        }
+      }
+    },
+    {
+      "tool_id": "tool-check-calendar-availability",
+      "tool_name": "check_calendar_availability",
+      "tool_type": "function",
+      "description": "Check available travel dates for a specific destination. Returns list of open dates with slot availability.",
+      "url": "https://your-api-domain.com/api/calendar/availability/{destination}",
+      "method": "GET",
+      "parameters": {
+        "destination": {
+          "type": "string",
+          "description": "Destination to check availability for (e.g., Orlando, Las Vegas, Hawaii)",
+          "required": true,
+          "in_path": true
+        },
+        "month": {
+          "type": "number",
+          "description": "Optional: Filter by month (1-12)",
+          "required": false
+        },
+        "year": {
+          "type": "number",
+          "description": "Optional: Filter by year (e.g., 2025)",
+          "required": false
+        }
+      },
+      "response_format": {
+        "destination": "string",
+        "total_available_dates": "number",
+        "dates": "array of objects with date, day_of_week, available_slots",
+        "message": "string"
+      }
+    },
+    {
+      "tool_id": "tool-book-travel-dates",
+      "tool_name": "book_travel_dates",
+      "tool_type": "function",
+      "description": "Book specific travel dates for a certificate. Requires certificate number, destination, and start/end dates. Returns confirmation number if successful.",
+      "url": "https://your-api-domain.com/api/calendar/book",
+      "method": "POST",
+      "parameters": {
+        "certificate_number": {
+          "type": "string",
+          "description": "Certificate number to book dates for",
+          "required": true
+        },
+        "destination": {
+          "type": "string",
+          "description": "Destination name (must match certificate destination)",
+          "required": true
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Travel start date in YYYY-MM-DD format (e.g., 2025-04-15)",
+          "required": true
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Travel end date in YYYY-MM-DD format (e.g., 2025-04-19)",
+          "required": true
+        },
+        "hotel_name": {
+          "type": "string",
+          "description": "Optional: Hotel name for booking",
+          "required": false
+        }
+      },
+      "response_format": {
+        "success": "boolean",
+        "message": "string",
+        "booking": {
+          "confirmation_number": "string",
+          "destination": "string",
+          "start_date": "string",
+          "end_date": "string",
+          "status": "string"
+        }
+      }
+    }
+  ],
+  "tool_usage_examples": {
+    "customer_lookup_by_phone": {
+      "tool": "tool-customer-lookup",
+      "scenario": "Customer calls in, AI uses their phone number to look them up automatically",
+      "request": {
+        "phone": "{{dynamic.call_from_number}}"
+      },
+      "use_in_node": "First conversation node after greeting - lookup customer automatically using caller ID"
+    },
+    "customer_lookup_by_certificate": {
+      "tool": "tool-customer-lookup",
+      "scenario": "Customer provides certificate number during call",
+      "request": {
+        "certificate": "{{user_provided_certificate}}"
+      },
+      "use_in_node": "After asking customer for certificate number - lookup their full details"
+    },
+    "check_deposit_status": {
+      "tool": "tool-certificate-details",
+      "scenario": "Customer asks if deposit was received",
+      "request": {
+        "certificate_number": "{{certificate_number}}"
+      },
+      "use_in_node": "When customer inquires about deposit - get full certificate details including payment status"
+    },
+    "check_refund": {
+      "tool": "tool-check-refund-status",
+      "scenario": "Customer asks about refund status",
+      "request": {
+        "certificate_number": "{{certificate_number}}"
+      },
+      "use_in_node": "When customer mentions refund - check if one exists and provide status"
+    },
+    "check_availability": {
+      "tool": "tool-check-calendar-availability",
+      "scenario": "Customer wants to know available dates for Orlando",
+      "request": {
+        "destination": "Orlando",
+        "month": 4,
+        "year": 2025
+      },
+      "use_in_node": "After confirming deposit paid - check availability for their destination"
+    },
+    "book_dates": {
+      "tool": "tool-book-travel-dates",
+      "scenario": "Customer selects April 15-19 for Orlando trip",
+      "request": {
+        "certificate_number": "{{certificate_number}}",
+        "destination": "Orlando",
+        "start_date": "2025-04-15",
+        "end_date": "2025-04-19",
+        "hotel_name": "Marriott Orlando"
+      },
+      "use_in_node": "After customer confirms date selection - book the dates and provide confirmation"
+    }
+  },
+  "recommended_node_flow": {
+    "description": "Optimal node structure using all tools",
+    "flow": [
+      {
+        "node_id": "greeting",
+        "type": "conversation",
+        "instruction": "Greet customer warmly"
+      },
+      {
+        "node_id": "auto-lookup",
+        "type": "function",
+        "tool_id": "tool-customer-lookup",
+        "instruction": "Automatically look up customer by phone number from caller ID",
+        "parameters": {
+          "phone": "{{dynamic.call_from_number}}"
+        }
+      },
+      {
+        "node_id": "customer-found-check",
+        "type": "logic_split",
+        "edges": [
+          {
+            "condition": "Customer found in database",
+            "destination": "ask-what-they-need"
+          },
+          {
+            "condition": "Customer not found",
+            "destination": "ask-for-certificate"
+          }
+        ]
+      },
+      {
+        "node_id": "ask-for-certificate",
+        "type": "conversation",
+        "instruction": "Ask customer for their certificate number"
+      },
+      {
+        "node_id": "lookup-by-certificate",
+        "type": "function",
+        "tool_id": "tool-customer-lookup",
+        "instruction": "Look up customer by certificate number they provided",
+        "parameters": {
+          "certificate": "{{user_provided_certificate}}"
+        }
+      },
+      {
+        "node_id": "ask-what-they-need",
+        "type": "conversation",
+        "instruction": "Now that we have their info, ask what they need help with"
+      },
+      {
+        "node_id": "route-by-intent",
+        "type": "logic_split",
+        "edges": [
+          {
+            "condition": "Customer asks about deposit status",
+            "destination": "get-certificate-details"
+          },
+          {
+            "condition": "Customer wants to schedule travel dates",
+            "destination": "check-deposit-paid"
+          },
+          {
+            "condition": "Customer asks about refund",
+            "destination": "check-refund-status"
+          },
+          {
+            "condition": "Customer has general question",
+            "destination": "knowledge-base-search"
+          }
+        ]
+      },
+      {
+        "node_id": "get-certificate-details",
+        "type": "function",
+        "tool_id": "tool-certificate-details",
+        "instruction": "Get full certificate details including deposit status"
+      },
+      {
+        "node_id": "provide-deposit-info",
+        "type": "conversation",
+        "instruction": "Tell customer their deposit status based on tool result"
+      },
+      {
+        "node_id": "check-deposit-paid",
+        "type": "logic_split",
+        "edges": [
+          {
+            "condition": "Deposit is paid",
+            "destination": "check-calendar-availability"
+          },
+          {
+            "condition": "Deposit not paid",
+            "destination": "provide-deposit-payment-info"
+          }
+        ]
+      },
+      {
+        "node_id": "check-calendar-availability",
+        "type": "function",
+        "tool_id": "tool-check-calendar-availability",
+        "instruction": "Check available dates for customer's destination",
+        "parameters": {
+          "destination": "{{customer_destination}}"
+        }
+      },
+      {
+        "node_id": "present-available-dates",
+        "type": "conversation",
+        "instruction": "Present available dates to customer and ask which they prefer"
+      },
+      {
+        "node_id": "book-selected-dates",
+        "type": "function",
+        "tool_id": "tool-book-travel-dates",
+        "instruction": "Book the dates customer selected",
+        "parameters": {
+          "certificate_number": "{{certificate_number}}",
+          "destination": "{{destination}}",
+          "start_date": "{{selected_start_date}}",
+          "end_date": "{{selected_end_date}}"
+        }
+      },
+      {
+        "node_id": "confirm-booking",
+        "type": "conversation",
+        "instruction": "Confirm booking with customer, provide confirmation number, and offer Hawaii upsell"
+      },
+      {
+        "node_id": "check-refund-status",
+        "type": "function",
+        "tool_id": "tool-check-refund-status",
+        "instruction": "Check refund status for customer's certificate"
+      },
+      {
+        "node_id": "provide-refund-info",
+        "type": "conversation",
+        "instruction": "Explain refund status and expected timeline to customer"
+      },
+      {
+        "node_id": "hawaii-offer",
+        "type": "conversation",
+        "instruction": "Present Hawaii upgrade offer (timing is perfect - customer is satisfied with resolution)"
+      },
+      {
+        "node_id": "end-call",
+        "type": "end",
+        "instruction": "Thank customer and confirm confirmation email will be sent"
+      }
+    ]
+  },
+  "important_notes": [
+    "Always use tool-customer-lookup FIRST with caller ID phone number - this gives instant customer recognition",
+    "Check deposit_paid status BEFORE attempting to check calendar availability",
+    "Use tool-certificate-details for single certificate deep-dive, tool-customer-lookup for all certificates",
+    "Always confirm booking details with customer before calling tool-book-travel-dates",
+    "Offer Hawaii upsell AFTER successful booking - customer is in positive state",
+    "Handle tool errors gracefully - if lookup fails, ask for certificate number manually",
+    "Use {{dynamic.call_from_number}} to get caller ID automatically",
+    "Store tool results in conversation memory for later use in flow"
+  ]
+}
