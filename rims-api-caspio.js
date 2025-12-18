@@ -479,6 +479,60 @@ app.post('/api/rims/vac-id-lookup', asyncHandler(async (req, res) => {
     });
 }));
 
+/**
+ * POST /api/rims/pkg-vac-lookup
+ * Look up customer by package code (pkg_code2) AND vacation ID
+ * Most specific lookup - guarantees exact record match
+ */
+app.post('/api/rims/pkg-vac-lookup', asyncHandler(async (req, res) => {
+    const { pkg_code2, vac_id } = req.body;
+
+    if (!pkg_code2 || !vac_id) {
+        return res.status(400).json({
+            error: 'Missing required parameters',
+            message: 'Both pkg_code2 and vac_id are required'
+        });
+    }
+
+    const cert_upper = pkg_code2.toUpperCase();
+
+    // MOCK MODE
+    if (USE_MOCK_DATA) {
+        const customer = MOCK_RIMS_DATA.find(c =>
+            c.pkg_code2.toUpperCase() === cert_upper &&
+            c.vac_id.toString() === vac_id.toString()
+        );
+
+        if (!customer) {
+            return res.json({
+                found: false,
+                message: 'Customer not found with matching certificate and vacation ID'
+            });
+        }
+
+        return res.json({
+            found: true,
+            customer_data: customer
+        });
+    }
+
+    // CASPIO MODE
+    const whereClause = `pkg_code2='${cert_upper}' AND vac_id=${vac_id}`;
+    const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+
+    if (results.length === 0) {
+        return res.json({
+            found: false,
+            message: 'Customer not found with matching certificate and vacation ID'
+        });
+    }
+
+    res.json({
+        found: true,
+        customer_data: results[0]
+    });
+}));
+
 // =============================================================================
 // KNOWLEDGE BASE ENDPOINTS
 // =============================================================================
