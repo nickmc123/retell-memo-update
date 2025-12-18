@@ -323,6 +323,63 @@ app.post('/api/rims/phone-lookup', asyncHandler(async (req, res) => {
 }));
 
 /**
+ * POST /api/rims/phone-pkg-lookup
+ * Look up customer by phone number AND package code (pkg_code2)
+ * Useful when a customer has multiple records with same phone but different certificates
+ */
+app.post('/api/rims/phone-pkg-lookup', asyncHandler(async (req, res) => {
+    const { phone_number, pkg_code2 } = req.body;
+
+    if (!phone_number || !pkg_code2) {
+        return res.status(400).json({
+            error: 'Missing required parameters',
+            message: 'Both phone_number and pkg_code2 are required'
+        });
+    }
+
+    const normalized = normalizePhone(phone_number);
+    const cert_upper = pkg_code2.toUpperCase();
+
+    // MOCK MODE
+    if (USE_MOCK_DATA) {
+        const customer = MOCK_RIMS_DATA.find(c =>
+            (normalizePhone(c.phn1) === normalized || normalizePhone(c.phn2) === normalized) &&
+            c.pkg_code2.toUpperCase() === cert_upper
+        );
+
+        if (!customer) {
+            return res.json({
+                found: false,
+                message: 'Customer not found with matching phone and certificate'
+            });
+        }
+
+        return res.json({
+            found: true,
+            customer_data: customer
+        });
+    }
+
+    // CASPIO MODE
+    // Query: find record where (phn1 OR phn2) AND pkg_code2 match
+    const whereClause = `(phn1='${normalized}' OR phn2='${normalized}') AND pkg_code2='${cert_upper}'`;
+
+    const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+
+    if (results.length === 0) {
+        return res.json({
+            found: false,
+            message: 'Customer not found with matching phone and certificate'
+        });
+    }
+
+    res.json({
+        found: true,
+        customer_data: results[0]
+    });
+}));
+
+/**
  * POST /api/rims/certificate-lookup
  * Look up customer by certificate number (checks pkg_code2)
  */
@@ -363,6 +420,56 @@ app.post('/api/rims/certificate-lookup', asyncHandler(async (req, res) => {
         return res.json({
             found: false,
             message: 'Certificate not found in RIMS database'
+        });
+    }
+
+    res.json({
+        found: true,
+        customer_data: results[0]
+    });
+}));
+
+/**
+ * POST /api/rims/vac-id-lookup
+ * Look up customer by vacation ID
+ */
+app.post('/api/rims/vac-id-lookup', asyncHandler(async (req, res) => {
+    const { vac_id } = req.body;
+
+    if (!vac_id) {
+        return res.status(400).json({
+            error: 'Missing vac_id',
+            message: 'Vacation ID is required'
+        });
+    }
+
+    // MOCK MODE
+    if (USE_MOCK_DATA) {
+        const customer = MOCK_RIMS_DATA.find(c =>
+            c.vac_id.toString() === vac_id.toString()
+        );
+
+        if (!customer) {
+            return res.json({
+                found: false,
+                message: 'Customer not found in RIMS database'
+            });
+        }
+
+        return res.json({
+            found: true,
+            customer_data: customer
+        });
+    }
+
+    // CASPIO MODE
+    const whereClause = `vac_id=${vac_id}`;
+    const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+
+    if (results.length === 0) {
+        return res.json({
+            found: false,
+            message: 'Customer not found in RIMS database'
         });
     }
 
