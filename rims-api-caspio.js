@@ -829,7 +829,7 @@ app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
         const isNumeric = /^\d+$/.test(certificate);
         const whereClause = isNumeric
             ? `vac_id=${certificate} OR pkg_code2='${certificate}'`
-            : `pkg_code2='${certificate.toUpperCase()}' OR vac_id=${certificate}`;
+            : `pkg_code2='${certificate.toUpperCase()}'`;
         const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
 
         if (!response || response.length === 0) {
@@ -930,7 +930,7 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
     const isNumeric = /^\d+$/.test(certificate_number);
     const whereClause = isNumeric
         ? `vac_id=${certificate_number} OR pkg_code2='${certificate_number}'`
-        : `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id=${certificate_number}`;
+        : `pkg_code2='${certificate_number.toUpperCase()}'`;
     const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
 
     if (!response || response.length === 0) {
@@ -1064,7 +1064,7 @@ app.post('/api/calendar/book', asyncHandler(async (req, res) => {
         const isNumeric = /^\d+$/.test(certificate_number);
         const whereClause = isNumeric
             ? `vac_id=${certificate_number} OR pkg_code2='${certificate_number}'`
-            : `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id=${certificate_number}`;
+            : `pkg_code2='${certificate_number.toUpperCase()}'`;
         const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
 
         if (!response || response.length === 0) {
