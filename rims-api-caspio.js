@@ -765,22 +765,26 @@ app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
         }
 
         const customer = response[0];
+        const firstName = customer.first_name || '';
+        const lastName = customer.last_name || '';
+        const fullName = `${firstName} ${lastName}`.trim() || 'Unknown Customer';
+
         return res.json({
             found: true,
             customer: {
                 customer_id: customer.vac_id,
                 phone: '+1' + customer.phn1,
-                email: customer.email,
-                first_name: customer.first_name,
-                last_name: customer.last_name,
-                full_name: `${customer.first_name} ${customer.last_name}`,
+                email: customer.email || '',
+                first_name: firstName,
+                last_name: lastName,
+                full_name: fullName,
                 certificates: [{
-                    certificate_number: customer.pkg_code2,
-                    package_type: customer.pkg_code,
-                    deposit_paid: customer.conf_deposit >= customer.val_dep,
-                    deposit_amount: customer.conf_deposit,
+                    certificate_number: customer.pkg_code2 || customer.pkg_code,
+                    package_type: customer.pkg_code || 'Unknown',
+                    deposit_paid: (customer.conf_deposit || 0) >= (customer.val_dep || 0),
+                    deposit_amount: customer.conf_deposit || 0,
                     travel_dates_scheduled: !!customer.Asgn_trv_DT,
-                    travel_start_date: customer.Asgn_trv_DT
+                    travel_start_date: customer.Asgn_trv_DT || null
                 }]
             }
         });
@@ -832,22 +836,26 @@ app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
         }
 
         const customer = response[0];
+        const firstName = customer.first_name || '';
+        const lastName = customer.last_name || '';
+        const fullName = `${firstName} ${lastName}`.trim() || 'Unknown Customer';
+
         return res.json({
             found: true,
             customer: {
                 customer_id: customer.vac_id,
                 phone: '+1' + customer.phn1,
-                email: customer.email,
-                first_name: customer.first_name,
-                last_name: customer.last_name,
-                full_name: `${customer.first_name} ${customer.last_name}`,
+                email: customer.email || '',
+                first_name: firstName,
+                last_name: lastName,
+                full_name: fullName,
                 certificates: [{
-                    certificate_number: customer.pkg_code2,
-                    package_type: customer.pkg_code,
-                    deposit_paid: customer.conf_deposit >= customer.val_dep,
-                    deposit_amount: customer.conf_deposit,
+                    certificate_number: customer.pkg_code2 || customer.pkg_code,
+                    package_type: customer.pkg_code || 'Unknown',
+                    deposit_paid: (customer.conf_deposit || 0) >= (customer.val_dep || 0),
+                    deposit_amount: customer.conf_deposit || 0,
                     travel_dates_scheduled: !!customer.Asgn_trv_DT,
-                    travel_start_date: customer.Asgn_trv_DT
+                    travel_start_date: customer.Asgn_trv_DT || null
                 }]
             }
         });
@@ -930,32 +938,32 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
     res.json({
         found: true,
         certificate: {
-            certificate_number: customer.pkg_code2,
-            package_type: customer.pkg_code,
-            destination: customer.pkg_code,
+            certificate_number: customer.pkg_code2 || customer.pkg_code,
+            package_type: customer.pkg_code || 'Unknown',
+            destination: customer.pkg_code || 'Unknown',
             customer: {
                 phone: '+1' + customer.phn1,
-                email: customer.email,
-                first_name: customer.first_name,
-                last_name: customer.last_name
+                email: customer.email || '',
+                first_name: customer.first_name || '',
+                last_name: customer.last_name || ''
             },
             deposit: {
-                required: packageInfo.total_deposit,
-                paid: customer.conf_deposit >= customer.val_dep,
-                amount: customer.conf_deposit,
+                required: packageInfo.total_deposit || 0,
+                paid: (customer.conf_deposit || 0) >= (customer.val_dep || 0),
+                amount: customer.conf_deposit || 0,
                 date: null
             },
             status: customer.confirm_status === 'confirm' ? 'active' : 'pending',
             dates: {
                 scheduled: !!customer.Asgn_trv_DT,
-                start: customer.Asgn_trv_DT,
+                start: customer.Asgn_trv_DT || null,
                 end: null,
                 expiration: null
             },
             travel_rep: customer.tm || null,
             booking: customer.agency_book_via || customer.htl_bk_via ? {
-                flight: customer.agency_book_via,
-                hotel: customer.htl_bk_via
+                flight: customer.agency_book_via || null,
+                hotel: customer.htl_bk_via || null
             } : null
         }
     });
@@ -1054,7 +1062,7 @@ app.post('/api/calendar/book', asyncHandler(async (req, res) => {
         }
 
         const customer = response[0];
-        if (customer.conf_deposit < customer.val_dep) {
+        if ((customer.conf_deposit || 0) < (customer.val_dep || 0)) {
             return res.status(400).json({
                 error: 'Deposit not paid',
                 message: 'Deposit must be paid before booking travel dates'
