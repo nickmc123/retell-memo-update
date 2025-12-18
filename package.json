@@ -4,7 +4,8 @@
   "description": "Customer Database and Calendar API for Retell AI Agent Integration",
   "main": "api-server.js",
   "scripts": {
-    "start": "node api-server.js",
+    "start": "node rims-api-caspio.js",
+    "start:postgres": "node api-server.js",
     "start:rims": "node rims-api-server.js",
     "start:caspio": "node rims-api-caspio.js",
     "dev": "nodemon api-server.js",

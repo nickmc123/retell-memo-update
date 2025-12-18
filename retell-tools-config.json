@@ -5,7 +5,7 @@
       "tool_name": "lookup_customer",
       "tool_type": "function",
       "description": "Look up customer information by phone number, email, or certificate number. Returns customer details and all associated certificates with deposit status and travel dates.",
-      "url": "https://your-api-domain.com/api/customer/lookup",
+      "url": "https://web-production-4080.up.railway.app/api/customer/lookup",
       "method": "GET",
       "parameters": {
         "phone": {
@@ -42,7 +42,7 @@
       "tool_name": "get_certificate_details",
       "tool_type": "function",
       "description": "Get detailed information about a specific certificate including deposit status, travel dates, and current bookings.",
-      "url": "https://your-api-domain.com/api/certificate/{certificate_number}",
+      "url": "https://web-production-4080.up.railway.app/api/certificate/{certificate_number}",
       "method": "GET",
       "parameters": {
         "certificate_number": {
@@ -71,7 +71,7 @@
       "tool_name": "check_refund_status",
       "tool_type": "function",
       "description": "Check if a refund has been requested for a certificate and get its current status and expected completion date.",
-      "url": "https://your-api-domain.com/api/refunds/{certificate_number}",
+      "url": "https://web-production-4080.up.railway.app/api/refunds/{certificate_number}",
       "method": "GET",
       "parameters": {
         "certificate_number": {
@@ -97,7 +97,7 @@
       "tool_name": "check_calendar_availability",
       "tool_type": "function",
       "description": "Check available travel dates for a specific destination. Returns list of open dates with slot availability.",
-      "url": "https://your-api-domain.com/api/calendar/availability/{destination}",
+      "url": "https://web-production-4080.up.railway.app/api/calendar/availability/{destination}",
       "method": "GET",
       "parameters": {
         "destination": {
@@ -129,7 +129,7 @@
       "tool_name": "book_travel_dates",
       "tool_type": "function",
       "description": "Book specific travel dates for a certificate. Requires certificate number, destination, and start/end dates. Returns confirmation number if successful.",
-      "url": "https://your-api-domain.com/api/calendar/book",
+      "url": "https://web-production-4080.up.railway.app/api/calendar/book",
       "method": "POST",
       "parameters": {
         "certificate_number": {
