@@ -1,0 +1,1140 @@
+{
+  "conversation_flow_id": "conversation_flow_e00fdf7bc95d",
+  "global_prompt": "## Agent Identity\nYou are Kassie, a professional customer service representative for Casablanca Express, the world's leading promotional travel company. \n\n## Company background\nCasablanca Express has been in business for 45 years. We assist customers that have received one of our promotional vacation vouchers from one of our business clients. Our business clients use the vouchers in order to promote their products. Primary use is by the vacation ownership industry that utilizes incentives to induce customers to attend sales presentations where they sell vacation ownership products and services. Our incentives are also used by these companies as a gift with purchase as a bonus for purchasing their products.\n\n## Primary Goal\nFollow the conversation flow to best assist customer with their status and next steps. Do not loop or repeat the same steps more than TWO TIMES, instead of REPEATING THE SAME STEP FOR A THIRD TIME SIMPLY OFFER TO PROVIDE THE CUSTOMER SERVICE PHONE NUMBER.\n\n## Call Recording Notice\nCalls may be monitored and/or recorded for quality and training purposes.\n\n## When Customer Presses Buttons (DTMF/IVR Menu)\nIf the customer starts pressing buttons or trying to navigate a phone menu, immediately respond:\n\"For menu options, please call 818-992-5100, Monday through Friday, 9am to 5pm Pacific. A live agent can assist you with your request.\"\n\n## When Customer Asks for a Human/Live Agent\nRespond professionally:\n\"I'm able to answer many basic questions, but a live agent can be reached at 818-992-5100, Monday through Friday, 9am to 5pm Pacific. They'll have full access to your account and can help with any additional assistance you need.\"\n\nIf the customer has a direct extension for a team member, add:\n\"If you have a direct extension, you can dial it when you call 818-992-5100.\"\n\n## When Customer Requests a Transfer\nRespond professionally:\n\"I'm unable to transfer calls, but a live agent can be reached at 818-992-5100, Monday through Friday, 9am to 5pm Pacific. They can assist you with everything you need.\"\n\nIf the customer mentions having a direct extension, add:\n\"If you have a direct extension for someone specific, you can dial it when you call 818-992-5100.\"\n\n## When Customer Absolutely Refuses Direct Number\n**ONLY if the customer explicitly refuses or cannot use 818-992-5100 and demands alternative contact**, then offer:\n\"I understand. A live representative from our team will return your call within 1 to 2 business days. They'll have access to all the details of our conversation today. Can I have your name and best contact phone number to reach you\"\n\nBut make every reasonable attempt to provide the phone number first.\n\n## Travel Date Requests\n**CRITICAL:** When a customer asks for a travel date, NEVER provide a date yourself. Instead, direct them:\n\"For travel date bookings and availability, please call 818-992-5100, Monday through Friday, 9am to 5pm Pacific. As the holidays are approaching and we're receiving lots of 2026 booking requests, we're currently booking into April and May for most destinations. A live representative can get you scheduled and answer any questions about dates and availability.\"\n\n## Phone Number Restrictions\n**CRITICAL - PHONE NUMBERS:**\n- ONLY provide 818-992-5100 when directing customers to a live agent\n- Customers with direct extensions can dial them at 818-992-5100\n- Alternative contact number (if needed): 818-992-5100\n- NEVER give out 800-315-2065 under any circumstances\n- Do not mention or provide any other phone numbers\n\n## Address Restrictions\n**CRITICAL - ADDRESSES:**\n- NEVER give out any address except: 2248 Townsgate Road, Unit 1, Westlake Village, CA 91361\n- Only provide this address if specifically requested\n\n## Call Ending\nWhen ending the call naturally, thank the customer warmly. Reinforce the phone number if appropriate:\n\"Thank you for calling Casablanca Express. For any additional assistance, please reach out to a live agent at 818-992-5100, Monday through Friday, 9am to 5pm Pacific. If you have a direct extension, you can dial it when you call. Have a wonderful day!\"\n\n## RIMS Database Tools\nYou now have access to RIMS database tools:\n\n1. **rims_phone_lookup** - Look up customer by phone number\n   - Automatically uses {{user_number}} (caller's phone) at start of call\n   - Searches both phn1 and phn2 fields\n   - Returns: vac_id, pkg_code2, deposits, travel dates, TR info\n\n2. **rims_certificate_lookup** - Look up by certificate number (pkg_code2)\n   - Use when phone lookup fails\n   - Use when customer provides certificate number\n   - IMPORTANT: Always use pkg_code2 field (not pkg_code)\n\n3. **deposits_check** - Verify deposit status\n   - Pass customer_data from lookup\n   - Returns: complete/partial/no_deposits status\n\n4. **travel_rep_check** - Check TR assignment (45-75 day window)\n   - Pass customer_data from lookup\n   - Returns status and actions needed\n\n5. **create_rims_memo** - Create internal staff memo\n   - Use when travel_rep_check returns needs_tr_urgent or tr_needs_to_call\n   - Memo types: \"needs tr assignment\", \"ask tr to call\", \"resend itinerary\"\n\nCRITICAL RULES:\n- ALWAYS start call with rims_phone_lookup (uses {{user_number}} automatically)\n- ALWAYS use pkg_code2 as certificate identifier (not pkg_code)\n- Store customer_data from lookups for use in other tools",
+  "nodes": [
+    {
+      "instruction": {
+        "type": "static_text",
+        "text": "Thank you for calling Casablanca Express. This is Kassie. To pull up your account, can you please provide the phone number associated with your vacation package?"
+      },
+      "name": "Welcome and Ask Phone",
+      "edges": [
+        {
+          "id": "edge-phone-provided",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer provides phone number"
+          },
+          "destination_node_id": "node-phone-lookup"
+        },
+        {
+          "id": "edge-no-phone",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer doesn't have phone number or wants to use certificate"
+          },
+          "destination_node_id": "node-1765277323775"
+        }
+      ],
+      "start_speaker": "agent",
+      "id": "start-node-1765154703527",
+      "type": "conversation",
+      "display_position": {"x": 258, "y": 8},
+      "interruption_sensitivity": 0
+    },
+    {
+      "name": "Phone Lookup",
+      "id": "node-phone-lookup",
+      "type": "function",
+      "tool_id": "tool-1765203515291",
+      "tool_type": "local",
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "display_position": {"x": 600, "y": 8},
+      "edges": [
+        {
+          "id": "edge-lookup-found",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer found successfully"
+          },
+          "destination_node_id": "node-greeting-with-name"
+        },
+        {
+          "id": "edge-lookup-not-found",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer not found"
+          },
+          "destination_node_id": "node-phone-retry"
+        }
+      ]
+    },
+    {
+      "name": "Phone Not Found - Retry",
+      "id": "node-phone-retry",
+      "type": "conversation",
+      "instruction": {
+        "type": "static_text",
+        "text": "Hmm that didn't come up, can you tell me the phone number once more or do you have another phone number you would like me to check?"
+      },
+      "display_position": {"x": 868, "y": 150},
+      "edges": [
+        {
+          "id": "edge-retry-provides-phone",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer provides another phone number"
+          },
+          "destination_node_id": "node-phone-lookup"
+        },
+        {
+          "id": "edge-retry-no-phone",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer doesn't have another phone number or wants to use certificate instead"
+          },
+          "destination_node_id": "node-1765277323775"
+        }
+      ]
+    },
+    {
+      "name": "Greet Customer by Name",
+      "id": "node-greeting-with-name",
+      "type": "conversation",
+      "instruction": {
+        "type": "prompt",
+        "text": "Greet the customer warmly by their first name from the lookup result. Then immediately confirm: 'I see you're calling about your trip to [destination from lookup]. Is that correct?' Wait for their confirmation before proceeding."
+      },
+      "display_position": {"x": 950, "y": -200},
+      "edges": [
+        {
+          "id": "edge-greeting-confirmed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer confirms this is correct"
+          },
+          "destination_node_id": "node-check-deposits"
+        },
+        {
+          "id": "edge-greeting-different",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer says no or has different question"
+          },
+          "destination_node_id": "node-1765289494632"
+        }
+      ]
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "id": "edge-1765277323775-lvs6yhcqz",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer provides the package letters and numbers"
+          },
+          "destination_node_id": "node-certificate-lookup"
+        },
+        {
+          "destination_node_id": "node-1765277499189",
+          "id": "edge-1765277444184-faqg4ufjr",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "customer does not have their certificate info available"
+          }
+        }
+      ],
+      "id": "node-1765277323775",
+      "type": "conversation",
+      "display_position": {"x": 868, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Ask for package code and vacation ID or certificate number, allow customer time to locate it"
+      }
+    },
+    {
+      "name": "Lookup by Certificate",
+      "id": "node-certificate-lookup",
+      "type": "function",
+      "tool_id": "tool-1766069889962",
+      "tool_type": "local",
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "display_position": {"x": 1400, "y": 300},
+      "edges": [
+        {
+          "id": "edge-cert-lookup-found",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Certificate found"
+          },
+          "destination_node_id": "node-check-deposits"
+        },
+        {
+          "id": "edge-cert-lookup-not-found",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Certificate not found"
+          },
+          "destination_node_id": "node-cert-retry"
+        }
+      ]
+    },
+    {
+      "name": "Certificate Not Found - Retry",
+      "id": "node-cert-retry",
+      "type": "conversation",
+      "instruction": {
+        "type": "static_text",
+        "text": "Hmm that certificate number didn't come up, can you tell me the certificate number once more? It should be a combination of letters and numbers."
+      },
+      "display_position": {"x": 1700, "y": 450},
+      "edges": [
+        {
+          "id": "edge-cert-retry-provides-cert",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer provides another certificate number"
+          },
+          "destination_node_id": "node-certificate-lookup"
+        },
+        {
+          "id": "edge-cert-retry-no-cert",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer doesn't have certificate number or cannot find it"
+          },
+          "destination_node_id": "node-1765277499189"
+        }
+      ]
+    },
+    {
+      "name": "Check Deposit Status",
+      "id": "node-check-deposits",
+      "type": "function",
+      "tool_id": "tool-1766060005133",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Check the deposit status using the customer_data from the phone lookup result"
+      },
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "display_position": {"x": 2119, "y": -290},
+      "edges": [
+        {
+          "id": "edge-deposits-complete",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Deposits are complete"
+          },
+          "destination_node_id": "node-1765277096014"
+        },
+        {
+          "id": "edge-deposits-partial",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Deposits are partial"
+          },
+          "destination_node_id": "node-1765334332294"
+        },
+        {
+          "id": "edge-deposits-none",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "No deposits found"
+          },
+          "destination_node_id": "node-1765277149235"
+        }
+      ]
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-check-travel-rep",
+          "id": "edge-1765277096014-8guid3c3k",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Yes"
+          }
+        },
+        {
+          "destination_node_id": "component-node-1765480241461",
+          "id": "edge-1765277136815-ewup50j7a",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "No"
+          }
+        }
+      ],
+      "id": "node-1765277096014",
+      "type": "conversation",
+      "display_position": {"x": 3310, "y": -152},
+      "instruction": {
+        "type": "static_text",
+        "text": "Great, so have you already scheduled your travel dates?"
+      }
+    },
+    {
+      "name": "Check Travel Rep Status",
+      "id": "node-check-travel-rep",
+      "type": "function",
+      "tool_id": "tool-1766060140677",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Check the travel rep status using the customer_data from the lookup result"
+      },
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "display_position": {"x": 4400, "y": 20},
+      "edges": [
+        {
+          "id": "edge-tr-needs-urgent",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Needs urgent TR assignment"
+          },
+          "destination_node_id": "node-create-urgent-memo"
+        },
+        {
+          "id": "edge-tr-normal",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Normal TR window"
+          },
+          "destination_node_id": "node-1765278399901"
+        },
+        {
+          "id": "edge-tr-needs-call",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "TR needs to call customer"
+          },
+          "destination_node_id": "node-create-followup-memo"
+        },
+        {
+          "id": "edge-tr-complete",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "TR is complete"
+          },
+          "destination_node_id": "node-1765285999598"
+        },
+        {
+          "id": "edge-tr-too-early",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Too early for TR"
+          },
+          "destination_node_id": "node-1765278399901"
+        }
+      ]
+    },
+    {
+      "name": "Create Urgent TR Memo",
+      "id": "node-create-urgent-memo",
+      "type": "function",
+      "tool_id": "tool-1766060443303",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Create an urgent memo with memo_type='needs tr assignment' using the vac_id and phone_number from customer data"
+      },
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "display_position": {"x": 5200, "y": -300},
+      "edges": [
+        {
+          "id": "edge-urgent-memo-created",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Memo created"
+          },
+          "destination_node_id": "node-urgent-memo-response"
+        }
+      ]
+    },
+    {
+      "name": "Urgent TR Response",
+      "id": "node-urgent-memo-response",
+      "type": "conversation",
+      "instruction": {
+        "type": "static_text",
+        "text": "I've flagged your account for immediate attention. A Travel Rep will call you within 24 hours to get you scheduled."
+      },
+      "display_position": {"x": 5700, "y": -300},
+      "edges": [
+        {
+          "id": "edge-urgent-to-anything-else",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer acknowledged"
+          },
+          "destination_node_id": "node-1765278192126"
+        }
+      ]
+    },
+    {
+      "name": "Create TR Follow-up Memo",
+      "id": "node-create-followup-memo",
+      "type": "function",
+      "tool_id": "tool-1766060443303",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Create a follow-up memo with memo_type='ask tr to call' using the vac_id and phone_number from customer data"
+      },
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "display_position": {"x": 5200, "y": 200},
+      "edges": [
+        {
+          "id": "edge-followup-memo-created",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Memo created"
+          },
+          "destination_node_id": "node-followup-memo-response"
+        }
+      ]
+    },
+    {
+      "name": "TR Follow-up Response",
+      "id": "node-followup-memo-response",
+      "type": "conversation",
+      "instruction": {
+        "type": "prompt",
+        "text": "Tell customer: Your Travel Rep is assigned to your account. I've sent them a reminder to follow up with you. You should hear from them within 2 business days."
+      },
+      "display_position": {"x": 5700, "y": 200},
+      "edges": [
+        {
+          "id": "edge-followup-to-anything-else",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer acknowledged"
+          },
+          "destination_node_id": "node-1765278192126"
+        }
+      ]
+    },
+    {
+      "finetune_conversation_examples": [
+        {
+          "transcript": [
+            {
+              "content": "I want to speak with someone immediately",
+              "role": "user"
+            },
+            {
+              "content": "fastest way to reach someone else id to call 818-992-5100",
+              "role": "agent"
+            }
+          ],
+          "id": "fe-1765289710303"
+        }
+      ],
+      "instruction": {
+        "type": "static_text",
+        "text": "If you activated online at just go to active my trip dot com and login with your email and password the online system will give you directions on how to pay your deposit. does that answer your question?"
+      },
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765278192126",
+          "id": "edge-1765204488332-kapdj4vxt",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Yes"
+          }
+        },
+        {
+          "destination_node_id": "node-1765284036524",
+          "id": "edge-1765278127076-uf3ppiuw7",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "no"
+          }
+        }
+      ],
+      "id": "node-1765204488332",
+      "type": "conversation",
+      "display_position": {"x": 4950, "y": 1735}
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765204488332",
+          "id": "edge-1765277149235-5ybwrh4cz",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "activated online"
+          }
+        },
+        {
+          "destination_node_id": "node-1765279375079",
+          "id": "edge-1765277892308-6knerhwa7",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "activated by mail"
+          }
+        }
+      ],
+      "id": "node-1765277149235",
+      "type": "conversation",
+      "display_position": {"x": 3850, "y": 1765},
+      "instruction": {
+        "type": "static_text",
+        "text": "When you activated your certificate, did you go online or did you mail it in?"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-check-deposits",
+          "id": "edge-1765277499189-vkgqnevuo",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Yes"
+          }
+        },
+        {
+          "destination_node_id": "node-1765278967095",
+          "id": "edge-1765278956840-gk1ev877l",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "No"
+          }
+        }
+      ],
+      "id": "node-1765277499189",
+      "type": "conversation",
+      "display_position": {"x": 1650, "y": 4250},
+      "instruction": {
+        "type": "prompt",
+        "text": "Offer to transfer to customer service to look them up by phone number"
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765278142706",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 5500, "y": 605},
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end the call"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765283167912",
+          "id": "edge-1765278192126-00m0ymi19",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "if customers questions have been answered"
+          }
+        },
+        {
+          "destination_node_id": "node-1765289494632",
+          "id": "edge-1765281323430-2p6agvjk6",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "If customer still needs additional assistance"
+          }
+        }
+      ],
+      "id": "node-1765278192126",
+      "type": "conversation",
+      "display_position": {"x": 5500, "y": 955},
+      "instruction": {
+        "type": "static_text",
+        "text": "Is there anything else \nI can help you with?"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765278192126",
+          "id": "edge-1765278399901-5d3fxvdbq",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Yes"
+          }
+        },
+        {
+          "destination_node_id": "node-1765278142706",
+          "id": "edge-1765280523303-795jdms7b",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "No"
+          }
+        }
+      ],
+      "id": "node-1765278399901",
+      "type": "conversation",
+      "display_position": {"x": 4950, "y": 500},
+      "instruction": {
+        "type": "static_text",
+        "text": "Ok great, you should expect a call from a travel rep about 45-75 days prior to your trip, give us a call about 60 days prior if you havent been contacted, is there anything else I can assist with?"
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765278967095",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 2200, "y": 4400},
+      "instruction": {
+        "type": "static_text",
+        "text": "When you're able to locate your package code or certificate number feel free to call back and I would be glad to assist you further. Have a great day"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765281525937",
+          "id": "edge-1765279375079-q227n3mpl",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Yes"
+          }
+        },
+        {
+          "destination_node_id": "node-1765283645522",
+          "id": "edge-1765283636290-wbea1uzg3",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "NO"
+          }
+        }
+      ],
+      "id": "node-1765279375079",
+      "type": "conversation",
+      "display_position": {"x": 4400, "y": 2200},
+      "instruction": {
+        "type": "static_text",
+        "text": "If you activate your trip by mailng the certicateYou should receive a tax deposit invoice or request form within 30 days of when you mailed in the certificate. Did you receive it?"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765283206338",
+          "id": "edge-1765281525937-g71xh09d4",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "No"
+          }
+        },
+        {
+          "destination_node_id": "node-1765289494632",
+          "id": "edge-1765281669910-dm8htwxe3",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "yes"
+          }
+        }
+      ],
+      "id": "node-1765281525937",
+      "type": "conversation",
+      "display_position": {"x": 5500, "y": 2200},
+      "instruction": {
+        "type": "prompt",
+        "text": "Great, just go ahead and mail it in to us at the address provided with a personal check , cashiers check or money order. Is there anything else I can assist with?"
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765283167912",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 6050, "y": 1020},
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end the call"
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765283206338",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 6050, "y": 2285},
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end the call"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765283715928",
+          "id": "edge-1765283645522-wmjlxcaa9",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Yes"
+          }
+        },
+        {
+          "destination_node_id": "node-1765284310259",
+          "id": "edge-1765283703991-eid0to9l5",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "No"
+          }
+        }
+      ],
+      "id": "node-1765283645522",
+      "type": "conversation",
+      "display_position": {"x": 4950, "y": 3375},
+      "instruction": {
+        "type": "static_text",
+        "text": "Has it been over 30 days since you sent in your certificate?"
+      }
+    },
+    {
+      "instruction": {
+        "type": "static_text",
+        "text": "Ok, it sounds like it may have been lost in the mail. we can email a duplicate, can you give me your email address?"
+      },
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765377395879",
+          "id": "edge-1765283715928-x4bllqju4",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "customer provides email address"
+          }
+        },
+        {
+          "destination_node_id": "node-1765289494632",
+          "id": "edge-1765283878148-zpia7jwx5",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "customer doesn't provide email address and/or has additional questions"
+          }
+        }
+      ],
+      "id": "node-1765283715928",
+      "knowledge_base_ids": [
+        "knowledge_base_2db57ca89b041a81",
+        "knowledge_base_3f7f19ea568ab3c9",
+        "knowledge_base_edd94f1f9b668d95",
+        "knowledge_base_09856718c8159b15",
+        "knowledge_base_aaac72a8a726eb36"
+      ],
+      "type": "conversation",
+      "display_position": {"x": 5500, "y": 3350}
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765283837995",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 6600, "y": 3430},
+      "instruction": {
+        "type": "prompt",
+        "text": "Ok great, you should have it within the next couple days, if you don't receive it, just call us back and have a gear day!"
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765284036524",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 5500, "y": 1850},
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end the call"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765289494632",
+          "id": "edge-1765284310259-x3r2j8ych",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "yes"
+          }
+        },
+        {
+          "destination_node_id": "node-1765284875316",
+          "id": "edge-1765284845960-5jrrzfdg0",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "no"
+          }
+        }
+      ],
+      "id": "node-1765284310259",
+      "type": "conversation",
+      "display_position": {"x": 5500, "y": 3880},
+      "instruction": {
+        "type": "static_text",
+        "text": "Please allow a bit more time and if it still hasn't arrived, feel free to call us back for a duplicate, is there anything else I can help you with?"
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765284875316",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 6050, "y": 4195},
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end the call"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765289494632",
+          "id": "edge-1765285999598-x7ipnupzv",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Needs travel documents or has questions"
+          }
+        },
+        {
+          "destination_node_id": "node-1765278192126",
+          "id": "edge-1765286189121-shgvmr260",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "something else"
+          }
+        }
+      ],
+      "id": "node-1765285999598",
+      "type": "conversation",
+      "display_position": {"x": 4950, "y": 20},
+      "instruction": {
+        "type": "prompt",
+        "text": "are you in need of assistance from our travel agency department or a call back from your travel rep?"
+      }
+    },
+    {
+      "instruction": {
+        "type": "prompt",
+        "text": "use knowledge base and lookup package code and let them know how to activate and off er to provide general information"
+      },
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765289566625",
+          "id": "edge-1765289494632-msasjjdax",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Once all questions are answered"
+          }
+        },
+        {
+          "destination_node_id": "node-1765376662325",
+          "id": "edge-1765376559141-k3bx0v1af",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "If customer still has questions that you can't answer"
+          }
+        }
+      ],
+      "id": "node-1765289494632",
+      "knowledge_base_ids": [
+        "knowledge_base_2db57ca89b041a81",
+        "knowledge_base_edd94f1f9b668d95",
+        "knowledge_base_09856718c8159b15",
+        "knowledge_base_aaac72a8a726eb36",
+        "knowledge_base_3f7f19ea568ab3c9"
+      ],
+      "type": "conversation",
+      "display_position": {"x": 6050, "y": 2635}
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765289566625",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 7150, "y": 2725},
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end the call"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765376899886",
+          "id": "edge-1765325668161-up2povlwp",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Wants to be transferred to scheduling dept"
+          }
+        },
+        {
+          "destination_node_id": "node-1765278192126",
+          "id": "edge-1765325924275-xb4fmt8hf",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Has additional questions"
+          }
+        },
+        {
+          "id": "edge-1765561511449-d1d95n5ye",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Just wants phone number"
+          }
+        }
+      ],
+      "id": "node-1765325668161",
+      "type": "conversation",
+      "display_position": {"x": 4965, "y": 1155},
+      "instruction": {
+        "type": "static_text",
+        "text": "In general, we are scheduling into May and June for most trips. Some cruises need to be booked even further in advance and may not be available until September of next year. When you call please have a calendar available and your certificate number. Do you have any further questions or would you like to be transferred to the scheduling department?"
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-1765325686860",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {"x": 8800, "y": 1270},
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end call "
+      }
+    },
+    {
+      "instruction": {
+        "type": "static_text",
+        "text": "Let me pull up the info on how to activate your deposit"
+      },
+      "name": "Conversation",
+      "edges": [],
+      "id": "node-1765334332294",
+      "type": "conversation",
+      "display_position": {"x": 2750, "y": 1830},
+      "skip_response_edge": {
+        "destination_node_id": "node-1765277149235",
+        "id": "edge-1765370766596",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Skip response"
+        }
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765376375373",
+          "id": "edge-1765376219578-qcs8davh1",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer wants to try to find it"
+          }
+        },
+        {
+          "destination_node_id": "node-1765278967095",
+          "id": "edge-1765376351841-21pis8jce",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer will call back"
+          }
+        }
+      ],
+      "id": "node-1765376219578",
+      "type": "conversation",
+      "display_position": {"x": 1650, "y": 4730},
+      "instruction": {
+        "type": "static_text",
+        "text": "Unfortunately, without your package code there isn't much information I can provide. Would you like me to wait while you try to find it or do you want to call back later?"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "id": "edge-1765376375373-zccnbch9o",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "If customer finds it "
+          }
+        }
+      ],
+      "id": "node-1765376375373",
+      "type": "conversation",
+      "display_position": {"x": 2200, "y": 4770},
+      "instruction": {
+        "type": "static_text",
+        "text": "OK, no worries. I'll hold on. Don't worry. I get paid by the hour."
+      }
+    },
+    {
+      "instruction": {
+        "type": "prompt",
+        "text": "Unfortunately I don't have access to that information but if you would like, I can transfer you to the department that can further assist you. Woud you like to be transferred?"
+      },
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765376899886",
+          "id": "edge-1765376662325-p2l98eieg",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer wants to be transferred"
+          }
+        },
+        {
+          "destination_node_id": "node-1765289566625",
+          "id": "edge-1765376829625-fnn49b588",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer will call back"
+          }
+        }
+      ],
+      "global_node_setting": {
+        "condition": "If you are unable to assist or if customers want to speak to someone else"
+      },
+      "id": "node-1765376662325",
+      "type": "conversation",
+      "display_position": {"x": 6600, "y": 2910}
+    },
+    {
+      "custom_sip_headers": {},
+      "transfer_destination": {
+        "type": "predefined",
+        "number": "+18189925100"
+      },
+      "edge": {
+        "destination_node_id": "node-1765378295385",
+        "id": "edge-1765376899886-g19r9dwww",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Transfer failed"
+        }
+      },
+      "name": "Transfer Call",
+      "ignore_e164_validation": false,
+      "id": "node-1765376899886",
+      "transfer_option": {
+        "type": "cold_transfer",
+        "show_transferee_as_caller": true,
+        "enable_bridge_audio_cue": true
+      },
+      "type": "transfer_call",
+      "speak_during_execution": false,
+      "display_position": {"x": 7150, "y": 1270}
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765283837995",
+          "id": "edge-1765377395879-lyf0c5wqp",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Once we have clearly received email address and customer is all ser"
+          }
+        }
+      ],
+      "id": "node-1765377395879",
+      "type": "conversation",
+      "display_position": {"x": 6050, "y": 3395},
+      "instruction": {
+        "type": "prompt",
+        "text": "Flag for follow-up, send duplicate invoice to email address provided"
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765378373187",
+          "id": "edge-1765378295385-eeub1u64q",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer is ready"
+          }
+        }
+      ],
+      "id": "node-1765378295385",
+      "type": "conversation",
+      "display_position": {"x": 7700, "y": 1195},
+      "instruction": {
+        "type": "prompt",
+        "text": "Unfortunately I am having some sort of technical issue transferring you… well at least now we know why they call my intelligence artificial… let me give you the number so you can call them directly. Are you ready?   "
+      }
+    },
+    {
+      "name": "Conversation",
+      "edges": [
+        {
+          "destination_node_id": "node-1765325686860",
+          "id": "edge-1765378373187-eambcnctc",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer is good and has the number"
+          }
+        },
+        {
+          "destination_node_id": "node-1765289494632",
+          "id": "edge-1765561673075-pjwbt8jdg",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer has additional  questions"
+          }
+        }
+      ],
+      "id": "node-1765378373187",
+      "type": "conversation",
+      "display_position": {"x": 8250, "y": 1195},
+      "instruction": {
+        "type": "prompt",
+        "text": "Ok the number is  8 - 1 - 8 - -9 - 9 - 2 - - 5 - 1 - 0 - 0 and dial extension 2 for customer service or dial 1 for scheduling. They are available Monday through Friday between 9am and 5pm pacific time.\n\n## Make sure customer is good Repeat number slowly if needed and determine if there is any further assistance needed\n"
+      }
+    },
+    {
+      "component_type": "shared",
+      "component_id": "conversation_flow_component_9ca7c8ccc64c",
+      "else_edge": {
+        "destination_node_id": "node-1765334332294",
+        "id": "component-node-1765480213679-else-edge",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Else"
+        }
+      },
+      "name": "Offer Hawaii",
+      "edges": [],
+      "id": "component-node-1765480213679",
+      "type": "component",
+      "display_position": {"x": 2730, "y": 573}
+    },
+    {
+      "component_type": "shared",
+      "component_id": "conversation_flow_component_9ca7c8ccc64c",
+      "else_edge": {
+        "destination_node_id": "node-1765325668161",
+        "id": "component-node-1765480241461-else-edge",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Else"
+        }
+      },
+      "name": "Offer Hawaii",
+      "edges": [],
+      "id": "component-node-1765480241461",
+      "type": "component",
+      "display_position": {"x": 3709, "y": 841}
+    }
+  ]
+}
