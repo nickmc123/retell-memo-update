@@ -755,8 +755,7 @@ app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
         }
 
         // Production mode - query Caspio
-        const token = await getCaspioToken();
-        const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `phn1='${cleanPhone}' OR phn2='${cleanPhone}'`);
+        const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, `phn1='${cleanPhone}' OR phn2='${cleanPhone}'`);
 
         if (!response || response.length === 0) {
             return res.json({
@@ -823,8 +822,7 @@ app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
         }
 
         // Production - query by certificate
-        const token = await getCaspioToken();
-        const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate.toUpperCase()}' OR vac_id='${certificate}'`);
+        const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate.toUpperCase()}' OR vac_id='${certificate}'`);
 
         if (!response || response.length === 0) {
             return res.json({
@@ -917,8 +915,7 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
     }
 
     // Production mode
-    const token = await getCaspioToken();
-    const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
+    const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
 
     if (!response || response.length === 0) {
         return res.json({
@@ -1048,8 +1045,7 @@ app.post('/api/calendar/book', asyncHandler(async (req, res) => {
         }
     } else {
         // Production - check Caspio
-        const token = await getCaspioToken();
-        const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
+        const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
 
         if (!response || response.length === 0) {
             return res.status(404).json({
