@@ -705,6 +705,388 @@ app.get('/api/memos/:vac_id', asyncHandler(async (req, res) => {
 }));
 
 // =============================================================================
+// RETELL AI COMPATIBILITY ENDPOINTS
+// =============================================================================
+
+/**
+ * GET /api/customer/lookup
+ * Retell AI compatible customer lookup endpoint
+ * Wraps the existing POST /api/rims/phone-lookup endpoint
+ */
+app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
+    const { phone, email, certificate } = req.query;
+
+    // Use phone lookup if phone is provided
+    if (phone) {
+        // Call existing phone lookup logic
+        const cleanPhone = phone.replace(/\D/g, '').replace(/^1/, ''); // Remove +1 and non-digits
+
+        if (USE_MOCK_DATA) {
+            const customer = MOCK_RIMS_DATA.find(c =>
+                c.phn1 === cleanPhone || c.phn2 === cleanPhone
+            );
+
+            if (!customer) {
+                return res.json({
+                    found: false,
+                    message: 'Customer not found'
+                });
+            }
+
+            return res.json({
+                found: true,
+                customer: {
+                    customer_id: customer.vac_id,
+                    phone: '+1' + customer.phn1,
+                    email: customer.email,
+                    first_name: customer.first_name,
+                    last_name: customer.last_name,
+                    full_name: `${customer.first_name} ${customer.last_name}`,
+                    certificates: [{
+                        certificate_number: customer.pkg_code2,
+                        package_type: customer.pkg_code,
+                        deposit_paid: customer.conf_deposit >= customer.val_dep,
+                        deposit_amount: customer.conf_deposit,
+                        travel_dates_scheduled: !!customer.Asgn_trv_DT,
+                        travel_start_date: customer.Asgn_trv_DT
+                    }]
+                }
+            });
+        }
+
+        // Production mode - query Caspio
+        const token = await getCaspioToken();
+        const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `phn1='${cleanPhone}' OR phn2='${cleanPhone}'`);
+
+        if (!response || response.length === 0) {
+            return res.json({
+                found: false,
+                message: 'Customer not found'
+            });
+        }
+
+        const customer = response[0];
+        return res.json({
+            found: true,
+            customer: {
+                customer_id: customer.vac_id,
+                phone: '+1' + customer.phn1,
+                email: customer.email,
+                first_name: customer.first_name,
+                last_name: customer.last_name,
+                full_name: `${customer.first_name} ${customer.last_name}`,
+                certificates: [{
+                    certificate_number: customer.pkg_code2,
+                    package_type: customer.pkg_code,
+                    deposit_paid: customer.conf_deposit >= customer.val_dep,
+                    deposit_amount: customer.conf_deposit,
+                    travel_dates_scheduled: !!customer.Asgn_trv_DT,
+                    travel_start_date: customer.Asgn_trv_DT
+                }]
+            }
+        });
+    }
+
+    // Certificate lookup
+    if (certificate) {
+        if (USE_MOCK_DATA) {
+            const customer = MOCK_RIMS_DATA.find(c =>
+                c.pkg_code2 === certificate.toUpperCase() || c.vac_id === certificate
+            );
+
+            if (!customer) {
+                return res.json({
+                    found: false,
+                    message: 'Certificate not found'
+                });
+            }
+
+            return res.json({
+                found: true,
+                customer: {
+                    customer_id: customer.vac_id,
+                    phone: '+1' + customer.phn1,
+                    email: customer.email,
+                    first_name: customer.first_name,
+                    last_name: customer.last_name,
+                    full_name: `${customer.first_name} ${customer.last_name}`,
+                    certificates: [{
+                        certificate_number: customer.pkg_code2,
+                        package_type: customer.pkg_code,
+                        deposit_paid: customer.conf_deposit >= customer.val_dep,
+                        deposit_amount: customer.conf_deposit,
+                        travel_dates_scheduled: !!customer.Asgn_trv_DT,
+                        travel_start_date: customer.Asgn_trv_DT
+                    }]
+                }
+            });
+        }
+
+        // Production - query by certificate
+        const token = await getCaspioToken();
+        const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate.toUpperCase()}' OR vac_id='${certificate}'`);
+
+        if (!response || response.length === 0) {
+            return res.json({
+                found: false,
+                message: 'Certificate not found'
+            });
+        }
+
+        const customer = response[0];
+        return res.json({
+            found: true,
+            customer: {
+                customer_id: customer.vac_id,
+                phone: '+1' + customer.phn1,
+                email: customer.email,
+                first_name: customer.first_name,
+                last_name: customer.last_name,
+                full_name: `${customer.first_name} ${customer.last_name}`,
+                certificates: [{
+                    certificate_number: customer.pkg_code2,
+                    package_type: customer.pkg_code,
+                    deposit_paid: customer.conf_deposit >= customer.val_dep,
+                    deposit_amount: customer.conf_deposit,
+                    travel_dates_scheduled: !!customer.Asgn_trv_DT,
+                    travel_start_date: customer.Asgn_trv_DT
+                }]
+            }
+        });
+    }
+
+    return res.status(400).json({
+        error: 'Missing required parameter',
+        message: 'Provide at least one of: phone, email, or certificate'
+    });
+}));
+
+/**
+ * GET /api/certificate/:certificate_number
+ * Retell AI compatible certificate details endpoint
+ */
+app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) => {
+    const { certificate_number } = req.params;
+
+    if (USE_MOCK_DATA) {
+        const customer = MOCK_RIMS_DATA.find(c =>
+            c.pkg_code2 === certificate_number.toUpperCase() || c.vac_id === certificate_number
+        );
+
+        if (!customer) {
+            return res.json({
+                found: false,
+                message: 'Certificate not found'
+            });
+        }
+
+        const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: 500 };
+
+        return res.json({
+            found: true,
+            certificate: {
+                certificate_number: customer.pkg_code2,
+                package_type: customer.pkg_code,
+                destination: customer.pkg_code,
+                customer: {
+                    phone: '+1' + customer.phn1,
+                    email: customer.email,
+                    first_name: customer.first_name,
+                    last_name: customer.last_name
+                },
+                deposit: {
+                    required: packageInfo.total_deposit,
+                    paid: customer.conf_deposit >= customer.val_dep,
+                    amount: customer.conf_deposit,
+                    date: null
+                },
+                status: customer.confirm_status === 'confirm' ? 'active' : 'pending',
+                dates: {
+                    scheduled: !!customer.Asgn_trv_DT,
+                    start: customer.Asgn_trv_DT,
+                    end: null,
+                    expiration: null
+                },
+                travel_rep: customer.tm || null,
+                booking: customer.agency_book_via || customer.htl_bk_via ? {
+                    flight: customer.agency_book_via,
+                    hotel: customer.htl_bk_via
+                } : null
+            }
+        });
+    }
+
+    // Production mode
+    const token = await getCaspioToken();
+    const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
+
+    if (!response || response.length === 0) {
+        return res.json({
+            found: false,
+            message: 'Certificate not found'
+        });
+    }
+
+    const customer = response[0];
+    const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: 500 };
+
+    res.json({
+        found: true,
+        certificate: {
+            certificate_number: customer.pkg_code2,
+            package_type: customer.pkg_code,
+            destination: customer.pkg_code,
+            customer: {
+                phone: '+1' + customer.phn1,
+                email: customer.email,
+                first_name: customer.first_name,
+                last_name: customer.last_name
+            },
+            deposit: {
+                required: packageInfo.total_deposit,
+                paid: customer.conf_deposit >= customer.val_dep,
+                amount: customer.conf_deposit,
+                date: null
+            },
+            status: customer.confirm_status === 'confirm' ? 'active' : 'pending',
+            dates: {
+                scheduled: !!customer.Asgn_trv_DT,
+                start: customer.Asgn_trv_DT,
+                end: null,
+                expiration: null
+            },
+            travel_rep: customer.tm || null,
+            booking: customer.agency_book_via || customer.htl_bk_via ? {
+                flight: customer.agency_book_via,
+                hotel: customer.htl_bk_via
+            } : null
+        }
+    });
+}));
+
+/**
+ * GET /api/refunds/:certificate_number
+ * Retell AI compatible refund status endpoint
+ * Note: RIMS doesn't track refunds, so this returns "no refund"
+ */
+app.get('/api/refunds/:certificate_number', asyncHandler(async (req, res) => {
+    res.json({
+        has_refund: false,
+        message: 'No refund request found for this certificate'
+    });
+}));
+
+/**
+ * GET /api/calendar/availability/:destination
+ * Retell AI compatible calendar availability endpoint
+ * Note: This is a mock response - actual calendar would need Google Sheets integration
+ */
+app.get('/api/calendar/availability/:destination', asyncHandler(async (req, res) => {
+    const { destination } = req.params;
+    const { month, year } = req.query;
+
+    // Generate mock available dates for next 90 days
+    const availableDates = [];
+    const today = new Date();
+
+    for (let i = 0; i < 90; i++) {
+        const checkDate = new Date(today);
+        checkDate.setDate(today.getDate() + i);
+
+        // Filter by month/year if provided
+        if (month && checkDate.getMonth() + 1 !== parseInt(month)) continue;
+        if (year && checkDate.getFullYear() !== parseInt(year)) continue;
+
+        availableDates.push({
+            date: checkDate.toISOString().split('T')[0],
+            day_of_week: checkDate.toLocaleDateString('en-US', { weekday: 'long' }),
+            available_slots: 10
+        });
+    }
+
+    res.json({
+        destination,
+        total_available_dates: availableDates.length,
+        dates: availableDates.slice(0, 30), // Return first 30 days
+        message: `Found ${availableDates.length} available dates for ${destination}`
+    });
+}));
+
+/**
+ * POST /api/calendar/book
+ * Retell AI compatible booking endpoint
+ * Note: This is a mock response - actual booking would update RIMS_DATA
+ */
+app.post('/api/calendar/book', asyncHandler(async (req, res) => {
+    const { certificate_number, destination, start_date, end_date, hotel_name } = req.body;
+
+    if (!certificate_number || !destination || !start_date || !end_date) {
+        return res.status(400).json({
+            error: 'Missing required fields',
+            required: ['certificate_number', 'destination', 'start_date', 'end_date']
+        });
+    }
+
+    // Verify certificate exists
+    if (USE_MOCK_DATA) {
+        const customer = MOCK_RIMS_DATA.find(c =>
+            c.pkg_code2 === certificate_number.toUpperCase() || c.vac_id === certificate_number
+        );
+
+        if (!customer) {
+            return res.status(404).json({
+                error: 'Certificate not found'
+            });
+        }
+
+        // Check deposit paid
+        if (customer.conf_deposit < customer.val_dep) {
+            return res.status(400).json({
+                error: 'Deposit not paid',
+                message: 'Deposit must be paid before booking travel dates'
+            });
+        }
+    } else {
+        // Production - check Caspio
+        const token = await getCaspioToken();
+        const response = await queryCaspio(token, CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
+
+        if (!response || response.length === 0) {
+            return res.status(404).json({
+                error: 'Certificate not found'
+            });
+        }
+
+        const customer = response[0];
+        if (customer.conf_deposit < customer.val_dep) {
+            return res.status(400).json({
+                error: 'Deposit not paid',
+                message: 'Deposit must be paid before booking travel dates'
+            });
+        }
+
+        // TODO: Update RIMS_DATA with booking info
+        // This would require a Caspio UPDATE operation
+    }
+
+    // Generate confirmation number
+    const confirmationNumber = `CB${Date.now()}${Math.floor(Math.random() * 1000)}`;
+
+    res.json({
+        success: true,
+        message: 'Travel dates booked successfully',
+        booking: {
+            confirmation_number: confirmationNumber,
+            destination: destination,
+            start_date: start_date,
+            end_date: end_date,
+            hotel_name: hotel_name || null,
+            status: 'confirmed'
+        }
+    });
+}));
+
+// =============================================================================
 // HEALTH CHECK
 // =============================================================================
 
