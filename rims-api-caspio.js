@@ -825,8 +825,12 @@ app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
             });
         }
 
-        // Production - query by certificate
-        const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate.toUpperCase()}' OR vac_id='${certificate}'`);
+        // Production - query by certificate (handle both pkg_code2 and numeric vac_id)
+        const isNumeric = /^\d+$/.test(certificate);
+        const whereClause = isNumeric
+            ? `vac_id=${certificate} OR pkg_code2='${certificate}'`
+            : `pkg_code2='${certificate.toUpperCase()}' OR vac_id=${certificate}`;
+        const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
 
         if (!response || response.length === 0) {
             return res.json({
@@ -922,8 +926,12 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
         });
     }
 
-    // Production mode
-    const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
+    // Production mode - handle both pkg_code2 (2-6 letters) and vac_id (6 digit number)
+    const isNumeric = /^\d+$/.test(certificate_number);
+    const whereClause = isNumeric
+        ? `vac_id=${certificate_number} OR pkg_code2='${certificate_number}'`
+        : `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id=${certificate_number}`;
+    const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
 
     if (!response || response.length === 0) {
         return res.json({
@@ -1052,8 +1060,12 @@ app.post('/api/calendar/book', asyncHandler(async (req, res) => {
             });
         }
     } else {
-        // Production - check Caspio
-        const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id='${certificate_number}'`);
+        // Production - check Caspio (handle both pkg_code2 and vac_id)
+        const isNumeric = /^\d+$/.test(certificate_number);
+        const whereClause = isNumeric
+            ? `vac_id=${certificate_number} OR pkg_code2='${certificate_number}'`
+            : `pkg_code2='${certificate_number.toUpperCase()}' OR vac_id=${certificate_number}`;
+        const response = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
 
         if (!response || response.length === 0) {
             return res.status(404).json({
