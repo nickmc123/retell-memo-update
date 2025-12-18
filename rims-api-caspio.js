@@ -286,11 +286,11 @@ app.post('/api/rims/phone-lookup', asyncHandler(async (req, res) => {
 
     // MOCK MODE
     if (USE_MOCK_DATA) {
-        const customer = MOCK_RIMS_DATA.find(c =>
+        const customers = MOCK_RIMS_DATA.filter(c =>
             normalizePhone(c.phn1) === normalized || normalizePhone(c.phn2) === normalized
         );
 
-        if (!customer) {
+        if (customers.length === 0) {
             return res.json({
                 found: false,
                 message: 'Customer not found in RIMS database'
@@ -299,12 +299,14 @@ app.post('/api/rims/phone-lookup', asyncHandler(async (req, res) => {
 
         return res.json({
             found: true,
-            customer_data: customer
+            count: customers.length,
+            customer_data: customers[0],  // Backward compatibility
+            all_records: customers         // All matching records
         });
     }
 
     // CASPIO MODE
-    // Query: find record where phn1 or phn2 matches (Caspio uses SQL-like syntax)
+    // Query: find ALL records where phn1 or phn2 matches (Caspio uses SQL-like syntax)
     const whereClause = `phn1='${normalized}' OR phn2='${normalized}'`;
 
     const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
@@ -318,7 +320,9 @@ app.post('/api/rims/phone-lookup', asyncHandler(async (req, res) => {
 
     res.json({
         found: true,
-        customer_data: results[0]
+        count: results.length,
+        customer_data: results[0],  // First record for backward compatibility
+        all_records: results         // All matching records
     });
 }));
 
