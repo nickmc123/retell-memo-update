@@ -1,0 +1,44 @@
+{
+  "name": "casablanca-express-api",
+  "version": "1.0.0",
+  "description": "Customer Database and Calendar API for Retell AI Agent Integration",
+  "main": "api-server.js",
+  "scripts": {
+    "start": "node rims-api-caspio.js",
+    "start:postgres": "node api-server.js",
+    "start:rims": "node rims-api-server.js",
+    "start:caspio": "node rims-api-caspio.js",
+    "dev": "nodemon api-server.js",
+    "dev:rims": "nodemon rims-api-server.js",
+    "dev:caspio": "nodemon rims-api-caspio.js",
+    "setup-db": "psql -U postgres -f DATABASE-SCHEMA.sql",
+    "setup-sheets": "node google-sheets-calendar.js",
+    "test": "./test-api.sh",
+    "test:rims": "./test-rims-api.sh",
+    "test:caspio": "./test-rims-api.sh"
+  },
+  "keywords": [
+    "retell-ai",
+    "api",
+    "customer-database",
+    "google-sheets",
+    "calendar-booking"
+  ],
+  "author": "Casablanca Express",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "googleapis": "^128.0.0",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
