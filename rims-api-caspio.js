@@ -950,7 +950,7 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
         const memo = {
             memo_type: finalMemoType,
             details: memoDetails,
-            rims_id: rims_id,
+            vac_id: rims_id,  // Store RIMS_ID in vac_id field
             phone_number: callData.from_number || '',
             created_date: callDate,
             created_by: `AI Agent (Retell Call ${call_id})`
@@ -1151,7 +1151,7 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 const memo = {
                     memo_type: 'AI Call Log (Batch)',
                     details: memoDetails,
-                    rims_id: rims_id,
+                    vac_id: rims_id,  // Store RIMS_ID in vac_id field
                     phone_number: callData.from_number || '',
                     created_date: callDate,
                     created_by: `AI Agent (Batch Import)`
