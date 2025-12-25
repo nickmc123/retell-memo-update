@@ -1369,6 +1369,7 @@ app.listen(PORT, () => {
 
     console.log(`\n📚 RIMS API Endpoints:`);
     console.log(`   GET  /health`);
+    console.log(`   GET  /api/customer/status ⭐ NEW - Complete status from caller ID!`);
     console.log(`   POST /api/rims/phone-lookup`);
     console.log(`   POST /api/rims/certificate-lookup`);
     console.log(`   GET  /api/kb/package/:certificate_code`);
