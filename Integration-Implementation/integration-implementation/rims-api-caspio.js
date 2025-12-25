@@ -33,6 +33,12 @@ const CASPIO_CONFIG = {
     }
 };
 
+// Retell AI Configuration
+const RETELL_CONFIG = {
+    apiKey: process.env.RETELL_API_KEY,
+    baseUrl: 'https://api.retellai.com'
+};
+
 // OAuth token cache
 let cachedToken = null;
 let tokenExpiry = null;
@@ -232,6 +238,61 @@ async function insertCaspioRecord(tableName, data) {
     } catch (error) {
         console.error(`❌ Caspio insert error (${tableName}):`, error.response?.data || error.message);
         throw new Error(`Failed to insert into ${tableName}`);
+    }
+}
+
+// =============================================================================
+// RETELL AI API CLIENT
+// =============================================================================
+
+/**
+ * Get call details from Retell AI
+ */
+async function getRetellCall(callId) {
+    if (!RETELL_CONFIG.apiKey) {
+        throw new Error('RETELL_API_KEY not configured');
+    }
+
+    const url = `${RETELL_CONFIG.baseUrl}/v2/get-call/${callId}`;
+
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${RETELL_CONFIG.apiKey}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error(`❌ Retell API error (get-call):`, error.response?.data || error.message);
+        throw new Error(`Failed to fetch call ${callId}`);
+    }
+}
+
+/**
+ * List calls from Retell AI
+ */
+async function listRetellCalls(filters = {}) {
+    if (!RETELL_CONFIG.apiKey) {
+        throw new Error('RETELL_API_KEY not configured');
+    }
+
+    const url = `${RETELL_CONFIG.baseUrl}/v2/list-calls`;
+
+    try {
+        const response = await axios.post(url, filters, {
+            headers: {
+                'Authorization': `Bearer ${RETELL_CONFIG.apiKey}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error(`❌ Retell API error (list-calls):`, error.response?.data || error.message);
+        throw new Error('Failed to list calls');
     }
 }
 
@@ -702,6 +763,316 @@ app.get('/api/memos/:vac_id', asyncHandler(async (req, res) => {
         memo_count: memos.length,
         memos
     });
+}));
+
+/**
+ * POST /api/memos/from-retell-call
+ * Create memo in Caspio from Retell AI call history
+ *
+ * Body parameters:
+ * - call_id (required): Retell AI call ID
+ * - memo_type (optional): Override default memo type
+ * - include_transcript (optional): Include full transcript in details (default: true)
+ */
+app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
+    const { call_id, memo_type, include_transcript = true } = req.body;
+
+    if (!call_id) {
+        return res.status(400).json({
+            error: 'Missing call_id',
+            message: 'Retell AI call_id is required'
+        });
+    }
+
+    if (!RETELL_CONFIG.apiKey) {
+        return res.status(500).json({
+            error: 'Retell API not configured',
+            message: 'RETELL_API_KEY environment variable not set'
+        });
+    }
+
+    try {
+        // STEP 1: Fetch call details from Retell AI
+        console.log(`📞 Fetching call ${call_id} from Retell AI...`);
+        const callData = await getRetellCall(call_id);
+
+        // STEP 2: Extract customer information from call
+        const fromNumber = normalizePhone(callData.from_number || '');
+
+        // Try to find customer in RIMS by phone number
+        let customer = null;
+        let vac_id = null;
+
+        if (fromNumber) {
+            if (USE_MOCK_DATA) {
+                customer = MOCK_RIMS_DATA.find(c =>
+                    normalizePhone(c.phn1) === fromNumber || normalizePhone(c.phn2) === fromNumber
+                );
+            } else {
+                const whereClause = `phn1='${fromNumber}' OR phn2='${fromNumber}'`;
+                const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+                customer = results.length > 0 ? results[0] : null;
+            }
+
+            if (customer) {
+                vac_id = customer.vac_id;
+            }
+        }
+
+        // STEP 3: Build memo details from call data
+        const callAnalysis = callData.call_analysis || {};
+        const transcript = callData.transcript || '';
+        const customAnalysis = callData.custom_analysis_data || {};
+
+        // Extract key information
+        const callDuration = callData.duration_ms ? Math.round(callData.duration_ms / 1000) : 0;
+        const callDate = callData.start_timestamp
+            ? new Date(callData.start_timestamp).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0];
+
+        const sentiment = callAnalysis.call_sentiment || 'Unknown';
+        const callSummary = callAnalysis.call_summary || 'No summary available';
+        const callSuccessful = callAnalysis.call_successful !== undefined
+            ? callAnalysis.call_successful
+            : null;
+
+        // Build memo details
+        let memoDetails = `--- RETELL AI CALL SUMMARY ---\n`;
+        memoDetails += `Call ID: ${call_id}\n`;
+        memoDetails += `Date: ${callDate}\n`;
+        memoDetails += `Duration: ${callDuration} seconds\n`;
+        memoDetails += `From: ${callData.from_number || 'Unknown'}\n`;
+        memoDetails += `Sentiment: ${sentiment}\n`;
+        if (callSuccessful !== null) {
+            memoDetails += `Call Successful: ${callSuccessful ? 'Yes' : 'No'}\n`;
+        }
+        memoDetails += `\n--- SUMMARY ---\n${callSummary}\n`;
+
+        // Add custom analysis data if available
+        if (Object.keys(customAnalysis).length > 0) {
+            memoDetails += `\n--- CUSTOM ANALYSIS ---\n`;
+            for (const [key, value] of Object.entries(customAnalysis)) {
+                memoDetails += `${key}: ${JSON.stringify(value)}\n`;
+            }
+        }
+
+        // Add transcript if requested
+        if (include_transcript && transcript) {
+            memoDetails += `\n--- TRANSCRIPT ---\n${transcript}`;
+        }
+
+        // Determine memo type
+        let finalMemoType = memo_type || 'AI Call Log';
+
+        // Auto-categorize based on analysis
+        if (!memo_type && callAnalysis.call_sentiment) {
+            if (callAnalysis.call_sentiment === 'Negative') {
+                finalMemoType = 'AI Call - Issue Reported';
+            } else if (callAnalysis.call_successful === false) {
+                finalMemoType = 'AI Call - Unsuccessful';
+            }
+        }
+
+        // STEP 4: Create memo in Caspio
+        const memo = {
+            memo_type: finalMemoType,
+            details: memoDetails,
+            vac_id: vac_id || 'UNKNOWN',
+            phone_number: callData.from_number || '',
+            created_date: callDate,
+            created_by: `AI Agent (Retell Call ${call_id})`
+        };
+
+        let memoId;
+        if (USE_MOCK_DATA) {
+            memo.id = Date.now();
+            MOCK_MEMOS.push(memo);
+            memoId = memo.id;
+        } else {
+            const result = await insertCaspioRecord(CASPIO_CONFIG.tables.rims_memos, memo);
+            memoId = result.id || Date.now();
+        }
+
+        // STEP 5: Return success response
+        res.json({
+            success: true,
+            message: 'Memo created successfully from Retell call',
+            memo_id: memoId,
+            call_id: call_id,
+            customer_found: !!customer,
+            customer_info: customer ? {
+                vac_id: customer.vac_id,
+                name: `${customer.first_name} ${customer.last_name}`,
+                phone: customer.phn1
+            } : null,
+            memo: {
+                memo_type: finalMemoType,
+                vac_id: vac_id || 'UNKNOWN',
+                created_date: callDate,
+                call_duration_seconds: callDuration,
+                call_sentiment: sentiment,
+                call_successful: callSuccessful
+            }
+        });
+
+    } catch (error) {
+        console.error('❌ Error creating memo from Retell call:', error);
+        res.status(500).json({
+            error: 'Failed to create memo',
+            message: error.message,
+            call_id: call_id
+        });
+    }
+}));
+
+/**
+ * POST /api/memos/batch-from-retell
+ * Create memos from multiple Retell AI calls
+ *
+ * Body parameters:
+ * - agent_id (optional): Filter by agent ID
+ * - start_timestamp (optional): Filter calls after this timestamp (ms)
+ * - end_timestamp (optional): Filter calls before this timestamp (ms)
+ * - limit (optional): Maximum number of calls to process (default: 50)
+ * - filter_registered (optional): Only include calls with status 'registered' (default: false)
+ */
+app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
+    const {
+        agent_id,
+        start_timestamp,
+        end_timestamp,
+        limit = 50,
+        filter_registered = false
+    } = req.body;
+
+    if (!RETELL_CONFIG.apiKey) {
+        return res.status(500).json({
+            error: 'Retell API not configured',
+            message: 'RETELL_API_KEY environment variable not set'
+        });
+    }
+
+    try {
+        // Build filter for Retell API
+        const filters = {
+            limit: Math.min(limit, 100), // Cap at 100 for safety
+            sort_order: 'descending'
+        };
+
+        if (agent_id) filters.agent_id = agent_id;
+        if (start_timestamp) filters.start_timestamp = start_timestamp;
+        if (end_timestamp) filters.end_timestamp = end_timestamp;
+        if (filter_registered) filters.filter_criteria = { call_status: ['registered'] };
+
+        // Fetch calls from Retell AI
+        console.log(`📞 Fetching calls from Retell AI with filters:`, filters);
+        const callsResponse = await listRetellCalls(filters);
+        const calls = callsResponse.calls || [];
+
+        console.log(`📊 Found ${calls.length} calls to process`);
+
+        // Process each call and create memos
+        const results = {
+            total_calls: calls.length,
+            memos_created: 0,
+            memos_failed: 0,
+            results: []
+        };
+
+        for (const call of calls) {
+            try {
+                // Get full call details
+                const callData = await getRetellCall(call.call_id);
+
+                // Find customer by phone
+                const fromNumber = normalizePhone(callData.from_number || '');
+                let customer = null;
+                let vac_id = null;
+
+                if (fromNumber) {
+                    if (USE_MOCK_DATA) {
+                        customer = MOCK_RIMS_DATA.find(c =>
+                            normalizePhone(c.phn1) === fromNumber || normalizePhone(c.phn2) === fromNumber
+                        );
+                    } else {
+                        const whereClause = `phn1='${fromNumber}' OR phn2='${fromNumber}'`;
+                        const dbResults = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+                        customer = dbResults.length > 0 ? dbResults[0] : null;
+                    }
+
+                    if (customer) {
+                        vac_id = customer.vac_id;
+                    }
+                }
+
+                // Build memo
+                const callAnalysis = callData.call_analysis || {};
+                const callDate = callData.start_timestamp
+                    ? new Date(callData.start_timestamp).toISOString().split('T')[0]
+                    : new Date().toISOString().split('T')[0];
+                const callDuration = callData.duration_ms ? Math.round(callData.duration_ms / 1000) : 0;
+
+                const memoDetails = `--- RETELL AI CALL ---\n` +
+                    `Call ID: ${call.call_id}\n` +
+                    `Date: ${callDate}\n` +
+                    `Duration: ${callDuration}s\n` +
+                    `From: ${callData.from_number || 'Unknown'}\n` +
+                    `Summary: ${callAnalysis.call_summary || 'N/A'}`;
+
+                const memo = {
+                    memo_type: 'AI Call Log (Batch)',
+                    details: memoDetails,
+                    vac_id: vac_id || 'UNKNOWN',
+                    phone_number: callData.from_number || '',
+                    created_date: callDate,
+                    created_by: `AI Agent (Batch Import)`
+                };
+
+                // Insert memo
+                if (USE_MOCK_DATA) {
+                    memo.id = Date.now() + results.memos_created;
+                    MOCK_MEMOS.push(memo);
+                } else {
+                    await insertCaspioRecord(CASPIO_CONFIG.tables.rims_memos, memo);
+                }
+
+                results.memos_created++;
+                results.results.push({
+                    call_id: call.call_id,
+                    status: 'success',
+                    customer_found: !!customer,
+                    vac_id: vac_id || 'UNKNOWN'
+                });
+
+            } catch (error) {
+                console.error(`❌ Failed to process call ${call.call_id}:`, error.message);
+                results.memos_failed++;
+                results.results.push({
+                    call_id: call.call_id,
+                    status: 'failed',
+                    error: error.message
+                });
+            }
+        }
+
+        res.json({
+            success: true,
+            message: `Processed ${results.total_calls} calls`,
+            summary: {
+                total_calls: results.total_calls,
+                memos_created: results.memos_created,
+                memos_failed: results.memos_failed
+            },
+            results: results.results
+        });
+
+    } catch (error) {
+        console.error('❌ Error in batch memo creation:', error);
+        res.status(500).json({
+            error: 'Batch processing failed',
+            message: error.message
+        });
+    }
 }));
 
 // =============================================================================
@@ -1369,7 +1740,7 @@ app.listen(PORT, () => {
 
     console.log(`\n📚 RIMS API Endpoints:`);
     console.log(`   GET  /health`);
-    console.log(`   GET  /api/customer/status ⭐ NEW - Complete status from caller ID!`);
+    console.log(`   GET  /api/customer/status ⭐ Complete status from caller ID!`);
     console.log(`   POST /api/rims/phone-lookup`);
     console.log(`   POST /api/rims/certificate-lookup`);
     console.log(`   GET  /api/kb/package/:certificate_code`);
@@ -1378,6 +1749,8 @@ app.listen(PORT, () => {
     console.log(`   POST /api/logic/booking-check`);
     console.log(`   POST /api/memos/create`);
     console.log(`   GET  /api/memos/:vac_id`);
+    console.log(`   POST /api/memos/from-retell-call ⭐ NEW - Create memo from Retell call!`);
+    console.log(`   POST /api/memos/batch-from-retell ⭐ NEW - Batch import Retell calls!`);
 
     if (USE_MOCK_DATA) {
         console.log(`\n🧪 Mock RIMS Test Data:`);
