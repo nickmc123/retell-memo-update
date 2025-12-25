@@ -4,5 +4,8 @@ nixPkgs = ["nodejs_18"]
 [phases.install]
 cmds = ["cd Integration-Implementation/integration-implementation && npm install"]
 
+[phases.build]
+cmds = ["echo 'Build complete - dependencies installed in install phase'"]
+
 [start]
 cmd = "cd Integration-Implementation/integration-implementation && npm start"
