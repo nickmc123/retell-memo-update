@@ -804,25 +804,23 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
         console.log(`📞 Fetching call ${call_id} from Retell AI...`);
         const callData = await getRetellCall(call_id);
 
-        // STEP 2: Extract customer information from call data
-        // Extract vac_id (RIMS_ID) and pkg_code2 from the call data itself
+        // STEP 2: Extract RIMS_ID from call data
         const customAnalysis = callData.custom_analysis_data || {};
         const collectedVars = callData.collected_dynamic_variables || {};
         const retellVars = callData.retell_llm_dynamic_variables || {};
 
-        // Try to find vac_id and pkg_code2 from various sources in the call data
-        let vac_id = customAnalysis.rims_id || customAnalysis.vac_id ||
-                     collectedVars.rims_id || collectedVars.vac_id ||
-                     retellVars.rims_id || retellVars.vac_id ||
-                     customAnalysis.RIMS_ID || customAnalysis.VAC_ID;
+        // Extract RIMS_ID from the call data (NOT vac_id)
+        const rims_id = customAnalysis.rims_id || customAnalysis.RIMS_ID ||
+                        collectedVars.rims_id || collectedVars.RIMS_ID ||
+                        retellVars.rims_id || retellVars.RIMS_ID;
 
-        let pkg_code2 = customAnalysis.pkg_code2 || customAnalysis.certificate ||
-                        collectedVars.pkg_code2 || collectedVars.certificate ||
-                        retellVars.pkg_code2 || retellVars.certificate ||
-                        customAnalysis.PKG_CODE2;
+        const pkg_code2 = customAnalysis.pkg_code2 || customAnalysis.certificate ||
+                          collectedVars.pkg_code2 || collectedVars.certificate ||
+                          retellVars.pkg_code2 || retellVars.certificate ||
+                          customAnalysis.PKG_CODE2;
 
         console.log(`📋 Extracted from call data:`, {
-            vac_id,
+            rims_id,
             pkg_code2,
             customAnalysis: Object.keys(customAnalysis),
             collectedVars: Object.keys(collectedVars),
@@ -830,11 +828,11 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
         });
 
         // STEP 3: Verify required fields are present
-        if (!vac_id || !pkg_code2) {
+        if (!rims_id || !pkg_code2) {
             return res.status(400).json({
                 success: false,
-                error: 'Customer verification failed',
-                message: 'Cannot create memo: Missing required fields (vac_id/RIMS_ID, pkg_code2) in call data',
+                error: 'Missing required fields',
+                message: 'Cannot create memo: RIMS_ID and pkg_code2 must be in call data',
                 call_id: call_id,
                 phone_number: callData.from_number,
                 available_data: {
@@ -842,7 +840,7 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
                     collected_variables: Object.keys(collectedVars),
                     retell_variables: Object.keys(retellVars)
                 },
-                note: 'Memos require vac_id (RIMS_ID) and pkg_code2 to be collected during the call'
+                note: 'RIMS_ID and pkg_code2 must be collected during the call'
             });
         }
 
@@ -864,7 +862,7 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
 
         // Extract customer name from call data if available
         const customerName = customAnalysis.customer_name || collectedVars.customer_name ||
-                           `RIMS ID: ${vac_id}`;
+                           `RIMS ID: ${rims_id}`;
 
         // Build memo details
         let memoDetails = `--- RETELL AI CALL SUMMARY ---\n`;
@@ -872,7 +870,7 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
         memoDetails += `Date: ${callDate}\n`;
         memoDetails += `Duration: ${callDuration} seconds\n`;
         memoDetails += `From: ${callData.from_number || 'Unknown'}\n`;
-        memoDetails += `RIMS ID: ${vac_id}\n`;
+        memoDetails += `RIMS ID: ${rims_id}\n`;
         memoDetails += `Certificate: ${pkg_code2}\n`;
         if (customerName && !customerName.startsWith('RIMS ID:')) {
             memoDetails += `Customer: ${customerName}\n`;
@@ -912,7 +910,7 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
         const memo = {
             memo_type: finalMemoType,
             details: memoDetails,
-            vac_id: vac_id,
+            vac_id: rims_id,  // Use RIMS_ID in the vac_id field
             phone_number: callData.from_number || '',
             created_date: callDate,
             created_by: `AI Agent (Retell Call ${call_id})`
@@ -934,16 +932,11 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             message: 'Memo created successfully from Retell call',
             memo_id: memoId,
             call_id: call_id,
-            customer_found: true,
-            customer_info: {
-                vac_id: customer.vac_id,
-                name: `${customer.first_name} ${customer.last_name}`,
-                phone: customer.phn1,
-                certificate: customer.pkg_code2
-            },
             memo: {
                 memo_type: finalMemoType,
-                vac_id: vac_id,
+                rims_id: rims_id,
+                pkg_code2: pkg_code2,
+                customer_name: customerName,
                 created_date: callDate,
                 call_duration_seconds: callDuration,
                 call_sentiment: sentiment,
@@ -1020,29 +1013,28 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 // Get full call details
                 const callData = await getRetellCall(call.call_id);
 
-                // Extract vac_id (RIMS_ID) and pkg_code2 from the call data itself
+                // Extract RIMS_ID and pkg_code2 from the call data
                 const customAnalysis = callData.custom_analysis_data || {};
                 const collectedVars = callData.collected_dynamic_variables || {};
                 const retellVars = callData.retell_llm_dynamic_variables || {};
 
-                // Try to find vac_id and pkg_code2 from various sources in the call data
-                let vac_id = customAnalysis.rims_id || customAnalysis.vac_id ||
-                             collectedVars.rims_id || collectedVars.vac_id ||
-                             retellVars.rims_id || retellVars.vac_id ||
-                             customAnalysis.RIMS_ID || customAnalysis.VAC_ID;
+                // Extract RIMS_ID from the call data (NOT vac_id)
+                const rims_id = customAnalysis.rims_id || customAnalysis.RIMS_ID ||
+                                collectedVars.rims_id || collectedVars.RIMS_ID ||
+                                retellVars.rims_id || retellVars.RIMS_ID;
 
-                let pkg_code2 = customAnalysis.pkg_code2 || customAnalysis.certificate ||
-                                collectedVars.pkg_code2 || collectedVars.certificate ||
-                                retellVars.pkg_code2 || retellVars.certificate ||
-                                customAnalysis.PKG_CODE2;
+                const pkg_code2 = customAnalysis.pkg_code2 || customAnalysis.certificate ||
+                                  collectedVars.pkg_code2 || collectedVars.certificate ||
+                                  retellVars.pkg_code2 || retellVars.certificate ||
+                                  customAnalysis.PKG_CODE2;
 
                 // SKIP if missing required fields from call data
-                if (!vac_id || !pkg_code2) {
-                    console.log(`⚠ Skipping call ${call.call_id} - Missing vac_id or pkg_code2 in call data`);
+                if (!rims_id || !pkg_code2) {
+                    console.log(`⚠ Skipping call ${call.call_id} - Missing RIMS_ID or pkg_code2 in call data`);
                     results.results.push({
                         call_id: call.call_id,
                         status: 'skipped',
-                        reason: 'Missing required fields (vac_id/RIMS_ID, pkg_code2) in call data',
+                        reason: 'Missing required fields (RIMS_ID, pkg_code2) in call data',
                         phone: callData.from_number,
                         available_data: {
                             custom_analysis: Object.keys(customAnalysis),
@@ -1067,7 +1059,7 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                     `Date: ${callDate}\n` +
                     `Duration: ${callDuration}s\n` +
                     `From: ${callData.from_number || 'Unknown'}\n` +
-                    `RIMS ID: ${vac_id}\n` +
+                    `RIMS ID: ${rims_id}\n` +
                     `Certificate: ${pkg_code2}\n`;
 
                 if (customerName) {
@@ -1080,7 +1072,7 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 const memo = {
                     memo_type: 'AI Call Log (Batch)',
                     details: memoDetails,
-                    vac_id: vac_id,
+                    vac_id: rims_id,  // Use RIMS_ID in the vac_id field
                     phone_number: callData.from_number || '',
                     created_date: callDate,
                     created_by: `AI Agent (Batch Import)`
@@ -1098,9 +1090,9 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 results.results.push({
                     call_id: call.call_id,
                     status: 'success',
-                    vac_id: vac_id,
+                    rims_id: rims_id,
                     pkg_code2: pkg_code2,
-                    customer_name: customerName || `RIMS ID: ${vac_id}`
+                    customer_name: customerName || `RIMS ID: ${rims_id}`
                 });
 
             } catch (error) {
