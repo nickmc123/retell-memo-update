@@ -827,44 +827,65 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             retellVars: Object.keys(retellVars)
         });
 
-        // STEP 3: Verify required fields are present
-        if (!vac_id || !pkg_code2) {
-            return res.status(400).json({
-                success: false,
-                error: 'Missing required fields',
-                message: 'Cannot create memo: vac_id and pkg_code2 must be in call data',
-                call_id: call_id,
-                phone_number: callData.from_number,
-                available_data: {
-                    custom_analysis: Object.keys(customAnalysis),
-                    collected_variables: Object.keys(collectedVars),
-                    retell_variables: Object.keys(retellVars)
-                },
-                note: 'vac_id and pkg_code2 must be collected during the call'
-            });
-        }
-
-        // STEP 4: Look up customer in RIMS_DATA using vac_id AND pkg_code2 to get RIMS_ID
+        // STEP 3: Look up customer in RIMS_DATA
         let customer = null;
         let rims_id = null;
+        let lookupMethod = '';
 
-        if (USE_MOCK_DATA) {
-            customer = MOCK_RIMS_DATA.find(c => c.vac_id === vac_id && c.pkg_code2 === pkg_code2);
-        } else {
-            const whereClause = `vac_id='${vac_id}' AND pkg_code2='${pkg_code2}'`;
-            console.log(`🔍 Looking up customer in RIMS_DATA: ${whereClause}`);
-            const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
-            customer = results.length > 0 ? results[0] : null;
+        // Try method 1: vac_id + pkg_code2
+        if (vac_id && pkg_code2) {
+            if (USE_MOCK_DATA) {
+                customer = MOCK_RIMS_DATA.find(c => c.vac_id === vac_id && c.pkg_code2 === pkg_code2);
+            } else {
+                const whereClause = `vac_id='${vac_id}' AND pkg_code2='${pkg_code2}'`;
+                console.log(`🔍 Looking up customer: ${whereClause}`);
+                const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+                customer = results.length > 0 ? results[0] : null;
+            }
+            lookupMethod = 'vac_id + pkg_code2';
         }
 
+        // Method 2: Phone number (only if unique match)
+        if (!customer && callData.from_number) {
+            const fromNumber = normalizePhone(callData.from_number);
+
+            if (USE_MOCK_DATA) {
+                const matches = MOCK_RIMS_DATA.filter(c =>
+                    normalizePhone(c.phn1) === fromNumber || normalizePhone(c.phn2) === fromNumber
+                );
+                if (matches.length === 1) {
+                    customer = matches[0];
+                    lookupMethod = 'unique phone match';
+                } else if (matches.length > 1) {
+                    console.log(`⚠ Multiple customers found for phone ${fromNumber}, skipping`);
+                }
+            } else {
+                const whereClause = `phn1='${fromNumber}' OR phn2='${fromNumber}'`;
+                console.log(`🔍 Trying phone lookup: ${whereClause}`);
+                const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+
+                if (results.length === 1) {
+                    customer = results[0];
+                    lookupMethod = 'unique phone match';
+                    console.log(`✅ Found unique customer by phone`);
+                } else if (results.length > 1) {
+                    console.log(`⚠ Found ${results.length} customers for phone ${fromNumber}, skipping (not unique)`);
+                } else {
+                    console.log(`❌ No customer found for phone ${fromNumber}`);
+                }
+            }
+        }
+
+        // If no customer found by either method, return error
         if (!customer) {
             return res.status(400).json({
                 success: false,
                 error: 'Customer not found',
-                message: `No customer found in RIMS_DATA with vac_id: ${vac_id} AND pkg_code2: ${pkg_code2}`,
+                message: 'No unique customer found by vac_id+pkg_code2 or phone number',
                 call_id: call_id,
-                vac_id: vac_id,
-                pkg_code2: pkg_code2
+                phone_number: callData.from_number,
+                vac_id: vac_id || null,
+                pkg_code2: pkg_code2 || null
             });
         }
 
@@ -940,9 +961,10 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             message: 'Memo created successfully from Retell call',
             memo_id: memoId,
             call_id: call_id,
+            lookup_method: lookupMethod,
             memo: {
                 rims_id: rims_id,
-                pkg_code2: pkg_code2,
+                pkg_code2: customer.pkg_code2,
                 memo_text: memoText,
                 datetime: formattedDateTime
             }
@@ -1032,42 +1054,56 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                                   retellVars.pkg_code2 || retellVars.certificate ||
                                   customAnalysis.PKG_CODE2;
 
-                // SKIP if missing required fields from call data
-                if (!vac_id || !pkg_code2) {
-                    console.log(`⚠ Skipping call ${call.call_id} - Missing vac_id or pkg_code2 in call data`);
-                    results.results.push({
-                        call_id: call.call_id,
-                        status: 'skipped',
-                        reason: 'Missing required fields (vac_id, pkg_code2) in call data',
-                        phone: callData.from_number,
-                        available_data: {
-                            custom_analysis: Object.keys(customAnalysis),
-                            collected_variables: Object.keys(collectedVars)
-                        }
-                    });
-                    continue;
-                }
-
-                // Look up customer in RIMS_DATA using vac_id AND pkg_code2 to get RIMS_ID
+                // Look up customer in RIMS_DATA
                 let customer = null;
                 let rims_id = null;
+                let lookupMethod = '';
 
-                if (USE_MOCK_DATA) {
-                    customer = MOCK_RIMS_DATA.find(c => c.vac_id === vac_id && c.pkg_code2 === pkg_code2);
-                } else {
-                    const whereClause = `vac_id='${vac_id}' AND pkg_code2='${pkg_code2}'`;
-                    const dbResults = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
-                    customer = dbResults.length > 0 ? dbResults[0] : null;
+                // Try method 1: vac_id + pkg_code2
+                if (vac_id && pkg_code2) {
+                    if (USE_MOCK_DATA) {
+                        customer = MOCK_RIMS_DATA.find(c => c.vac_id === vac_id && c.pkg_code2 === pkg_code2);
+                    } else {
+                        const whereClause = `vac_id='${vac_id}' AND pkg_code2='${pkg_code2}'`;
+                        const dbResults = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+                        customer = dbResults.length > 0 ? dbResults[0] : null;
+                    }
+                    lookupMethod = 'vac_id + pkg_code2';
                 }
 
+                // Method 2: Phone number (only if unique match)
+                if (!customer && callData.from_number) {
+                    const fromNumber = normalizePhone(callData.from_number);
+
+                    if (USE_MOCK_DATA) {
+                        const matches = MOCK_RIMS_DATA.filter(c =>
+                            normalizePhone(c.phn1) === fromNumber || normalizePhone(c.phn2) === fromNumber
+                        );
+                        if (matches.length === 1) {
+                            customer = matches[0];
+                            lookupMethod = 'unique phone match';
+                        }
+                    } else {
+                        const whereClause = `phn1='${fromNumber}' OR phn2='${fromNumber}'`;
+                        const dbResults = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
+
+                        if (dbResults.length === 1) {
+                            customer = dbResults[0];
+                            lookupMethod = 'unique phone match';
+                        } else if (dbResults.length > 1) {
+                            console.log(`⚠ Skipping call ${call.call_id} - Multiple customers for phone ${fromNumber}`);
+                        }
+                    }
+                }
+
+                // Skip if no customer found by either method
                 if (!customer) {
-                    console.log(`⚠ Skipping call ${call.call_id} - Customer not found with vac_id: ${vac_id} AND pkg_code2: ${pkg_code2}`);
+                    console.log(`⚠ Skipping call ${call.call_id} - No unique customer found`);
                     results.results.push({
                         call_id: call.call_id,
                         status: 'skipped',
-                        reason: 'Customer not found in RIMS_DATA',
-                        vac_id: vac_id,
-                        pkg_code2: pkg_code2
+                        reason: 'No unique customer found by vac_id+pkg_code2 or phone',
+                        phone: callData.from_number
                     });
                     continue;
                 }
@@ -1080,9 +1116,7 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                     results.results.push({
                         call_id: call.call_id,
                         status: 'skipped',
-                        reason: 'Customer record does not have RIMS_ID field',
-                        vac_id: vac_id,
-                        pkg_code2: pkg_code2
+                        reason: 'Customer record does not have RIMS_ID field'
                     });
                     continue;
                 }
@@ -1123,8 +1157,9 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 results.results.push({
                     call_id: call.call_id,
                     status: 'success',
+                    lookup_method: lookupMethod,
                     rims_id: rims_id,
-                    pkg_code2: pkg_code2
+                    pkg_code2: customer.pkg_code2
                 });
 
             } catch (error) {
