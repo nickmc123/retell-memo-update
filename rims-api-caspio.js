@@ -819,7 +819,19 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             }
         }
 
-        // STEP 3: Build memo details from call data
+        // STEP 3: Verify customer has required fields
+        if (!customer || !vac_id || !customer.pkg_code2) {
+            return res.status(400).json({
+                success: false,
+                error: 'Customer verification failed',
+                message: 'Cannot create memo: Customer not found or missing required fields (vac_id, pkg_code2)',
+                call_id: call_id,
+                phone_number: callData.from_number,
+                note: 'Memos can only be created for verified customers in RIMS_DATA with valid vac_id and pkg_code2'
+            });
+        }
+
+        // STEP 4: Build memo details from call data
         const callAnalysis = callData.call_analysis || {};
         const transcript = callData.transcript || '';
         const customAnalysis = callData.custom_analysis_data || {};
@@ -842,6 +854,8 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
         memoDetails += `Date: ${callDate}\n`;
         memoDetails += `Duration: ${callDuration} seconds\n`;
         memoDetails += `From: ${callData.from_number || 'Unknown'}\n`;
+        memoDetails += `Customer: ${customer.first_name} ${customer.last_name}\n`;
+        memoDetails += `Certificate: ${customer.pkg_code2}\n`;
         memoDetails += `Sentiment: ${sentiment}\n`;
         if (callSuccessful !== null) {
             memoDetails += `Call Successful: ${callSuccessful ? 'Yes' : 'No'}\n`;
@@ -873,11 +887,11 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             }
         }
 
-        // STEP 4: Create memo in Caspio
+        // STEP 5: Create memo in Caspio
         const memo = {
             memo_type: finalMemoType,
             details: memoDetails,
-            vac_id: vac_id || 'UNKNOWN',
+            vac_id: vac_id,
             phone_number: callData.from_number || '',
             created_date: callDate,
             created_by: `AI Agent (Retell Call ${call_id})`
@@ -893,21 +907,22 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             memoId = result.id || Date.now();
         }
 
-        // STEP 5: Return success response
+        // STEP 6: Return success response
         res.json({
             success: true,
             message: 'Memo created successfully from Retell call',
             memo_id: memoId,
             call_id: call_id,
-            customer_found: !!customer,
-            customer_info: customer ? {
+            customer_found: true,
+            customer_info: {
                 vac_id: customer.vac_id,
                 name: `${customer.first_name} ${customer.last_name}`,
-                phone: customer.phn1
-            } : null,
+                phone: customer.phn1,
+                certificate: customer.pkg_code2
+            },
             memo: {
                 memo_type: finalMemoType,
-                vac_id: vac_id || 'UNKNOWN',
+                vac_id: vac_id,
                 created_date: callDate,
                 call_duration_seconds: callDuration,
                 call_sentiment: sentiment,
@@ -1005,7 +1020,19 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                     }
                 }
 
-                // Build memo
+                // SKIP if customer not found - must have verified vac_id and pkg_code2
+                if (!customer || !vac_id || !customer.pkg_code2) {
+                    console.log(`⚠ Skipping call ${call.call_id} - Customer not found or missing pkg_code2`);
+                    results.results.push({
+                        call_id: call.call_id,
+                        status: 'skipped',
+                        reason: 'Customer not found or missing required fields (vac_id, pkg_code2)',
+                        phone: callData.from_number
+                    });
+                    continue;
+                }
+
+                // Build memo - only for verified customers
                 const callAnalysis = callData.call_analysis || {};
                 const callDate = callData.start_timestamp
                     ? new Date(callData.start_timestamp).toISOString().split('T')[0]
@@ -1017,12 +1044,15 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                     `Date: ${callDate}\n` +
                     `Duration: ${callDuration}s\n` +
                     `From: ${callData.from_number || 'Unknown'}\n` +
+                    `Customer: ${customer.first_name} ${customer.last_name}\n` +
+                    `Certificate: ${customer.pkg_code2}\n` +
+                    `Sentiment: ${callAnalysis.call_sentiment || 'Unknown'}\n` +
                     `Summary: ${callAnalysis.call_summary || 'N/A'}`;
 
                 const memo = {
                     memo_type: 'AI Call Log (Batch)',
                     details: memoDetails,
-                    vac_id: vac_id || 'UNKNOWN',
+                    vac_id: vac_id,
                     phone_number: callData.from_number || '',
                     created_date: callDate,
                     created_by: `AI Agent (Batch Import)`
@@ -1040,8 +1070,10 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 results.results.push({
                     call_id: call.call_id,
                     status: 'success',
-                    customer_found: !!customer,
-                    vac_id: vac_id || 'UNKNOWN'
+                    customer_found: true,
+                    vac_id: vac_id,
+                    pkg_code2: customer.pkg_code2,
+                    customer_name: `${customer.first_name} ${customer.last_name}`
                 });
 
             } catch (error) {
