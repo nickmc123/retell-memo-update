@@ -946,14 +946,12 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             }
         }
 
-        // STEP 5: Create memo in Caspio
+        // STEP 5: Create memo in Caspio with correct field names
         const memo = {
-            memo_type: finalMemoType,
-            details: memoDetails,
-            vac_id: rims_id,  // Store RIMS_ID in vac_id field
-            phone_number: callData.from_number || '',
-            created_date: callDate,
-            created_by: `AI Agent (Retell Call ${call_id})`
+            rims_id: rims_id,
+            rims_memos: memoDetails,
+            tm: 'AI',
+            dt: new Date(callData.start_timestamp).toISOString()
         };
 
         let memoId;
@@ -1149,12 +1147,10 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                     `Summary: ${callAnalysis.call_summary || 'N/A'}`;
 
                 const memo = {
-                    memo_type: 'AI Call Log (Batch)',
-                    details: memoDetails,
-                    vac_id: rims_id,  // Store RIMS_ID in vac_id field
-                    phone_number: callData.from_number || '',
-                    created_date: callDate,
-                    created_by: `AI Agent (Batch Import)`
+                    rims_id: rims_id,
+                    rims_memos: memoDetails,
+                    tm: 'AI',
+                    dt: new Date(callData.start_timestamp).toISOString()
                 };
 
                 // Insert memo
