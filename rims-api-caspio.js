@@ -306,7 +306,15 @@ function daysBetween(date1, date2) {
 }
 
 function normalizePhone(phone) {
-    return phone.replace(/\D/g, '');
+    // Remove all non-digits
+    let normalized = phone.replace(/\D/g, '');
+
+    // Remove leading 1 for US numbers (11 digits starting with 1)
+    if (normalized.length === 11 && normalized.startsWith('1')) {
+        normalized = normalized.substring(1);
+    }
+
+    return normalized;
 }
 
 function isDateBlank(dateStr) {
