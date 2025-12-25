@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["nodejs_18"]
+
+[phases.install]
+cmds = ["cd Integration-Implementation/integration-implementation && npm install"]
+
+[start]
+cmd = "cd Integration-Implementation/integration-implementation && npm start"
