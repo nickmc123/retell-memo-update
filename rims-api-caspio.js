@@ -900,58 +900,28 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             ? callAnalysis.call_successful
             : null;
 
-        // Extract customer name from call data if available
-        const customerName = customAnalysis.customer_name || collectedVars.customer_name ||
-                           `RIMS ID: ${rims_id}`;
+        // Build simple memo text (like existing format)
+        let memoText = callSummary || 'AI CALL SUMMARY NOT AVAILABLE';
 
-        // Build memo details
-        let memoDetails = `--- RETELL AI CALL SUMMARY ---\n`;
-        memoDetails += `Call ID: ${call_id}\n`;
-        memoDetails += `Date: ${callDate}\n`;
-        memoDetails += `Duration: ${callDuration} seconds\n`;
-        memoDetails += `From: ${callData.from_number || 'Unknown'}\n`;
-        memoDetails += `RIMS ID: ${rims_id}\n`;
-        memoDetails += `Certificate: ${pkg_code2}\n`;
-        if (customerName && !customerName.startsWith('RIMS ID:')) {
-            memoDetails += `Customer: ${customerName}\n`;
-        }
-        memoDetails += `Sentiment: ${sentiment}\n`;
-        if (callSuccessful !== null) {
-            memoDetails += `Call Successful: ${callSuccessful ? 'Yes' : 'No'}\n`;
-        }
-        memoDetails += `\n--- SUMMARY ---\n${callSummary}\n`;
+        // Clean up the text - remove special characters, keep only periods
+        memoText = memoText.replace(/[^\w\s.]/g, '').toUpperCase();
 
-        // Add custom analysis data if available
-        if (Object.keys(customAnalysis).length > 0) {
-            memoDetails += `\n--- CUSTOM ANALYSIS ---\n`;
-            for (const [key, value] of Object.entries(customAnalysis)) {
-                memoDetails += `${key}: ${JSON.stringify(value)}\n`;
-            }
-        }
-
-        // Add transcript if requested
-        if (include_transcript && transcript) {
-            memoDetails += `\n--- TRANSCRIPT ---\n${transcript}`;
-        }
-
-        // Determine memo type
-        let finalMemoType = memo_type || 'AI Call Log';
-
-        // Auto-categorize based on analysis
-        if (!memo_type && callAnalysis.call_sentiment) {
-            if (callAnalysis.call_sentiment === 'Negative') {
-                finalMemoType = 'AI Call - Issue Reported';
-            } else if (callAnalysis.call_successful === false) {
-                finalMemoType = 'AI Call - Unsuccessful';
-            }
-        }
+        // Format datetime as MM/DD/YYYY HH:MM:SS
+        const callDateTime = new Date(callData.start_timestamp);
+        const month = String(callDateTime.getMonth() + 1).padStart(2, '0');
+        const day = String(callDateTime.getDate()).padStart(2, '0');
+        const year = callDateTime.getFullYear();
+        const hours = String(callDateTime.getHours()).padStart(2, '0');
+        const minutes = String(callDateTime.getMinutes()).padStart(2, '0');
+        const seconds = String(callDateTime.getSeconds()).padStart(2, '0');
+        const formattedDateTime = `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 
         // STEP 5: Create memo in Caspio with correct field names
         const memo = {
             rims_id: rims_id,
-            rims_memos: memoDetails,
+            rims_memos: memoText,
             tm: 'AI',
-            dt: new Date(callData.start_timestamp).toISOString()
+            dt: formattedDateTime
         };
 
         let memoId;
@@ -971,14 +941,10 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             memo_id: memoId,
             call_id: call_id,
             memo: {
-                memo_type: finalMemoType,
                 rims_id: rims_id,
                 pkg_code2: pkg_code2,
-                customer_name: customerName,
-                created_date: callDate,
-                call_duration_seconds: callDuration,
-                call_sentiment: sentiment,
-                call_successful: callSuccessful
+                memo_text: memoText,
+                datetime: formattedDateTime
             }
         });
 
@@ -1121,36 +1087,28 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                     continue;
                 }
 
-                // Build memo with call data
+                // Build simple memo text (like existing format)
                 const callAnalysis = callData.call_analysis || {};
-                const callDate = callData.start_timestamp
-                    ? new Date(callData.start_timestamp).toISOString().split('T')[0]
-                    : new Date().toISOString().split('T')[0];
-                const callDuration = callData.duration_ms ? Math.round(callData.duration_ms / 1000) : 0;
+                const callSummary = callAnalysis.call_summary || 'AI CALL SUMMARY NOT AVAILABLE';
 
-                // Extract customer name from call data if available
-                const customerName = customAnalysis.customer_name || collectedVars.customer_name || null;
+                // Clean up the text - remove special characters, keep only periods
+                let memoText = callSummary.replace(/[^\w\s.]/g, '').toUpperCase();
 
-                let memoDetails = `--- RETELL AI CALL ---\n` +
-                    `Call ID: ${call.call_id}\n` +
-                    `Date: ${callDate}\n` +
-                    `Duration: ${callDuration}s\n` +
-                    `From: ${callData.from_number || 'Unknown'}\n` +
-                    `RIMS ID: ${rims_id}\n` +
-                    `Certificate: ${pkg_code2}\n`;
-
-                if (customerName) {
-                    memoDetails += `Customer: ${customerName}\n`;
-                }
-
-                memoDetails += `Sentiment: ${callAnalysis.call_sentiment || 'Unknown'}\n` +
-                    `Summary: ${callAnalysis.call_summary || 'N/A'}`;
+                // Format datetime as MM/DD/YYYY HH:MM:SS
+                const callDateTime = new Date(callData.start_timestamp);
+                const month = String(callDateTime.getMonth() + 1).padStart(2, '0');
+                const day = String(callDateTime.getDate()).padStart(2, '0');
+                const year = callDateTime.getFullYear();
+                const hours = String(callDateTime.getHours()).padStart(2, '0');
+                const minutes = String(callDateTime.getMinutes()).padStart(2, '0');
+                const seconds = String(callDateTime.getSeconds()).padStart(2, '0');
+                const formattedDateTime = `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 
                 const memo = {
                     rims_id: rims_id,
-                    rims_memos: memoDetails,
+                    rims_memos: memoText,
                     tm: 'AI',
-                    dt: new Date(callData.start_timestamp).toISOString()
+                    dt: formattedDateTime
                 };
 
                 // Insert memo
@@ -1166,8 +1124,7 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                     call_id: call.call_id,
                     status: 'success',
                     rims_id: rims_id,
-                    pkg_code2: pkg_code2,
-                    customer_name: customerName || `RIMS ID: ${rims_id}`
+                    pkg_code2: pkg_code2
                 });
 
             } catch (error) {
