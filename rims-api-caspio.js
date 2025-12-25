@@ -804,45 +804,51 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
         console.log(`📞 Fetching call ${call_id} from Retell AI...`);
         const callData = await getRetellCall(call_id);
 
-        // STEP 2: Extract customer information from call
-        const fromNumber = normalizePhone(callData.from_number || '');
+        // STEP 2: Extract customer information from call data
+        // Extract vac_id (RIMS_ID) and pkg_code2 from the call data itself
+        const customAnalysis = callData.custom_analysis_data || {};
+        const collectedVars = callData.collected_dynamic_variables || {};
+        const retellVars = callData.retell_llm_dynamic_variables || {};
 
-        // Try to find customer in RIMS by phone number
-        let customer = null;
-        let vac_id = null;
+        // Try to find vac_id and pkg_code2 from various sources in the call data
+        let vac_id = customAnalysis.rims_id || customAnalysis.vac_id ||
+                     collectedVars.rims_id || collectedVars.vac_id ||
+                     retellVars.rims_id || retellVars.vac_id ||
+                     customAnalysis.RIMS_ID || customAnalysis.VAC_ID;
 
-        if (fromNumber) {
-            if (USE_MOCK_DATA) {
-                customer = MOCK_RIMS_DATA.find(c =>
-                    normalizePhone(c.phn1) === fromNumber || normalizePhone(c.phn2) === fromNumber
-                );
-            } else {
-                const whereClause = `phn1='${fromNumber}' OR phn2='${fromNumber}'`;
-                const results = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
-                customer = results.length > 0 ? results[0] : null;
-            }
+        let pkg_code2 = customAnalysis.pkg_code2 || customAnalysis.certificate ||
+                        collectedVars.pkg_code2 || collectedVars.certificate ||
+                        retellVars.pkg_code2 || retellVars.certificate ||
+                        customAnalysis.PKG_CODE2;
 
-            if (customer) {
-                vac_id = customer.vac_id;
-            }
-        }
+        console.log(`📋 Extracted from call data:`, {
+            vac_id,
+            pkg_code2,
+            customAnalysis: Object.keys(customAnalysis),
+            collectedVars: Object.keys(collectedVars),
+            retellVars: Object.keys(retellVars)
+        });
 
-        // STEP 3: Verify customer has required fields
-        if (!customer || !vac_id || !customer.pkg_code2) {
+        // STEP 3: Verify required fields are present
+        if (!vac_id || !pkg_code2) {
             return res.status(400).json({
                 success: false,
                 error: 'Customer verification failed',
-                message: 'Cannot create memo: Customer not found or missing required fields (vac_id, pkg_code2)',
+                message: 'Cannot create memo: Missing required fields (vac_id/RIMS_ID, pkg_code2) in call data',
                 call_id: call_id,
                 phone_number: callData.from_number,
-                note: 'Memos can only be created for verified customers in RIMS_DATA with valid vac_id and pkg_code2'
+                available_data: {
+                    custom_analysis: Object.keys(customAnalysis),
+                    collected_variables: Object.keys(collectedVars),
+                    retell_variables: Object.keys(retellVars)
+                },
+                note: 'Memos require vac_id (RIMS_ID) and pkg_code2 to be collected during the call'
             });
         }
 
         // STEP 4: Build memo details from call data
         const callAnalysis = callData.call_analysis || {};
         const transcript = callData.transcript || '';
-        const customAnalysis = callData.custom_analysis_data || {};
 
         // Extract key information
         const callDuration = callData.duration_ms ? Math.round(callData.duration_ms / 1000) : 0;
@@ -856,14 +862,21 @@ app.post('/api/memos/from-retell-call', asyncHandler(async (req, res) => {
             ? callAnalysis.call_successful
             : null;
 
+        // Extract customer name from call data if available
+        const customerName = customAnalysis.customer_name || collectedVars.customer_name ||
+                           `RIMS ID: ${vac_id}`;
+
         // Build memo details
         let memoDetails = `--- RETELL AI CALL SUMMARY ---\n`;
         memoDetails += `Call ID: ${call_id}\n`;
         memoDetails += `Date: ${callDate}\n`;
         memoDetails += `Duration: ${callDuration} seconds\n`;
         memoDetails += `From: ${callData.from_number || 'Unknown'}\n`;
-        memoDetails += `Customer: ${customer.first_name} ${customer.last_name}\n`;
-        memoDetails += `Certificate: ${customer.pkg_code2}\n`;
+        memoDetails += `RIMS ID: ${vac_id}\n`;
+        memoDetails += `Certificate: ${pkg_code2}\n`;
+        if (customerName && !customerName.startsWith('RIMS ID:')) {
+            memoDetails += `Customer: ${customerName}\n`;
+        }
         memoDetails += `Sentiment: ${sentiment}\n`;
         if (callSuccessful !== null) {
             memoDetails += `Call Successful: ${callSuccessful ? 'Yes' : 'No'}\n`;
@@ -1007,54 +1020,61 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 // Get full call details
                 const callData = await getRetellCall(call.call_id);
 
-                // Find customer by phone
-                const fromNumber = normalizePhone(callData.from_number || '');
-                let customer = null;
-                let vac_id = null;
+                // Extract vac_id (RIMS_ID) and pkg_code2 from the call data itself
+                const customAnalysis = callData.custom_analysis_data || {};
+                const collectedVars = callData.collected_dynamic_variables || {};
+                const retellVars = callData.retell_llm_dynamic_variables || {};
 
-                if (fromNumber) {
-                    if (USE_MOCK_DATA) {
-                        customer = MOCK_RIMS_DATA.find(c =>
-                            normalizePhone(c.phn1) === fromNumber || normalizePhone(c.phn2) === fromNumber
-                        );
-                    } else {
-                        const whereClause = `phn1='${fromNumber}' OR phn2='${fromNumber}'`;
-                        const dbResults = await queryCaspioTable(CASPIO_CONFIG.tables.rims_data, whereClause);
-                        customer = dbResults.length > 0 ? dbResults[0] : null;
-                    }
+                // Try to find vac_id and pkg_code2 from various sources in the call data
+                let vac_id = customAnalysis.rims_id || customAnalysis.vac_id ||
+                             collectedVars.rims_id || collectedVars.vac_id ||
+                             retellVars.rims_id || retellVars.vac_id ||
+                             customAnalysis.RIMS_ID || customAnalysis.VAC_ID;
 
-                    if (customer) {
-                        vac_id = customer.vac_id;
-                    }
-                }
+                let pkg_code2 = customAnalysis.pkg_code2 || customAnalysis.certificate ||
+                                collectedVars.pkg_code2 || collectedVars.certificate ||
+                                retellVars.pkg_code2 || retellVars.certificate ||
+                                customAnalysis.PKG_CODE2;
 
-                // SKIP if customer not found - must have verified vac_id and pkg_code2
-                if (!customer || !vac_id || !customer.pkg_code2) {
-                    console.log(`⚠ Skipping call ${call.call_id} - Customer not found or missing pkg_code2`);
+                // SKIP if missing required fields from call data
+                if (!vac_id || !pkg_code2) {
+                    console.log(`⚠ Skipping call ${call.call_id} - Missing vac_id or pkg_code2 in call data`);
                     results.results.push({
                         call_id: call.call_id,
                         status: 'skipped',
-                        reason: 'Customer not found or missing required fields (vac_id, pkg_code2)',
-                        phone: callData.from_number
+                        reason: 'Missing required fields (vac_id/RIMS_ID, pkg_code2) in call data',
+                        phone: callData.from_number,
+                        available_data: {
+                            custom_analysis: Object.keys(customAnalysis),
+                            collected_variables: Object.keys(collectedVars)
+                        }
                     });
                     continue;
                 }
 
-                // Build memo - only for verified customers
+                // Build memo with call data
                 const callAnalysis = callData.call_analysis || {};
                 const callDate = callData.start_timestamp
                     ? new Date(callData.start_timestamp).toISOString().split('T')[0]
                     : new Date().toISOString().split('T')[0];
                 const callDuration = callData.duration_ms ? Math.round(callData.duration_ms / 1000) : 0;
 
-                const memoDetails = `--- RETELL AI CALL ---\n` +
+                // Extract customer name from call data if available
+                const customerName = customAnalysis.customer_name || collectedVars.customer_name || null;
+
+                let memoDetails = `--- RETELL AI CALL ---\n` +
                     `Call ID: ${call.call_id}\n` +
                     `Date: ${callDate}\n` +
                     `Duration: ${callDuration}s\n` +
                     `From: ${callData.from_number || 'Unknown'}\n` +
-                    `Customer: ${customer.first_name} ${customer.last_name}\n` +
-                    `Certificate: ${customer.pkg_code2}\n` +
-                    `Sentiment: ${callAnalysis.call_sentiment || 'Unknown'}\n` +
+                    `RIMS ID: ${vac_id}\n` +
+                    `Certificate: ${pkg_code2}\n`;
+
+                if (customerName) {
+                    memoDetails += `Customer: ${customerName}\n`;
+                }
+
+                memoDetails += `Sentiment: ${callAnalysis.call_sentiment || 'Unknown'}\n` +
                     `Summary: ${callAnalysis.call_summary || 'N/A'}`;
 
                 const memo = {
@@ -1078,10 +1098,9 @@ app.post('/api/memos/batch-from-retell', asyncHandler(async (req, res) => {
                 results.results.push({
                     call_id: call.call_id,
                     status: 'success',
-                    customer_found: true,
                     vac_id: vac_id,
-                    pkg_code2: customer.pkg_code2,
-                    customer_name: `${customer.first_name} ${customer.last_name}`
+                    pkg_code2: pkg_code2,
+                    customer_name: customerName || `RIMS ID: ${vac_id}`
                 });
 
             } catch (error) {
