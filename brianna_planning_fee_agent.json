@@ -1,0 +1,128 @@
+{
+  "agent_name": "Brianna - Travel Planning Concierge (TCPA Compliant)",
+  "conversation_flow_id": "conversation_flow_c58b131ffc40",
+
+  "response_engine": {
+    "type": "conversation-flow",
+    "conversation_flow_id": "conversation_flow_c58b131ffc40"
+  },
+
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2_5",
+
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.8,
+  "backchannel_words": ["yeah", "uh-huh", "mm-hmm", "okay", "I see", "got it"],
+
+  "denoising_mode": "noise-and-background-speech-cancellation",
+  "normalize_for_speech": true,
+
+  "model_choice": {
+    "type": "cascading",
+    "model": "gpt-4.1"
+  },
+
+  "ambient_sound": "call-center",
+  "ambient_sound_volume": 0.80,
+  "interruption_sensitivity": 0.9,
+
+  "tools": [
+    {
+      "id": "tool-send-payment-sms",
+      "type": "custom",
+      "name": "Send Payment Link via SMS",
+      "description": "Send a Caspio-hosted Authorize.Net payment link to the customer via SMS for the $149 planning fee",
+      "url": "https://travelbucks-voice-ops-production.up.railway.app/webhooks/send-payment-sms",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "lead_id": {
+            "type": "string",
+            "description": "TravelBucks lead ID (e.g., tb263421)"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Customer's phone number in E.164 format (e.g., +14155551234)"
+          },
+          "customer_name": {
+            "type": "string",
+            "description": "Customer's full name"
+          },
+          "email": {
+            "type": "string",
+            "description": "Customer's email address"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Payment amount (always 149 for planning fee)"
+          }
+        },
+        "required": ["lead_id", "phone", "customer_name", "email", "amount"]
+      }
+    }
+  ],
+
+  "post_call_analysis_data": [
+    {
+      "name": "lead_id",
+      "type": "string",
+      "description": "Unique lead identifier"
+    },
+    {
+      "name": "destination",
+      "type": "string",
+      "description": "Where the traveler wants to go"
+    },
+    {
+      "name": "travel_dates",
+      "type": "string",
+      "description": "When they plan to travel"
+    },
+    {
+      "name": "travelers_count",
+      "type": "string",
+      "description": "Number of travelers"
+    },
+    {
+      "name": "budget_range",
+      "type": "string",
+      "description": "Budget per person"
+    },
+    {
+      "name": "special_occasion",
+      "type": "string",
+      "description": "Honeymoon, anniversary, etc."
+    },
+    {
+      "name": "planning_fee_offered",
+      "type": "boolean",
+      "description": "Was the $149 planning fee offered?"
+    },
+    {
+      "name": "planning_fee_accepted",
+      "type": "boolean",
+      "description": "Did they accept the planning fee?"
+    },
+    {
+      "name": "payment_link_sent",
+      "type": "boolean",
+      "description": "Was payment SMS sent?"
+    },
+    {
+      "name": "call_outcome",
+      "type": "enum",
+      "choices": ["payment_link_sent", "declined_fee", "transferred_to_human", "simple_referral", "callback_scheduled"],
+      "description": "Final outcome of the call"
+    },
+    {
+      "name": "lead_priority",
+      "type": "enum",
+      "choices": ["high", "medium", "low"],
+      "description": "Lead quality based on budget and complexity"
+    }
+  ]
+}
