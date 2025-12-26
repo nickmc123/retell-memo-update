@@ -111,6 +111,10 @@ const MOCK_KNOWLEDGE_BASE = {
     "E78": { total_deposit: 500, activation_method: "online" },
     "E789": { total_deposit: 500, activation_method: "online" },
 
+    // EVX packages (Las Vegas)
+    "EVX": { total_deposit: 50, activation_method: "online" },
+    "EVXV": { total_deposit: 50, activation_method: "online" },
+
     // BEACH packages
     "BEACH": { total_deposit: 750, activation_method: "online" },
     "BEACH1": { total_deposit: 750, activation_method: "online" },
@@ -1277,7 +1281,7 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
             });
         }
 
-        const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: 500 };
+        const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: null };
 
         return res.json({
             found: true,
@@ -1328,7 +1332,7 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
     }
 
     const customer = response[0];
-    const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: 500 };
+    const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: null };
 
     res.json({
         found: true,
