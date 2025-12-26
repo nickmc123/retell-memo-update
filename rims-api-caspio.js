@@ -117,6 +117,10 @@ const MOCK_KNOWLEDGE_BASE = {
     "E78": { total_deposit: 500, activation_method: "online" },
     "E789": { total_deposit: 500, activation_method: "online" },
 
+    // EVX packages (Las Vegas)
+    "EVX": { total_deposit: 50, activation_method: "online" },
+    "EVXV": { total_deposit: 50, activation_method: "online" },
+
     // BEACH packages
     "BEACH": { total_deposit: 750, activation_method: "online" },
     "BEACH1": { total_deposit: 750, activation_method: "online" },
@@ -1379,7 +1383,7 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
             });
         }
 
-        const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: 500 };
+        const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: null };
 
         return res.json({
             found: true,
@@ -1430,7 +1434,7 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
     }
 
     const customer = response[0];
-    const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: 500 };
+    const packageInfo = MOCK_KNOWLEDGE_BASE[customer.pkg_code] || { total_deposit: null };
 
     res.json({
         found: true,
@@ -1445,7 +1449,7 @@ app.get('/api/certificate/:certificate_number', asyncHandler(async (req, res) =>
                 last_name: customer.last_name || ''
             },
             deposit: {
-                required: packageInfo.total_deposit || 0,
+                required: packageInfo.total_deposit,
                 paid: (customer.conf_deposit || 0) >= (customer.val_dep || 0),
                 amount: customer.conf_deposit || 0,
                 date: null
@@ -1658,10 +1662,10 @@ app.get('/api/customer/status', asyncHandler(async (req, res) => {
         }
     }
 
-    const expected_deposit = kb_info ? kb_info.total_deposit : 500;
+    const expected_deposit = kb_info ? kb_info.total_deposit : null;
 
     let deposit_status;
-    if (total_paid >= expected_deposit) {
+    if (expected_deposit !== null && total_paid >= expected_deposit) {
         deposit_status = 'complete';
     } else if (total_paid > 0) {
         deposit_status = 'partial';
@@ -1727,18 +1731,26 @@ app.get('/api/customer/status', asyncHandler(async (req, res) => {
             agent_message = `Your deposits are complete! You can now schedule your travel dates. When would you like to travel?`;
         }
     } else if (deposit_status === 'partial') {
-        const remaining = expected_deposit - total_paid;
         overall_status = 'deposits_incomplete';
         recommended_action = 'collect_payment';
-        agent_message = `I see you've paid $${total_paid} toward your $${expected_deposit} deposit. You have $${remaining} remaining. Would you like to complete your payment today?`;
+        if (expected_deposit !== null) {
+            const remaining = expected_deposit - total_paid;
+            agent_message = `I see you've paid $${total_paid} toward your $${expected_deposit} deposit. You have $${remaining} remaining. Would you like to complete your payment today?`;
+        } else {
+            agent_message = `I see you've paid $${total_paid} toward your deposit. Please refer to your certificate for the total amount required. Would you like to complete your payment today?`;
+        }
     } else {
         overall_status = 'deposits_pending';
         recommended_action = 'collect_payment';
         const activation_method = kb_info ? kb_info.activation_method : 'online';
         if (activation_method === 'online') {
-            agent_message = `Your deposits haven't been received yet. You can activate your certificate online at our website. Would you like me to send you the link?`;
+            agent_message = `Your deposit hasn't been received yet. You can activate your certificate online at our website. Would you like me to send you the link?`;
         } else {
-            agent_message = `Your deposits haven't been received yet. Have you mailed in your activation form? The total deposit needed is $${expected_deposit}.`;
+            if (expected_deposit !== null) {
+                agent_message = `Your deposit hasn't been received yet. Have you mailed in your activation form? The total deposit needed is $${expected_deposit}.`;
+            } else {
+                agent_message = `Your deposit hasn't been received yet. Have you mailed in your activation form? The deposit amount is shown on your certificate.`;
+            }
         }
     }
 
@@ -1770,7 +1782,7 @@ app.get('/api/customer/status', asyncHandler(async (req, res) => {
             conf_deposit: conf_deposit,
             total_paid: total_paid,
             expected_deposit: expected_deposit,
-            remaining: Math.max(0, expected_deposit - total_paid),
+            remaining: expected_deposit !== null ? Math.max(0, expected_deposit - total_paid) : null,
             activation_method: kb_info ? kb_info.activation_method : 'online'
         },
         travel_rep: {
