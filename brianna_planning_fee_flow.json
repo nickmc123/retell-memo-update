@@ -1,0 +1,405 @@
+{
+  "name": "Brianna - Travel Planning Concierge",
+  "start_speaker": "agent",
+  "general_prompt": "You are a professional AI travel concierge for TravelBucks. Your role is to qualify travel leads, explain the custom trip planning service, and offer a $149 one-time planning fee when appropriate. You are warm, professional, and helpful. You do NOT collect payment information over the phone. You send secure payment links via SMS. You MUST disclose AI assistance within the first 10 seconds. You transfer high-intent or paid leads to human specialists immediately. If anyone requests a human at any time, comply immediately without hesitation.",
+  
+  "general_tools": [],
+  
+  "starting_node_id": "node-greeting-disclosure",
+  
+  "nodes": [
+    {
+      "id": "node-greeting-disclosure",
+      "type": "conversation",
+      "name": "Greeting + AI Disclosure",
+      "instruction": {
+        "type": "static_text",
+        "text": "Hi! This is the TravelBucks travel concierge. Just a quick heads-up — this call may be assisted by AI or automated technology to help us respond faster and get you to the right specialist. I'm calling because you requested help planning a trip. I'll ask a few quick questions so we can get you matched with the right specialist. Sound good?"
+      },
+      "display_position": {"x": 500, "y": 100},
+      "edges": [
+        {
+          "id": "edge-disclosure-continue",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User agrees to continue or acknowledges"
+          },
+          "destination_node_id": "node-qualification"
+        },
+        {
+          "id": "edge-disclosure-human",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User requests human agent immediately"
+          },
+          "destination_node_id": "node-transfer-human"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-qualification",
+      "type": "conversation",
+      "name": "Travel Qualification",
+      "instruction": {
+        "type": "prompt",
+        "text": "Ask these qualification questions in order: (1) Where are you thinking of traveling? (2) When are you planning to go, or are you flexible? (3) How many travelers will there be? (4) What's your estimated budget per person? (5) Is this for a special occasion like a honeymoon or anniversary? Listen carefully to their answers and take note of: destination complexity, budget level (under or over $2000/person), and whether it seems like custom planning is needed."
+      },
+      "display_position": {"x": 500, "y": 250},
+      "edges": [
+        {
+          "id": "edge-qual-high-intent",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Budget is $2,000+ per person OR multi-city trip OR honeymoon/group OR customer explicitly mentions wanting custom itinerary"
+          },
+          "destination_node_id": "node-offer-planning-fee"
+        },
+        {
+          "id": "edge-qual-low-budget",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Budget is under $2,000 per person AND simple single-destination trip"
+          },
+          "destination_node_id": "node-simple-referral"
+        },
+        {
+          "id": "edge-qual-human-request",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User requests to speak with human"
+          },
+          "destination_node_id": "node-transfer-human"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-offer-planning-fee",
+      "type": "conversation",
+      "name": "Offer Planning Fee",
+      "instruction": {
+        "type": "static_text",
+        "text": "For custom trip planning, TravelBucks charges a one-time planning fee of $149. This covers itinerary design, supplier research, and concierge support. The fee is credited toward your booking if you move forward. Would you like to proceed with custom planning?"
+      },
+      "display_position": {"x": 500, "y": 400},
+      "edges": [
+        {
+          "id": "edge-fee-accept",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User accepts and wants to proceed with the planning fee"
+          },
+          "destination_node_id": "node-send-payment-link"
+        },
+        {
+          "id": "edge-fee-objection",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has questions or objections about the fee"
+          },
+          "destination_node_id": "node-handle-objection"
+        },
+        {
+          "id": "edge-fee-decline",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User declines the planning fee"
+          },
+          "destination_node_id": "node-decline-end"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-handle-objection",
+      "type": "conversation",
+      "name": "Handle Planning Fee Objection",
+      "instruction": {
+        "type": "static_text",
+        "text": "The fee ensures a dedicated specialist and is credited toward your booking. This gives you access to wholesale rates and custom itinerary design that you won't find on Expedia or other booking sites. Does that make sense?"
+      },
+      "display_position": {"x": 750, "y": 400},
+      "edges": [
+        {
+          "id": "edge-objection-accept",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is satisfied and wants to proceed"
+          },
+          "destination_node_id": "node-send-payment-link"
+        },
+        {
+          "id": "edge-objection-decline",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User still declines"
+          },
+          "destination_node_id": "node-decline-end"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-send-payment-link",
+      "type": "function",
+      "name": "Send Payment Link",
+      "tool_id": "tool-send-payment-sms",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Tell the customer: 'Perfect! I'll send you a secure payment link by text right now. Once that's completed, your specialist will take over right away.' Then call the send_payment_sms tool with their phone number and lead_id."
+      },
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "display_position": {"x": 500, "y": 550},
+      "edges": [
+        {
+          "id": "edge-sms-sent",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "SMS was sent successfully"
+          },
+          "destination_node_id": "node-sms-confirmation"
+        },
+        {
+          "id": "edge-sms-failed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "SMS failed to send"
+          },
+          "destination_node_id": "node-transfer-human"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-sms-confirmation",
+      "type": "conversation",
+      "name": "SMS Sent Confirmation",
+      "instruction": {
+        "type": "static_text",
+        "text": "Great! You should receive the text within the next minute. Once you complete that, a specialist will reach out to start designing your trip. Is there anything else I can help clarify before we get you over to them?"
+      },
+      "display_position": {"x": 500, "y": 700},
+      "edges": [
+        {
+          "id": "edge-sms-done",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is satisfied and ready to end"
+          },
+          "destination_node_id": "node-end-payment-pending"
+        },
+        {
+          "id": "edge-sms-questions",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has questions"
+          },
+          "destination_node_id": "node-sms-confirmation"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-simple-referral",
+      "type": "conversation",
+      "name": "Simple Trip Referral",
+      "instruction": {
+        "type": "prompt",
+        "text": "Thank the user for their interest. Explain that for straightforward trips like theirs, they can book directly through TravelBucks' online platform to get member rates without the planning fee. Ask if they'd like to speak with someone about setting up a free membership account to access those rates."
+      },
+      "display_position": {"x": 250, "y": 400},
+      "edges": [
+        {
+          "id": "edge-simple-human",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to speak with someone about membership"
+          },
+          "destination_node_id": "node-transfer-human"
+        },
+        {
+          "id": "edge-simple-decline",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User declines or just wants information"
+          },
+          "destination_node_id": "node-end-simple"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-transfer-human",
+      "type": "transfer_call",
+      "name": "Transfer to Human Specialist",
+      "instruction": {
+        "type": "static_text",
+        "text": "No problem, I'll connect you with a live travel specialist. They should answer in under 2 minutes. Transferring now..."
+      },
+      "transfer_destination": {
+        "type": "predefined",
+        "number": "+14155551234"
+      },
+      "transfer_option": {
+        "type": "cold_transfer",
+        "show_transferee_as_caller": false
+      },
+      "display_position": {"x": 800, "y": 250},
+      "edge": {
+        "id": "edge-transfer-failed",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Transfer failed"
+        },
+        "destination_node_id": "node-transfer-fallback"
+      }
+    },
+    
+    {
+      "id": "node-transfer-fallback",
+      "type": "conversation",
+      "name": "Transfer Failed Fallback",
+      "instruction": {
+        "type": "static_text",
+        "text": "I'm having trouble connecting you right now. Can I have someone call you back within the hour instead? They'll have all your information."
+      },
+      "display_position": {"x": 1000, "y": 250},
+      "edges": [
+        {
+          "id": "edge-fallback-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User agrees to callback"
+          },
+          "destination_node_id": "node-end-callback-scheduled"
+        }
+      ]
+    },
+    
+    {
+      "id": "node-decline-end",
+      "type": "end",
+      "name": "End - Fee Declined",
+      "instruction": {
+        "type": "static_text",
+        "text": "No problem! If you change your mind, you can always reach us at 1-800-TB-VOICE. Thanks for considering TravelBucks, and happy travels!"
+      },
+      "display_position": {"x": 250, "y": 700}
+    },
+    
+    {
+      "id": "node-end-payment-pending",
+      "type": "end",
+      "name": "End - Payment Link Sent",
+      "instruction": {
+        "type": "static_text",
+        "text": "Perfect! Check your texts for the payment link. A specialist will be in touch shortly. Thanks for choosing TravelBucks!"
+      },
+      "display_position": {"x": 500, "y": 850}
+    },
+    
+    {
+      "id": "node-end-simple",
+      "type": "end",
+      "name": "End - Simple Trip",
+      "instruction": {
+        "type": "static_text",
+        "text": "Great! You can visit TravelBucks.com to explore member rates. Thanks for your interest!"
+      },
+      "display_position": {"x": 250, "y": 550}
+    },
+    
+    {
+      "id": "node-end-callback-scheduled",
+      "type": "end",
+      "name": "End - Callback Scheduled",
+      "instruction": {
+        "type": "static_text",
+        "text": "All set! Someone will call you back within the hour. Thanks for your patience!"
+      },
+      "display_position": {"x": 1000, "y": 400}
+    }
+  ],
+  
+  "begin_message": "Hi! This is the TravelBucks travel concierge calling about your travel inquiry.",
+  
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2_5",
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.8,
+  "backchannel_words": ["yeah", "uh-huh", "mm-hmm", "okay", "I see", "got it"],
+  "denoising_mode": "noise-and-background-speech-cancellation",
+  "normalize_for_speech": true,
+  
+  "model_choice": {
+    "type": "cascading",
+    "model": "gpt-4.1"
+  },
+  
+  "ambient_sound": "call-center",
+  "ambient_sound_volume": 0.80,
+  "interruption_sensitivity": 0.9,
+  
+  "post_call_analysis_data": [
+    {
+      "name": "lead_id",
+      "type": "string",
+      "description": "Unique lead identifier"
+    },
+    {
+      "name": "destination",
+      "type": "string",
+      "description": "Where the traveler wants to go"
+    },
+    {
+      "name": "travel_dates",
+      "type": "string",
+      "description": "When they plan to travel"
+    },
+    {
+      "name": "travelers_count",
+      "type": "string",
+      "description": "Number of travelers"
+    },
+    {
+      "name": "budget_range",
+      "type": "string",
+      "description": "Budget per person"
+    },
+    {
+      "name": "special_occasion",
+      "type": "string",
+      "description": "Honeymoon, anniversary, etc."
+    },
+    {
+      "name": "planning_fee_offered",
+      "type": "boolean",
+      "description": "Was the $149 planning fee offered?"
+    },
+    {
+      "name": "planning_fee_accepted",
+      "type": "boolean",
+      "description": "Did they accept the planning fee?"
+    },
+    {
+      "name": "payment_link_sent",
+      "type": "boolean",
+      "description": "Was payment SMS sent?"
+    },
+    {
+      "name": "call_outcome",
+      "type": "enum",
+      "choices": ["payment_link_sent", "declined_fee", "transferred_to_human", "simple_referral", "callback_scheduled"],
+      "description": "Final outcome of the call"
+    },
+    {
+      "name": "lead_priority",
+      "type": "enum",
+      "choices": ["high", "medium", "low"],
+      "description": "Lead quality based on budget and complexity"
+    }
+  ]
+}
