@@ -581,11 +581,18 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
     function getExpectedDeposit(pkg_code) {
         const depositMap = {
             'ECF': 500,
+            'ECFWIN': 500,
             'EKCA': 500,
             'BEACH': 500,
             'CRUISE': 500,
+            'E': 500,
+            'E7': 500,
+            'E78': 500,
+            'E789': 500,
+            'EVX': 50,
+            'EVXV': 50,
         };
-        return depositMap[pkg_code] || 500;
+        return depositMap[pkg_code] || null;
     }
 
     // Lookup customer using priority: phone+pkg → phone → vac_id
@@ -667,8 +674,8 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
 
     const expectedDeposit = getExpectedDeposit(pkg_code);
     const totalPaid = (val_dep || 0) + (conf_deposit || 0);
-    const remaining = Math.max(0, expectedDeposit - totalPaid);
-    const depositsComplete = totalPaid >= expectedDeposit;
+    const remaining = expectedDeposit !== null ? Math.max(0, expectedDeposit - totalPaid) : null;
+    const depositsComplete = expectedDeposit !== null ? totalPaid >= expectedDeposit : false;
 
     const daysUntilTravel = asgn_trv_dt ? daysUntilDate(asgn_trv_dt) : null;
     const daysUntilArrival = arv_date ? daysUntilDate(arv_date) : null;
@@ -721,7 +728,11 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
     else {
         status = 'Deposit Needed';
         next_action = 'direct_to_payment';
-        message = `Deposit required: $${remaining} remaining of $${expectedDeposit} total.`;
+        if (expectedDeposit !== null) {
+            message = `Deposit required: $${remaining} remaining of $${expectedDeposit} total.`;
+        } else {
+            message = `Deposit required as shown on your certificate.`;
+        }
     }
 
     res.json({
