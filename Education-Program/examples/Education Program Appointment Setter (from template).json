@@ -1,0 +1,706 @@
+{
+  "agent_id": "",
+  "channel": "voice",
+  "last_modification_timestamp": 1764943621841,
+  "agent_name": "Education Program Appointment Setter (from template)",
+  "response_engine": {
+    "type": "conversation-flow",
+    "version": 0,
+    "conversation_flow_id": "conversation_flow_0c8f6fdf01e3"
+  },
+  "language": "en-US",
+  "data_storage_setting": "everything",
+  "version": 0,
+  "is_published": false,
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2",
+  "voice_temperature": 1,
+  "voice_speed": 1,
+  "volume": 1,
+  "max_call_duration_ms": 3600000,
+  "interruption_sensitivity": 0.9,
+  "user_dtmf_options": {},
+  "conversationFlow": {
+    "conversation_flow_id": "conversation_flow_0c8f6fdf01e3",
+    "version": 0,
+    "global_prompt": "You are Kate, from Retell Education Program Office. You are calling user on the phone to help them learn more about the program and book a meeting potentially.\n\nNote that the user transcript might contain some transcription errors, do your best to guess and respond.",
+    "nodes": [
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "Hi, this is Kate from Retell Education Program. Is this {{first_name}}?"
+        },
+        "edges": [
+          {
+            "condition": "It's not the right user",
+            "id": "edge-1",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "It's not the right user"
+            },
+            "destination_node_id": "node-1735265419547"
+          },
+          {
+            "condition": "It's the right user",
+            "id": "edge-2",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "It's the right user"
+            },
+            "destination_node_id": "node-1735265548415"
+          }
+        ],
+        "name": "Welcome Node",
+        "start_speaker": "agent",
+        "id": "start-node-1735265375625",
+        "type": "conversation",
+        "display_position": {
+          "x": 277,
+          "y": 1176
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Could you let them know we called regarding their request for information? They can reach us at [Phone Number]. Thank you, and have a nice day."
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735265419547",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735265419547",
+        "type": "conversation",
+        "display_position": {
+          "x": 777,
+          "y": 646
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1735265433222",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1735265440136"
+        }
+      },
+      {
+        "name": "End Call",
+        "id": "node-1735265440136",
+        "type": "end",
+        "display_position": {
+          "x": 1277,
+          "y": 756
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "If no",
+            "id": "edge-1735265548415",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If no"
+            },
+            "destination_node_id": "node-1735265611306"
+          },
+          {
+            "condition": "If yes",
+            "id": "edge-1735265711941",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If yes"
+            },
+            "destination_node_id": "node-1735265861461"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735265548415",
+        "type": "conversation",
+        "display_position": {
+          "x": 777,
+          "y": 1176
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Nice to speak with you, {{first_name}}. I see you recently inquired about our program. Is now a good time to talk?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "If They Prefer a Callback",
+            "id": "edge-1735265611306",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If They Prefer a Callback"
+            },
+            "destination_node_id": "node-1735265665782"
+          },
+          {
+            "condition": "If now is a good time",
+            "id": "edge-1735265651159",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If now is a good time"
+            },
+            "destination_node_id": "node-1735265861461"
+          },
+          {
+            "condition": "If they decline entirely",
+            "id": "edge-1735266172167",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If they decline entirely"
+            },
+            "destination_node_id": "node-1735266167986"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735265611306",
+        "type": "conversation",
+        "display_position": {
+          "x": 1277,
+          "y": 912
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "I understand. This will only take a few minutes, or I can call you back. Which do you prefer?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "User confirms the callback time",
+            "id": "edge-1735265665782",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User confirms the callback time"
+            },
+            "destination_node_id": "node-1735265690704"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735265665782",
+        "type": "conversation",
+        "display_position": {
+          "x": 1626.551473672084,
+          "y": 139.00135584644391
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Ask user for a good time to call back. If they already specified some time to callback, then double check and confirm with them."
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Great, we’ll speak then. Have a wonderful day."
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735265690704",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735265690704",
+        "type": "conversation",
+        "display_position": {
+          "x": 2277,
+          "y": 0
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1735265702939",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1735265704966"
+        }
+      },
+      {
+        "name": "End Call",
+        "id": "node-1735265704966",
+        "type": "end",
+        "display_position": {
+          "x": 2777,
+          "y": 110
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "If Not Interested at All",
+            "id": "edge-1735265861461",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If Not Interested at All"
+            },
+            "destination_node_id": "node-1735266167986"
+          },
+          {
+            "condition": "If They Show Interest or Have Questions",
+            "id": "edge-1735266281988",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If They Show Interest or Have Questions"
+            },
+            "destination_node_id": "node-1735266303701"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735265861461",
+        "type": "conversation",
+        "display_position": {
+          "x": 1777,
+          "y": 526
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Great! Our program helps students earn college credits faster and more affordably through live, teacher-led online classes that meet once a week for about three hours over six weeks per course. With a 93% pass rate, no graded homework or quizzes, and credit earned by passing one exam per course, it’s a streamlined and effective way to succeed. Plus, materials are included, and we offer unlimited support to help every step of the way. How does that sound so far?"
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Okay, no problem. Thank you for your time. Have a great day."
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735266167986",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266167986",
+        "type": "conversation",
+        "display_position": {
+          "x": 2777,
+          "y": 266
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1735266189445",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1735266195977"
+        }
+      },
+      {
+        "name": "End Call",
+        "id": "node-1735266195977",
+        "type": "end",
+        "display_position": {
+          "x": 3277,
+          "y": 376
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "If user is not interested",
+            "id": "edge-1735266303702",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If user is not interested"
+            },
+            "destination_node_id": "node-1735266167986"
+          },
+          {
+            "condition": "If user is interested",
+            "id": "edge-1735266379904",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If user is interested"
+            },
+            "destination_node_id": "node-1735266424624"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266303701",
+        "type": "conversation",
+        "display_position": {
+          "x": 2277,
+          "y": 604
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Awesome! Our program is designed with flexibility in mind, making it perfect for busy schedules. Would you like to connect with an Education Advisor in a quick virtual meeting to learn more about costs, classes, and timelines?"
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Excellent! Let me see what appointment slots are available."
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735266424624",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266424624",
+        "type": "conversation",
+        "display_position": {
+          "x": 2777,
+          "y": 642
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1735266463597",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1735266455521"
+        }
+      },
+      {
+        "tool_id": "tool-1735266454153",
+        "edges": [
+          {
+            "condition": "There are avaiabilities",
+            "id": "edge-1735266506684",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "There are avaiabilities"
+            },
+            "destination_node_id": "node-1735266476014"
+          },
+          {
+            "condition": "There are no availabilities",
+            "id": "edge-1737536250409",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "There are no availabilities"
+            },
+            "destination_node_id": "node-1737536263608"
+          }
+        ],
+        "name": "Check Calendar Availability",
+        "id": "node-1735266455521",
+        "type": "function",
+        "display_position": {
+          "x": 3277,
+          "y": 703
+        },
+        "speak_during_execution": false,
+        "tool_type": "local",
+        "wait_for_result": true
+      },
+      {
+        "edges": [
+          {
+            "condition": "If None of them Work",
+            "id": "edge-1735266476014",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If None of them Work"
+            },
+            "destination_node_id": "node-1735266569803"
+          },
+          {
+            "condition": "If They Choose a Slot",
+            "id": "edge-1735266549999",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If They Choose a Slot"
+            },
+            "destination_node_id": "node-1735266755124"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266476014",
+        "type": "conversation",
+        "display_position": {
+          "x": 3777,
+          "y": 400
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "We have availability on [earliest date/time], [second date/time], and [third date/time]. Which one works best for you?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "New time range obtained and confirmed.",
+            "id": "edge-1735266569803",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "New time range obtained and confirmed."
+            },
+            "destination_node_id": "node-1735266455521"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266569803",
+        "type": "conversation",
+        "display_position": {
+          "x": 4143.510529862922,
+          "y": 1.109735706115515
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Ask user to provide a new range of time that they are available. If they already provided the new time range, read it back to user to confirm."
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "User confirms the email is correct",
+            "id": "edge-1735266755124",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User confirms the email is correct"
+            },
+            "destination_node_id": "node-1735266786911"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266755124",
+        "type": "conversation",
+        "display_position": {
+          "x": 4277,
+          "y": 422
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Great, let’s reserve that time. I have your email as {{email}}—is that correct?\n\nIf not correct, ask user to provide their email and once obtained, spell it back to user to let them confirm."
+        }
+      },
+      {
+        "tool_id": "tool-1735266699692",
+        "edges": [
+          {
+            "condition": "appt booked successfully",
+            "id": "edge-1735266804788",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "appt booked successfully"
+            },
+            "destination_node_id": "node-1735266801448"
+          },
+          {
+            "condition": "booking is not successful",
+            "id": "edge-1737536323776",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "booking is not successful"
+            },
+            "destination_node_id": "node-1737536263608"
+          }
+        ],
+        "name": "Book Appointment",
+        "id": "node-1735266786911",
+        "type": "function",
+        "display_position": {
+          "x": 4777,
+          "y": 483
+        },
+        "speak_during_execution": false,
+        "tool_type": "local",
+        "wait_for_result": true
+      },
+      {
+        "edges": [
+          {
+            "condition": "User have no more questions",
+            "id": "edge-1735266801448",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User have no more questions"
+            },
+            "destination_node_id": "node-1735266886314"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266801448",
+        "type": "conversation",
+        "display_position": {
+          "x": 5277,
+          "y": 422
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Tell user \"I’ve booked your appointment. At the scheduled time, simply click the link in the confirmation email to join the session. Do you have any questions?\"\n\nIf user have any questions, do your best to answer them, and ask if they have any additional questions."
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Perfect! We’re excited to meet with you. Thank you, and have a wonderful day!"
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735266886314",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735266886314",
+        "type": "conversation",
+        "display_position": {
+          "x": 5777,
+          "y": 422
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1735266905086",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1735266906378"
+        }
+      },
+      {
+        "name": "End Call",
+        "id": "node-1735266906378",
+        "type": "end",
+        "display_position": {
+          "x": 6277,
+          "y": 532
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Tell user that there seems to be some technical difficulties, will transfer them to your supervisor, please hold."
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1737536263608",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1737536263608",
+        "type": "conversation",
+        "display_position": {
+          "x": 3653.441744790301,
+          "y": 883.745909305963
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1737536309584",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1737536311774"
+        }
+      },
+      {
+        "edge": {
+          "condition": "Transfer failed",
+          "id": "edge-1737536311774",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Transfer failed"
+          }
+        },
+        "transfer_destination": {
+          "type": "predefined",
+          "number": "+12134447777"
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Transferring your call now."
+        },
+        "name": "Transfer Call",
+        "id": "node-1737536311774",
+        "transfer_option": {
+          "type": "cold_transfer",
+          "show_transferee_as_caller": false,
+          "enable_bridge_audio_cue": true
+        },
+        "type": "transfer_call",
+        "display_position": {
+          "x": 4086.9081255008696,
+          "y": 913.18477084507
+        }
+      }
+    ],
+    "start_node_id": "start-node-1735265375625",
+    "start_speaker": "agent",
+    "tools": [
+      {
+        "tool_id": "tool-1735266454153",
+        "event_type_id": 0,
+        "cal_api_key": "",
+        "timezone": "America/Los_Angeles",
+        "name": "check_calendar_availability",
+        "description": "When users ask for availability, check the calendar and provide available slots.",
+        "type": "check_availability_cal"
+      },
+      {
+        "tool_id": "tool-1735266699692",
+        "event_type_id": 0,
+        "cal_api_key": "",
+        "timezone": "America/Los_Angeles",
+        "name": "book_appointment",
+        "description": "When users ask to book an appointment, book it on the calendar.",
+        "type": "book_appointment_cal"
+      }
+    ],
+    "model_choice": {
+      "type": "cascading",
+      "model": "gpt-4.1"
+    },
+    "knowledge_base_ids": [],
+    "begin_tag_display_position": {
+      "x": 0,
+      "y": 1322
+    },
+    "is_published": false
+  }
+}

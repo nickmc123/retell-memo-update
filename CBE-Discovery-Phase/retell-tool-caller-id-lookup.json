@@ -1,0 +1,64 @@
+{
+  "tool_name": "lookup_customer_by_caller_id",
+  "description": "Automatically look up customer in RIMS database using their phone number from caller ID. Returns customer details, certificate info, and deposit status.",
+  "url": "https://web-production-4080.up.railway.app/api/customer/lookup",
+  "method": "GET",
+  "speak_during_execution": false,
+  "parameters": [
+    {
+      "name": "phone",
+      "type": "string",
+      "description": "Customer phone number from caller ID",
+      "required": true,
+      "value": "{{call.from_number}}"
+    }
+  ],
+  "response_data_extraction": {
+    "customer_found": "found",
+    "customer_id": "customer.customer_id",
+    "phone": "customer.phone",
+    "email": "customer.email",
+    "first_name": "customer.first_name",
+    "last_name": "customer.last_name",
+    "full_name": "customer.full_name",
+    "certificate_number": "customer.certificates[0].certificate_number",
+    "package_type": "customer.certificates[0].package_type",
+    "deposit_paid": "customer.certificates[0].deposit_paid",
+    "deposit_amount": "customer.certificates[0].deposit_amount",
+    "travel_dates_scheduled": "customer.certificates[0].travel_dates_scheduled",
+    "travel_start_date": "customer.certificates[0].travel_start_date"
+  },
+  "usage_instructions": {
+    "when_to_call": "IMMEDIATELY at the start of every call, before greeting the customer",
+    "how_to_use": "Set the phone parameter to {{call.from_number}} to automatically use caller ID",
+    "silent_execution": "Set speak_during_execution to false so customer doesn't hear the lookup",
+    "branching_logic": "After execution, check if customer_found is true or false to personalize greeting"
+  },
+  "example_responses": {
+    "customer_found": {
+      "found": true,
+      "customer": {
+        "customer_id": 155002,
+        "phone": "+18182121359",
+        "email": "NICKMC123@GMAIL.COM",
+        "first_name": "",
+        "last_name": "",
+        "full_name": "Unknown Customer",
+        "certificates": [
+          {
+            "certificate_number": "ECFWIN",
+            "package_type": "ECF",
+            "deposit_paid": true,
+            "deposit_amount": 0,
+            "travel_dates_scheduled": false,
+            "travel_start_date": null
+          }
+        ]
+      }
+    },
+    "customer_not_found": {
+      "found": false,
+      "message": "Customer not found in RIMS database"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "webhook_name": "Caspio Memo Logger",
+  "webhook_url": "https://web-production-4080.up.railway.app/api/memos/from-retell-call",
+  "event_type": "call.ended",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "payload_template": {
+    "call_id": "{{call_id}}",
+    "include_transcript": true
+  },
+  "description": "Automatically creates a memo in Caspio RIMS_MEMOS table after each call ends. Includes full transcript, call summary, sentiment analysis, and custom analysis data. Automatically matches customer by phone number.",
+  "notes": [
+    "Memos are auto-categorized by sentiment:",
+    "  - Negative sentiment → 'AI Call - Issue Reported'",
+    "  - Call unsuccessful → 'AI Call - Unsuccessful'",
+    "  - Default → 'AI Call Log'",
+    "",
+    "Customer matching:",
+    "  - Looks up customer by phone number in RIMS_DATA",
+    "  - If found: Uses customer's vac_id",
+    "  - If not found: Creates memo with vac_id = 'UNKNOWN'",
+    "",
+    "Memo includes:",
+    "  - Call ID, date, duration, phone number",
+    "  - Sentiment analysis (Positive/Negative/Neutral)",
+    "  - Call summary from Retell AI",
+    "  - Custom analysis data (post-call fields)",
+    "  - Full transcript (if include_transcript = true)"
+  ],
+  "retell_dashboard_setup": {
+    "step_1": "Go to https://app.retellai.com",
+    "step_2": "Navigate to Settings → Webhooks",
+    "step_3": "Click 'Add Webhook'",
+    "step_4": "Fill in:",
+    "step_4a": "  Name: Caspio Memo Logger",
+    "step_4b": "  URL: https://web-production-4080.up.railway.app/api/memos/from-retell-call",
+    "step_4c": "  Event: call.ended",
+    "step_4d": "  Method: POST",
+    "step_5": "In Payload Template, paste:",
+    "step_5a": "  {",
+    "step_5b": "    \"call_id\": \"{{call_id}}\",",
+    "step_5c": "    \"include_transcript\": true",
+    "step_5d": "  }",
+    "step_6": "Click Save",
+    "step_7": "Test by making a call to your Retell agent"
+  },
+  "optional_configurations": {
+    "exclude_transcript": {
+      "description": "Create smaller memos without full transcript",
+      "payload": {
+        "call_id": "{{call_id}}",
+        "include_transcript": false
+      }
+    },
+    "custom_memo_type": {
+      "description": "Override default memo type",
+      "payload": {
+        "call_id": "{{call_id}}",
+        "memo_type": "Customer Service Call",
+        "include_transcript": true
+      }
+    },
+    "agent_specific": {
+      "description": "Only log calls from specific agent (configure in webhook filter)",
+      "filter": "agent_id = ***REMOVED***"
+    }
+  },
+  "troubleshooting": {
+    "webhook_not_firing": [
+      "Check webhook is enabled in Retell dashboard",
+      "Verify webhook URL is correct",
+      "Check event type is 'call.ended'",
+      "View Railway logs: railway logs --follow"
+    ],
+    "customer_not_found": [
+      "Not an error - memo is created with vac_id = 'UNKNOWN'",
+      "Update customer phone in RIMS_DATA to match caller",
+      "Phone numbers must match exactly (normalized to digits only)"
+    ],
+    "retell_api_error": [
+      "Verify RETELL_API_KEY is set in Railway",
+      "Check API key has correct permissions",
+      "View error details in Railway logs"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "call_id": "test-call-deployment-123",
+  "transcript": [
+    {
+      "role": "agent",
+      "content": "Thanks for your interest in our exclusive travel membership. I'd love to tell you about how our members save up to 70% on hotels, cruises, and vacation packages.",
+      "timestamp": "2025-12-25T09:27:55Z"
+    },
+    {
+      "role": "user",
+      "content": "That sounds interesting. Tell me more about the savings.",
+      "timestamp": "2025-12-25T09:28:05Z"
+    }
+  ]
+}

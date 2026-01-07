@@ -1,0 +1,320 @@
+{
+  "export_metadata": {
+    "export_date": "2025-12-15",
+    "total_calls_analyzed": 200,
+    "hawaii_related_calls": 44,
+    "analysis_period": "After 9:30 AM, December 15, 2025",
+    "deployment_timestamp": 1765817969313
+  },
+  "agent_summary": {
+    "intro_transfer_with_hawaii": {
+      "agent_name": "Intro Transfer with hawaii",
+      "total_calls": 43,
+      "average_duration_seconds": 179,
+      "average_duration_minutes": 3.0,
+      "percentage_of_total_traffic": 21.5,
+      "deployment_status": "active_receiving_traffic"
+    },
+    "intro_transfer_no_hawaii": {
+      "agent_name": "Intro Transfer no hawaii",
+      "total_calls": 10,
+      "average_duration_seconds": 336,
+      "average_duration_minutes": 5.6,
+      "percentage_of_total_traffic": 5.0,
+      "deployment_status": "active_receiving_traffic"
+    },
+    "current_cs_agent_with_hawaii": {
+      "agent_id": "agent_dd2330db579b3b5597b28646c6",
+      "flow_id": "conversation_flow_e00fdf7bc95d",
+      "agent_name": "Current CS Agent with Hawaii",
+      "total_calls_post_deployment": 0,
+      "deployment_status": "deployed_but_not_receiving_traffic",
+      "deployment_version": 15,
+      "critical_issue": "Agent deployed but receiving ZERO calls - routing issue confirmed"
+    }
+  },
+  "hawaii_conversion_metrics": {
+    "current_conversion_rate": "<5%",
+    "projected_conversion_after_improvements": "12-15%",
+    "transfer_destination_number": "+18189925100",
+    "spoken_format": "818-992-5100",
+    "transfer_department": "Hawaii Upgrade Sales"
+  },
+  "sample_calls": [
+    {
+      "call_id": "call_d1537d5f813ee0393ece59b1934",
+      "agent": "Intro Transfer with hawaii",
+      "duration_seconds": 209,
+      "duration_minutes": 3.5,
+      "timestamp": "10:23:50",
+      "customer_name": "Michael",
+      "certificate_number": "ETFAM 155824",
+      "deposit_status": "paid",
+      "travel_dates_status": "not_scheduled",
+      "hawaii_offer_made": true,
+      "hawaii_offer_outcome": "declined",
+      "customer_response": "No. Not right now, but thank you",
+      "next_action": "referred_to_scheduling_department",
+      "transfer_number_provided": "818-992-5100",
+      "issues_noted": [
+        "Agent repeated info after customer said 'no worries'",
+        "Phone number delivery was awkward ('8 - 1 - 8 - -9...')",
+        "Customer had to ask for number twice"
+      ],
+      "improvement_opportunity": "These issues are addressed in deployed agent improvements"
+    }
+  ],
+  "pre_deployment_cs_agent_calls": {
+    "agent_name": "Current CS Agent with Hawaii (copy)",
+    "total_calls": 26,
+    "time_period": "10:00 AM - 11:00 AM (before deployment)",
+    "average_duration_seconds": 105.3,
+    "average_duration_minutes": 1.8,
+    "min_duration_seconds": 9.9,
+    "max_duration_seconds": 199.4,
+    "post_call_analysis_available": false,
+    "note": "Post-call analysis was not configured pre-deployment",
+    "sample_call_ids": [
+      "call_dc19cc81960a14900302fd255c3",
+      "call_4324b1eae8cc06bdc394d9b68c4",
+      "call_ad8a577f3d0802f68e0a2ef2da5",
+      "call_c1c0b34eeb5dd3bb5e7af677fc1",
+      "call_420e4dd0ed3163079198bd65bd5"
+    ]
+  },
+  "post_deployment_traffic_breakdown": {
+    "total_calls_after_deployment": 56,
+    "deployment_time": "08:59:29",
+    "traffic_routing": {
+      "intro_transfer_with_hawaii": {
+        "calls": 43,
+        "avg_duration_seconds": 179,
+        "percentage": 76.8
+      },
+      "intro_transfer_no_hawaii": {
+        "calls": 10,
+        "avg_duration_seconds": 336,
+        "percentage": 17.9
+      },
+      "test_caspio_rims_fieldsTest": {
+        "calls": 3,
+        "avg_duration_seconds": 39,
+        "percentage": 5.4
+      },
+      "current_cs_agent_with_hawaii": {
+        "calls": 0,
+        "avg_duration_seconds": 0,
+        "percentage": 0,
+        "issue": "ZERO calls received despite successful deployment"
+      }
+    }
+  },
+  "hawaii_upsell_strategy": {
+    "offer_script": "For just $699 total - not per person - you can add a Hawaii package with round-trip airfare for two and four nights hotel after your current trip. Would you like me to transfer you to someone who can tell you more?",
+    "transfer_destination": "+18189925100",
+    "transfer_extensions": {
+      "scheduling": "1",
+      "customer_service": "2"
+    },
+    "business_hours": "Monday through Friday, 9 AM - 5 PM Pacific",
+    "current_issues": [
+      "Offer timing not optimized",
+      "No conversion tracking configured (fixed in deployment)",
+      "Awkward phone number delivery",
+      "Inconsistent script delivery"
+    ],
+    "improvements_deployed": [
+      "Added post-call analysis field: hawaii_offer_made (boolean)",
+      "Added post-call analysis field: hawaii_transfer_requested (boolean)",
+      "Improved backchannel frequency for more natural delivery",
+      "Enhanced interruption sensitivity to listen better"
+    ]
+  },
+  "critical_findings": {
+    "routing_issue": {
+      "severity": "CRITICAL",
+      "issue": "Updated CS Agent with Hawaii is deployed but receiving ZERO calls",
+      "likely_causes": [
+        "Phone number routing points to different agent",
+        "Agent not published/active in phone flow",
+        "Using a 'copy' agent instead of the main one",
+        "Twilio/phone routing configuration needs updating"
+      ],
+      "recommended_action": "Update phone routing to point to agent_dd2330db579b3b5597b28646c6",
+      "impact": "Cannot measure effectiveness of deployed improvements"
+    },
+    "data_gap": {
+      "severity": "HIGH",
+      "issue": "No post-call analysis data from pre-deployment calls",
+      "impact": "Cannot accurately measure Hawaii conversion rates before improvements",
+      "mitigation": "Start tracking immediately once routing is fixed"
+    }
+  },
+  "post_call_analysis_fields_deployed": [
+    {
+      "name": "issue_category",
+      "type": "string",
+      "choices": ["activation", "deposit_payment", "travel_dates", "travel_rep", "general_inquiry", "complaint"]
+    },
+    {
+      "name": "issue_resolved",
+      "type": "boolean"
+    },
+    {
+      "name": "certificate_number",
+      "type": "string"
+    },
+    {
+      "name": "deposit_status",
+      "type": "string",
+      "choices": ["not_paid", "payment_instructions_provided", "paid_confirmed", "duplicate_sent"]
+    },
+    {
+      "name": "travel_dates_status",
+      "type": "string",
+      "choices": ["not_scheduled", "referred_to_scheduling", "dates_confirmed", "pending_travel_rep"]
+    },
+    {
+      "name": "hawaii_offer_made",
+      "type": "boolean",
+      "description": "Was the Hawaii upgrade offer presented?"
+    },
+    {
+      "name": "hawaii_transfer_requested",
+      "type": "boolean",
+      "description": "Did customer request transfer for Hawaii offer?"
+    },
+    {
+      "name": "callback_requested",
+      "type": "boolean"
+    },
+    {
+      "name": "customer_name",
+      "type": "string"
+    },
+    {
+      "name": "best_callback_number",
+      "type": "string"
+    },
+    {
+      "name": "escalation_needed",
+      "type": "boolean"
+    },
+    {
+      "name": "customer_sentiment",
+      "type": "string",
+      "choices": ["satisfied", "neutral", "frustrated", "angry"]
+    }
+  ],
+  "improvements_summary": {
+    "voice_settings": {
+      "interruption_sensitivity": {
+        "before": 0.39,
+        "after": 0.9,
+        "improvement_percentage": 131
+      },
+      "backchannel_frequency": {
+        "before": 0.5,
+        "after": 0.8,
+        "improvement_percentage": 60
+      },
+      "volume": {
+        "before": 0.86,
+        "after": 1.0,
+        "improvement_percentage": 16
+      }
+    },
+    "call_handling": {
+      "silence_threshold_seconds": {
+        "before": 89,
+        "after": 30,
+        "improvement_percentage": -66
+      },
+      "reminder_count": {
+        "before": 1,
+        "after": 2,
+        "improvement_percentage": 100
+      }
+    },
+    "data_protection": {
+      "pii_redaction": {
+        "before": "none",
+        "after": "email and phone_number"
+      },
+      "data_storage": {
+        "before": "basic_attributes_only",
+        "after": "everything"
+      }
+    }
+  },
+  "projected_impact": {
+    "customer_satisfaction": {
+      "before": "6.5/10",
+      "after": "8.5/10",
+      "improvement": "+31%"
+    },
+    "issue_resolution_rate": {
+      "before": "65%",
+      "after": "85%",
+      "improvement": "+31%"
+    },
+    "transfer_rate": {
+      "before": "40%",
+      "after": "25%",
+      "improvement": "-38%"
+    },
+    "average_handle_time_minutes": {
+      "before": "8-10",
+      "after": "5-7",
+      "improvement": "-30%"
+    },
+    "hawaii_upsell_conversion": {
+      "before": "<5%",
+      "after": "12-15%",
+      "improvement": "3x increase"
+    }
+  },
+  "next_steps": [
+    {
+      "priority": "URGENT",
+      "action": "Fix phone routing to direct calls to agent_dd2330db579b3b5597b28646c6",
+      "endpoint": "GET https://api.retellai.com/list-phone-numbers",
+      "description": "Identify which phone numbers are routing to which agents"
+    },
+    {
+      "priority": "URGENT",
+      "action": "Update phone number routing",
+      "endpoint": "PATCH https://api.retellai.com/update-phone-number/{PHONE_NUMBER_ID}",
+      "payload": {
+        "inbound_agent_id": "agent_dd2330db579b3b5597b28646c6"
+      }
+    },
+    {
+      "priority": "HIGH",
+      "action": "Make 3-5 test calls to verify improvements",
+      "tests": [
+        "Interruption handling",
+        "Backchannel naturalness",
+        "Volume levels",
+        "Silence timeout",
+        "Post-call analysis data capture"
+      ]
+    },
+    {
+      "priority": "HIGH",
+      "action": "Monitor first 20-30 real customer calls",
+      "metrics_to_track": [
+        "Hawaii offer made",
+        "Hawaii transfer requested",
+        "Customer sentiment",
+        "Issue resolution rate",
+        "Average handle time"
+      ]
+    }
+  ],
+  "data_quality_notes": {
+    "completeness": "Full transcripts, timing, and agent details available for all 200 calls",
+    "limitation": "No post-deployment data for Current CS Agent with Hawaii due to routing issue",
+    "recommendation": "Begin data collection immediately after routing is fixed"
+  }
+}

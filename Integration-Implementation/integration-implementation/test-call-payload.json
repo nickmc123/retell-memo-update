@@ -1,0 +1,17 @@
+{
+  "call_id": "test-call-deployment-123",
+  "call": {
+    "from_number": "+14155551234",
+    "to_number": "+18005551234"
+  },
+  "metadata": {
+    "customer_name": "Test Customer",
+    "customer_email": "test@travelbucks.com",
+    "customer_phone": "+14155551234",
+    "lead_source": "Website",
+    "campaign": "TravelBucks Deployment Test"
+  },
+  "agent": {
+    "agent_name": "TravelBucks Travel Concierge"
+  }
+}

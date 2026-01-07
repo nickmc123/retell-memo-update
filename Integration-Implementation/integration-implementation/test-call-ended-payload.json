@@ -1,0 +1,9 @@
+{
+  "call_id": "test-call-deployment-123",
+  "call_analysis": {
+    "outcome": "activated",
+    "lead_qualified": true,
+    "membership_activated": true
+  },
+  "end_reason": "completed"
+}

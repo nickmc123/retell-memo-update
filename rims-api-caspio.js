@@ -29,7 +29,8 @@ const CASPIO_CONFIG = {
     tables: {
         rims_data: process.env.CASPIO_TABLE_RIMS || 'RIMS_DATA',
         knowledge_base: process.env.CASPIO_TABLE_KB || 'Knowledge_Base',
-        rims_memos: process.env.CASPIO_TABLE_MEMOS || 'RIMS_MEMOS'
+        rims_memos: process.env.CASPIO_TABLE_MEMOS || 'RIMS_MEMOS',
+        destsel: process.env.CASPIO_TABLE_DESTSEL || 'destsel'
     }
 };
 
@@ -1505,6 +1506,249 @@ app.post('/api/calendar/book', asyncHandler(async (req, res) => {
 }));
 
 // =============================================================================
+// PACKAGE DESCRIPTION LOOKUP (destsel table)
+// =============================================================================
+
+/**
+ * GET /api/package/description
+ * Look up package description from destsel table
+ *
+ * Query params:
+ *   - pkg_code2: The package code (e.g., MIWCA, MIGCH, DBVH)
+ *
+ * Returns: Package description including vacation type, nights, departure rules
+ */
+app.get('/api/package/description', asyncHandler(async (req, res) => {
+    const { pkg_code2 } = req.query;
+
+    if (!pkg_code2) {
+        return res.status(400).json({ error: 'pkg_code2 is required' });
+    }
+
+    console.log(`[Package Description] Looking up: ${pkg_code2}`);
+
+    if (USE_MOCK_DATA) {
+        // Mock package descriptions based on code prefix patterns
+        const mockDescriptions = getMockPackageDescription(pkg_code2);
+        return res.json(mockDescriptions);
+    }
+
+    try {
+        // Query destsel table by pkg_code2 (or similar field name)
+        // Note: Field names may vary - try multiple common patterns
+        const possibleFields = ['pkg_code2', 'pkgCode2', 'code', 'package_code', 'cert_code'];
+        let records = [];
+
+        for (const field of possibleFields) {
+            try {
+                records = await queryCaspioTable(
+                    CASPIO_CONFIG.tables.destsel,
+                    `${field}='${pkg_code2}'`
+                );
+                if (records.length > 0) break;
+            } catch (e) {
+                // Field doesn't exist, try next
+                continue;
+            }
+        }
+
+        // If exact match not found, try prefix match
+        if (records.length === 0) {
+            const prefix = pkg_code2.substring(0, 3).toUpperCase();
+            for (const field of possibleFields) {
+                try {
+                    records = await queryCaspioTable(
+                        CASPIO_CONFIG.tables.destsel,
+                        `${field} LIKE '${prefix}%'`
+                    );
+                    if (records.length > 0) break;
+                } catch (e) {
+                    continue;
+                }
+            }
+        }
+
+        if (records.length === 0) {
+            // Fall back to deriving from code prefix
+            return res.json(getMockPackageDescription(pkg_code2));
+        }
+
+        const record = records[0];
+
+        // Map destsel fields to our standardized response format
+        // (Field names may vary based on actual Caspio table structure)
+        const packageInfo = {
+            found: true,
+            pkg_code2: pkg_code2,
+            vacation_type: record.vacation_type || record.vac_type || record.type || deriveVacationType(pkg_code2),
+            nights: record.nights || record.num_nights || deriveNights(pkg_code2),
+            depart_city: record.depart_city || record.departure_city || record.city || null,
+            destination: record.destination || record.dest || record.dest_name || deriveDestination(pkg_code2),
+            calendar_type: record.calendar_type || deriveCalendarType(pkg_code2),
+            departure_rules: getDepartureRules(pkg_code2),
+            description: record.description || record.pkg_description || null,
+            // Include all raw fields from destsel for reference
+            raw_data: record
+        };
+
+        res.json(packageInfo);
+    } catch (error) {
+        console.error('[Package Description] Error:', error.message);
+        // Fall back to derived description
+        res.json(getMockPackageDescription(pkg_code2));
+    }
+}));
+
+/**
+ * GET /api/package/list
+ * List all package descriptions from destsel table
+ */
+app.get('/api/package/list', asyncHandler(async (req, res) => {
+    console.log('[Package List] Fetching all package descriptions');
+
+    if (USE_MOCK_DATA) {
+        return res.json({
+            count: 0,
+            message: 'Mock mode - no package list available. Query individual packages.',
+            sample_prefixes: ['MIW', 'MIG', 'DB', 'DH', 'MI', 'AI']
+        });
+    }
+
+    try {
+        const records = await queryCaspioTable(CASPIO_CONFIG.tables.destsel, null);
+
+        res.json({
+            count: records.length,
+            packages: records
+        });
+    } catch (error) {
+        console.error('[Package List] Error:', error.message);
+        res.status(500).json({ error: 'Failed to fetch package list' });
+    }
+}));
+
+/**
+ * Helper: Derive vacation type from package code prefix
+ */
+function deriveVacationType(pkgCode2) {
+    const prefix = (pkgCode2 || '').substring(0, 2).toUpperCase();
+    const prefix3 = (pkgCode2 || '').substring(0, 3).toUpperCase();
+
+    const typeMap = {
+        'MIW': '3 Night Air All-Inclusive',
+        'MIG': '2 Night Air All-Inclusive',
+        'DB': '2 Night Hotel Vacation',
+        'DH': '3 Night Hotel Vacation',
+        'MI': 'Air All-Inclusive Vacation',
+        'AI': 'Air Inclusive Package',
+        'CR': 'Cruise Vacation',
+        'EVX': 'Las Vegas Vacation'
+    };
+
+    return typeMap[prefix3] || typeMap[prefix] || 'Vacation Package';
+}
+
+/**
+ * Helper: Derive number of nights from package code
+ */
+function deriveNights(pkgCode2) {
+    const prefix3 = (pkgCode2 || '').substring(0, 3).toUpperCase();
+
+    if (prefix3 === 'MIW' || prefix3.startsWith('DH')) return 3;
+    if (prefix3 === 'MIG' || prefix3.startsWith('DB')) return 2;
+
+    // Try to extract number from code
+    const match = pkgCode2.match(/(\d)/);
+    return match ? parseInt(match[1]) : null;
+}
+
+/**
+ * Helper: Derive calendar type from package code
+ */
+function deriveCalendarType(pkgCode2) {
+    const prefix = (pkgCode2 || '').substring(0, 2).toUpperCase();
+
+    if (prefix === 'CR') return 'cruise';
+    if (['MI', 'AI', 'MIW', 'MIG'].some(p => pkgCode2.toUpperCase().startsWith(p))) return 'air';
+    return 'hotel';
+}
+
+/**
+ * Helper: Derive destination from package code
+ */
+function deriveDestination(pkgCode2) {
+    // Common destination mappings based on code patterns
+    const code = (pkgCode2 || '').toUpperCase();
+
+    if (code.includes('MEX') || code.includes('CAN')) return 'Mexico';
+    if (code.includes('CAR') || code.includes('JAM')) return 'Caribbean';
+    if (code.includes('VEG') || code.includes('LV')) return 'Las Vegas';
+    if (code.includes('ORL') || code.includes('FL')) return 'Orlando';
+    if (code.includes('BAH')) return 'Bahamas';
+
+    return null;
+}
+
+/**
+ * Helper: Get departure rules based on package type
+ */
+function getDepartureRules(pkgCode2) {
+    const prefix3 = (pkgCode2 || '').substring(0, 3).toUpperCase();
+    const calendarType = deriveCalendarType(pkgCode2);
+
+    if (calendarType === 'cruise') {
+        return {
+            type: 'cruise',
+            valid_days: null,
+            description: 'Cruise departures are on specific dates - check cruise calendar'
+        };
+    }
+
+    if (prefix3 === 'MIW' || deriveNights(pkgCode2) === 3) {
+        return {
+            type: 'air',
+            valid_days: ['monday', 'tuesday'],
+            description: '3-night air packages: Monday or Tuesday departures only'
+        };
+    }
+
+    if (prefix3 === 'MIG' || deriveNights(pkgCode2) === 2) {
+        return {
+            type: 'air',
+            valid_days: ['monday', 'tuesday', 'wednesday'],
+            description: '2-night air packages: Monday, Tuesday, or Wednesday departures only'
+        };
+    }
+
+    return {
+        type: 'flexible',
+        valid_days: null,
+        description: 'Check availability for any departure date'
+    };
+}
+
+/**
+ * Helper: Generate mock package description from code prefix
+ */
+function getMockPackageDescription(pkgCode2) {
+    const prefix3 = (pkgCode2 || '').substring(0, 3).toUpperCase();
+
+    return {
+        found: true,
+        pkg_code2: pkgCode2,
+        source: 'derived',
+        vacation_type: deriveVacationType(pkgCode2),
+        nights: deriveNights(pkgCode2),
+        depart_city: null,
+        destination: deriveDestination(pkgCode2),
+        calendar_type: deriveCalendarType(pkgCode2),
+        departure_rules: getDepartureRules(pkgCode2),
+        description: null,
+        note: 'Package details derived from code prefix. Deploy with Caspio access for full destsel lookup.'
+    };
+}
+
+// =============================================================================
 // HEALTH CHECK
 // =============================================================================
 
@@ -1582,6 +1826,9 @@ app.listen(PORT, () => {
     console.log(`   POST /api/logic/booking-check`);
     console.log(`   POST /api/memos/create`);
     console.log(`   GET  /api/memos/:vac_id`);
+    console.log(`\n📦 Package Description API (destsel):`);
+    console.log(`   GET  /api/package/description?pkg_code2=XXX ⭐ NEW`);
+    console.log(`   GET  /api/package/list ⭐ NEW`);
 
     if (USE_MOCK_DATA) {
         console.log(`\n🧪 Mock RIMS Test Data:`);

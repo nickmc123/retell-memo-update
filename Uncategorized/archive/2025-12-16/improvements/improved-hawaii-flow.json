@@ -1,0 +1,759 @@
+{
+  "agent_name": "Intro Transfer with Hawaii - IMPROVED",
+  "general_prompt": "You are a friendly, professional customer service representative for a vacation package company. Your role is to help customers with their inquiries, resolve issues efficiently, and when appropriate, offer an exclusive Hawaii vacation package.\n\nKey behaviors:\n- Be warm, empathetic, and solution-focused\n- Listen carefully to understand the customer's situation\n- Resolve issues quickly and completely before offering anything else\n- Only offer Hawaii when the customer is in a positive or neutral state\n- Never rush or pressure customers\n- Celebrate successful resolutions\n\nImportant: Always attempt to resolve the customer's issue first. Only after their problem is addressed should you consider offering the Hawaii package.",
+
+  "conversational_flow": {
+    "nodes": [
+      {
+        "id": "node-greeting",
+        "type": "conversation",
+        "name": "Greeting",
+        "display_position": {"x": 500, "y": 100},
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you for calling! I'm here to help you today. What can I assist you with?"
+        },
+        "edges": [
+          {
+            "id": "edge-greeting-to-intent",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer has stated their reason for calling"
+            },
+            "destination_node_id": "node-intent-router"
+          }
+        ]
+      },
+
+      {
+        "id": "node-intent-router",
+        "type": "logic_split",
+        "name": "Route by Intent",
+        "display_position": {"x": 500, "y": 250},
+        "edges": [
+          {
+            "id": "edge-to-deposit",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer is asking about deposits, how to pay their deposit, or deposit payment methods"
+            },
+            "destination_node_id": "node-deposit-help"
+          },
+          {
+            "id": "edge-to-travel-dates",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer is asking about travel dates, when they can travel, or scheduling their trip"
+            },
+            "destination_node_id": "node-travel-dates-help"
+          },
+          {
+            "id": "edge-to-activation",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer is asking about certificate activation, how to activate their package, or activation steps"
+            },
+            "destination_node_id": "node-activation-help"
+          },
+          {
+            "id": "edge-to-refund",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer is asking about refunds, wants to cancel, or is inquiring about refund status"
+            },
+            "destination_node_id": "node-refund-handling"
+          },
+          {
+            "id": "edge-to-general",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer has a general inquiry, complex issue, or none of the above categories apply"
+            },
+            "destination_node_id": "node-general-assistance"
+          }
+        ]
+      },
+
+      {
+        "id": "node-deposit-help",
+        "type": "conversation",
+        "name": "Deposit Payment Info",
+        "display_position": {"x": 200, "y": 400},
+        "instruction": {
+          "type": "static_text",
+          "text": "Great question! For your deposit payment, you have several options. You can pay online through your customer portal using a credit or debit card, or you can call our payment line at 1-800-XXX-XXXX. The deposit is typically $99 per person and is due within 7 days of booking. Would you like me to help you access your customer portal, or do you have any other questions about the deposit?"
+        },
+        "edges": [
+          {
+            "id": "edge-deposit-resolved",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer confirms their question is answered and they're satisfied"
+            },
+            "destination_node_id": "node-sentiment-check"
+          },
+          {
+            "id": "edge-deposit-more-help",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer needs additional help, has portal access issues, or wants to speak with someone"
+            },
+            "destination_node_id": "node-transfer-setup"
+          }
+        ]
+      },
+
+      {
+        "id": "node-travel-dates-help",
+        "type": "conversation",
+        "name": "Travel Dates Info",
+        "display_position": {"x": 350, "y": 400},
+        "instruction": {
+          "type": "static_text",
+          "text": "I can help you with travel dates! For most vacation packages, you can travel within 12-18 months from your activation date, with some blackout dates around major holidays. To schedule your specific travel dates, you'll need to contact our reservations team at least 60 days before your desired travel date. They can check availability and finalize your booking. Would you like me to transfer you to reservations now, or do you have other questions first?"
+        },
+        "edges": [
+          {
+            "id": "edge-travel-resolved",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer confirms their question is answered and doesn't need transfer"
+            },
+            "destination_node_id": "node-sentiment-check"
+          },
+          {
+            "id": "edge-travel-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer wants to be transferred to reservations or needs to schedule now"
+            },
+            "destination_node_id": "node-transfer-setup"
+          }
+        ]
+      },
+
+      {
+        "id": "node-activation-help",
+        "type": "conversation",
+        "name": "Certificate Activation Info",
+        "display_position": {"x": 500, "y": 400},
+        "instruction": {
+          "type": "static_text",
+          "text": "I can help with activation! To activate your vacation certificate, you'll need to: 1) Have your certificate code ready (it was emailed to you), 2) Visit our activation portal at www.yourcompany.com/activate, or call our activation line at 1-800-XXX-XXXX, and 3) Complete your deposit payment. Once activated, you can begin planning your travel dates. Do you have your certificate code, or would you like me to help you locate it?"
+        },
+        "edges": [
+          {
+            "id": "edge-activation-resolved",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer has the information they need and is ready to activate on their own"
+            },
+            "destination_node_id": "node-sentiment-check"
+          },
+          {
+            "id": "edge-activation-help",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer needs help finding their code, has activation issues, or wants assistance"
+            },
+            "destination_node_id": "node-transfer-setup"
+          }
+        ]
+      },
+
+      {
+        "id": "node-refund-handling",
+        "type": "conversation",
+        "name": "Refund Inquiry",
+        "display_position": {"x": 650, "y": 400},
+        "instruction": {
+          "type": "prompt",
+          "text": "Listen empathetically to the customer's refund concern. Acknowledge their frustration if present. Explain that refund requests are handled by our specialized refund team who can review their specific situation and eligibility. Let them know typical processing time is 7-14 business days once approved. Ask if they'd like to be transferred to the refund team now to discuss their situation."
+        },
+        "edges": [
+          {
+            "id": "edge-refund-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer wants to speak with refund team or proceed with refund request"
+            },
+            "destination_node_id": "node-transfer-setup"
+          },
+          {
+            "id": "edge-refund-wait",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer just wanted information and will wait for callback or processing"
+            },
+            "destination_node_id": "node-sentiment-check"
+          }
+        ]
+      },
+
+      {
+        "id": "node-general-assistance",
+        "type": "conversation",
+        "name": "General Assistance",
+        "display_position": {"x": 800, "y": 400},
+        "instruction": {
+          "type": "prompt",
+          "text": "Help the customer with their inquiry. Use your knowledge base to provide accurate information. If you cannot fully resolve their issue or if they need account-specific changes, offer to transfer them to a specialist who can help. Focus on being helpful and thorough."
+        },
+        "edges": [
+          {
+            "id": "edge-general-resolved",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer's issue is fully resolved and they're satisfied"
+            },
+            "destination_node_id": "node-sentiment-check"
+          },
+          {
+            "id": "edge-general-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer needs to be transferred for additional assistance"
+            },
+            "destination_node_id": "node-transfer-setup"
+          }
+        ]
+      },
+
+      {
+        "id": "node-sentiment-check",
+        "type": "logic_split",
+        "name": "Check Customer Sentiment",
+        "display_position": {"x": 500, "y": 600},
+        "edges": [
+          {
+            "id": "edge-positive-sentiment",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer seems satisfied, happy, relieved, or in a positive mood. Their issue was resolved successfully."
+            },
+            "destination_node_id": "node-hawaii-offer"
+          },
+          {
+            "id": "edge-neutral-exploratory",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer is neutral, curious, asking general questions, or exploring options. No signs of frustration or stress."
+            },
+            "destination_node_id": "node-hawaii-offer"
+          },
+          {
+            "id": "edge-negative-sentiment",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer is frustrated, upset, stressed, in a hurry, or still has unresolved concerns"
+            },
+            "destination_node_id": "node-closing-no-offer"
+          }
+        ]
+      },
+
+      {
+        "id": "node-hawaii-offer",
+        "type": "conversation",
+        "name": "Hawaii Vacation Offer",
+        "display_position": {"x": 350, "y": 750},
+        "instruction": {
+          "type": "static_text",
+          "text": "I'm so glad I could help! Before you go, I want to let you know about an exclusive offer we have right now. We're offering a limited-time Hawaii vacation package at a significantly discounted rate - 5 nights in Waikiki for just $699 total, which includes your accommodations and some amazing perks. It's only available for the next few days. Would you be interested in hearing more details about this Hawaii offer?"
+        },
+        "edges": [
+          {
+            "id": "edge-hawaii-interested",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer expresses interest, says yes, asks questions, or wants to hear more"
+            },
+            "destination_node_id": "node-hawaii-details"
+          },
+          {
+            "id": "edge-hawaii-not-interested",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer declines, says no thank you, or is not interested"
+            },
+            "destination_node_id": "node-soft-followup"
+          }
+        ]
+      },
+
+      {
+        "id": "node-hawaii-details",
+        "type": "conversation",
+        "name": "Hawaii Package Details",
+        "display_position": {"x": 250, "y": 900},
+        "instruction": {
+          "type": "prompt",
+          "text": "Enthusiastically share the Hawaii package details: 5 nights at a quality resort in Waikiki, travel valid for 18 months with flexible dates (60-day advance booking), includes resort fees, and total cost is only $699 plus taxes. Mention this is normally $1,500+. Create urgency by noting the limited availability. Ask if they'd like to take advantage of this offer today."
+        },
+        "edges": [
+          {
+            "id": "edge-hawaii-yes",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer wants to accept, book, or be transferred to complete the Hawaii package purchase"
+            },
+            "destination_node_id": "node-hawaii-transfer"
+          },
+          {
+            "id": "edge-hawaii-objection",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer has questions, objections, concerns, or needs more information"
+            },
+            "destination_node_id": "node-objection-handling"
+          },
+          {
+            "id": "edge-hawaii-decline",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer definitively declines after hearing details"
+            },
+            "destination_node_id": "node-soft-followup"
+          }
+        ]
+      },
+
+      {
+        "id": "node-objection-handling",
+        "type": "conversation",
+        "name": "Handle Objections",
+        "display_position": {"x": 150, "y": 1050},
+        "instruction": {
+          "type": "prompt",
+          "text": "Address their specific objection professionally:\n- Price concern: Emphasize the $800+ savings and payment plan options\n- Timing concern: Highlight 18-month validity and flexible dates\n- Need to think: Acknowledge but create urgency (offer expires soon, limited availability)\n- Need spouse approval: Offer to send details via email for them to review together\n\nAfter addressing objection, ask one more time if they'd like to take advantage of this limited offer."
+        },
+        "edges": [
+          {
+            "id": "edge-objection-overcome",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer's objection is resolved and they want to proceed"
+            },
+            "destination_node_id": "node-hawaii-transfer"
+          },
+          {
+            "id": "edge-objection-not-overcome",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer still declines after objection handling"
+            },
+            "destination_node_id": "node-soft-followup"
+          }
+        ]
+      },
+
+      {
+        "id": "node-soft-followup",
+        "type": "conversation",
+        "name": "Soft Follow-up",
+        "display_position": {"x": 450, "y": 1050},
+        "instruction": {
+          "type": "static_text",
+          "text": "I completely understand. No problem at all! If you change your mind, just give us a call back within the next few days while this offer is still available. Is there anything else I can help you with today?"
+        },
+        "edges": [
+          {
+            "id": "edge-followup-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer confirms no additional questions"
+            },
+            "destination_node_id": "node-closing-positive"
+          },
+          {
+            "id": "edge-followup-more-help",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer has additional questions or needs more help"
+            },
+            "destination_node_id": "node-general-assistance"
+          }
+        ]
+      },
+
+      {
+        "id": "node-hawaii-transfer",
+        "type": "conversation",
+        "name": "Prepare Hawaii Transfer",
+        "display_position": {"x": 250, "y": 1200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Excellent choice! I'm so excited for you - Hawaii is absolutely beautiful. Let me connect you with our Hawaii specialist who will finalize all the details and get you booked. Please stay on the line."
+        },
+        "edges": [
+          {
+            "id": "edge-to-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Ready to transfer"
+            },
+            "destination_node_id": "node-transfer-hawaii"
+          }
+        ]
+      },
+
+      {
+        "id": "node-transfer-hawaii",
+        "type": "transfer_call",
+        "name": "Transfer to Hawaii Sales",
+        "display_position": {"x": 250, "y": 1350},
+        "instruction": {
+          "type": "static_text",
+          "text": "Transferring now to Hawaii specialist."
+        },
+        "transfer_destination": {
+          "type": "predefined",
+          "number": "{{HAWAII_TRANSFER_NUMBER}}"
+        },
+        "transfer_option": {
+          "type": "cold_transfer",
+          "show_transferee_as_caller": false
+        },
+        "edge": {
+          "id": "edge-hawaii-transfer-fail",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Transfer failed"
+          },
+          "destination_node_id": "node-transfer-fallback"
+        }
+      },
+
+      {
+        "id": "node-transfer-setup",
+        "type": "conversation",
+        "name": "Setup Transfer",
+        "display_position": {"x": 650, "y": 750},
+        "instruction": {
+          "type": "prompt",
+          "text": "Confirm you'll transfer them to the appropriate department. Let them know you're connecting them now and they may experience a brief hold. Thank them for their patience."
+        },
+        "edges": [
+          {
+            "id": "edge-to-general-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Ready to transfer"
+            },
+            "destination_node_id": "node-transfer-general"
+          }
+        ]
+      },
+
+      {
+        "id": "node-transfer-general",
+        "type": "transfer_call",
+        "name": "Transfer to Support",
+        "display_position": {"x": 650, "y": 900},
+        "instruction": {
+          "type": "static_text",
+          "text": "Transferring you now."
+        },
+        "transfer_destination": {
+          "type": "predefined",
+          "number": "{{GENERAL_TRANSFER_NUMBER}}"
+        },
+        "transfer_option": {
+          "type": "cold_transfer",
+          "show_transferee_as_caller": false
+        },
+        "edge": {
+          "id": "edge-general-transfer-fail",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Transfer failed"
+          },
+          "destination_node_id": "node-transfer-fallback"
+        }
+      },
+
+      {
+        "id": "node-transfer-fallback",
+        "type": "conversation",
+        "name": "Transfer Failure Fallback",
+        "display_position": {"x": 800, "y": 1050},
+        "instruction": {
+          "type": "static_text",
+          "text": "I apologize, but I'm having trouble connecting you right now. Let me take your phone number and have someone call you back within the next hour. What's the best number to reach you?"
+        },
+        "edges": [
+          {
+            "id": "edge-fallback-collected",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Callback number collected"
+            },
+            "destination_node_id": "node-closing-callback"
+          }
+        ]
+      },
+
+      {
+        "id": "node-closing-no-offer",
+        "type": "conversation",
+        "name": "Close Without Offer",
+        "display_position": {"x": 650, "y": 750},
+        "instruction": {
+          "type": "static_text",
+          "text": "Is there anything else I can help you with today? I'm here to assist with any other questions you might have."
+        },
+        "edges": [
+          {
+            "id": "edge-no-offer-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer confirms no additional questions"
+            },
+            "destination_node_id": "node-end-standard"
+          },
+          {
+            "id": "edge-no-offer-more",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Customer has more questions"
+            },
+            "destination_node_id": "node-general-assistance"
+          }
+        ]
+      },
+
+      {
+        "id": "node-closing-positive",
+        "type": "conversation",
+        "name": "Positive Closing",
+        "display_position": {"x": 450, "y": 1200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Perfect! I'm so glad I could help you today. If you think of anything else, feel free to give us a call anytime. Have a wonderful day!"
+        },
+        "edges": [
+          {
+            "id": "edge-positive-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Call ending"
+            },
+            "destination_node_id": "node-end-positive"
+          }
+        ]
+      },
+
+      {
+        "id": "node-closing-callback",
+        "type": "conversation",
+        "name": "Closing with Callback",
+        "display_position": {"x": 800, "y": 1200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Perfect, I have your number. Someone will call you back within the hour. We apologize for the inconvenience, and thank you for your patience. Have a great day!"
+        },
+        "edges": [
+          {
+            "id": "edge-callback-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Call ending"
+            },
+            "destination_node_id": "node-end-callback"
+          }
+        ]
+      },
+
+      {
+        "id": "node-end-standard",
+        "type": "end",
+        "name": "End Call",
+        "display_position": {"x": 650, "y": 900},
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you for calling. Goodbye!"
+        }
+      },
+
+      {
+        "id": "node-end-positive",
+        "type": "end",
+        "name": "End Call - Positive",
+        "display_position": {"x": 450, "y": 1350},
+        "instruction": {
+          "type": "static_text",
+          "text": "Goodbye and thank you!"
+        }
+      },
+
+      {
+        "id": "node-end-callback",
+        "type": "end",
+        "name": "End Call - Callback Scheduled",
+        "display_position": {"x": 800, "y": 1350},
+        "instruction": {
+          "type": "static_text",
+          "text": "Goodbye!"
+        }
+      }
+    ],
+
+    "global_triggers": [
+      {
+        "id": "trigger-human-request",
+        "name": "Human Escalation Request",
+        "trigger_condition": {
+          "type": "prompt",
+          "prompt": "Customer explicitly asks to speak with a human, real person, or supervisor"
+        },
+        "destination_node_id": "node-transfer-setup"
+      },
+      {
+        "id": "trigger-angry-customer",
+        "name": "Angry Customer Escalation",
+        "trigger_condition": {
+          "type": "prompt",
+          "prompt": "Customer is very angry, yelling, using profanity, or extremely upset"
+        },
+        "destination_node_id": "node-transfer-setup"
+      }
+    ]
+  },
+
+  "post_call_analysis_data": [
+    {
+      "name": "hawaii_offered",
+      "type": "boolean",
+      "description": "Was the Hawaii vacation package offered to the customer?"
+    },
+    {
+      "name": "hawaii_transfer_requested",
+      "type": "boolean",
+      "description": "Did the customer request to be transferred for the Hawaii package?"
+    },
+    {
+      "name": "issue_resolved",
+      "type": "boolean",
+      "description": "Was the customer's issue resolved by the AI agent?"
+    },
+    {
+      "name": "issue_category",
+      "type": "enum",
+      "options": [
+        "deposit_payment",
+        "travel_dates",
+        "certificate_activation",
+        "refund_inquiry",
+        "package_verification",
+        "general_inquiry",
+        "booking_change",
+        "complaint",
+        "other"
+      ],
+      "description": "Primary category of customer's issue"
+    },
+    {
+      "name": "customer_sentiment",
+      "type": "enum",
+      "options": [
+        "positive",
+        "neutral",
+        "negative",
+        "frustrated"
+      ],
+      "description": "Customer's overall sentiment during the call"
+    },
+    {
+      "name": "sentiment_at_hawaii_offer",
+      "type": "enum",
+      "options": [
+        "positive",
+        "neutral",
+        "negative",
+        "not_offered"
+      ],
+      "description": "Customer's sentiment at the moment Hawaii was offered (or would have been offered)"
+    },
+    {
+      "name": "transfer_occurred",
+      "type": "boolean",
+      "description": "Was the customer transferred to a human agent?"
+    },
+    {
+      "name": "transfer_reason",
+      "type": "enum",
+      "options": [
+        "hawaii_sales",
+        "complex_issue",
+        "refund_request",
+        "customer_request",
+        "escalation",
+        "no_transfer",
+        "other"
+      ],
+      "description": "Reason for transfer if applicable"
+    },
+    {
+      "name": "hawaii_decline_reason",
+      "type": "enum",
+      "options": [
+        "not_interested",
+        "too_expensive",
+        "bad_timing",
+        "need_to_think",
+        "already_have_plans",
+        "accepted",
+        "not_offered",
+        "other"
+      ],
+      "description": "Reason customer declined Hawaii offer if applicable"
+    },
+    {
+      "name": "quick_help_node_used",
+      "type": "enum",
+      "options": [
+        "deposit_help",
+        "travel_dates_help",
+        "activation_help",
+        "none"
+      ],
+      "description": "Which quick help node was used, if any"
+    },
+    {
+      "name": "objection_handling_used",
+      "type": "boolean",
+      "description": "Did the conversation reach the objection handling node for Hawaii?"
+    },
+    {
+      "name": "call_outcome",
+      "type": "enum",
+      "options": [
+        "fully_resolved",
+        "transferred_to_support",
+        "transferred_to_hawaii",
+        "callback_scheduled",
+        "customer_declined_help",
+        "incomplete"
+      ],
+      "description": "Final outcome of the call"
+    }
+  ],
+
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2_5",
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.8,
+  "backchannel_words": ["yeah", "uh-huh", "mm-hmm", "okay", "I see", "got it"],
+  "denoising_mode": "noise-and-background-speech-cancellation",
+  "normalize_for_speech": true,
+  "model_choice": {
+    "type": "cascading",
+    "model": "gpt-4.1"
+  },
+  "ambient_sound": "call-center",
+  "ambient_sound_volume": 0.80,
+  "interruption_sensitivity": 0.9,
+  "flex_mode": true,
+
+  "begin_message": "Thank you for calling! I'm here to help you today. What can I assist you with?"
+}

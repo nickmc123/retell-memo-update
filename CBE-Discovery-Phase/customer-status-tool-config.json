@@ -1,0 +1,162 @@
+{
+  "tool_name": "get_customer_status",
+  "description": "Get comprehensive customer status from caller ID in ONE call. Returns customer info, deposit status, travel rep status, booking status, and agent-ready message with recommended action.",
+  "url": "https://web-production-4080.up.railway.app/api/customer/status",
+  "method": "GET",
+  "speak_during_execution": false,
+  "parameters": [
+    {
+      "name": "phone",
+      "type": "string",
+      "description": "Customer phone number from caller ID",
+      "required": true,
+      "value": "{{call.from_number}}"
+    }
+  ],
+  "response_data_extraction": {
+    "customer_found": "found",
+    "overall_status": "status.overall",
+    "customer_category": "status.category",
+    "recommended_action": "status.recommended_action",
+    "agent_message": "status.agent_message",
+    "customer_id": "customer.customer_id",
+    "customer_name": "customer.full_name",
+    "customer_email": "customer.email",
+    "customer_phone": "customer.phone",
+    "certificate_number": "certificate.certificate_number",
+    "package_type": "certificate.package_type",
+    "confirmation_status": "certificate.confirmation_status",
+    "deposit_status": "deposits.status",
+    "deposit_total_paid": "deposits.total_paid",
+    "deposit_expected": "deposits.expected_deposit",
+    "deposit_remaining": "deposits.remaining",
+    "activation_method": "deposits.activation_method",
+    "travel_rep_status": "travel_rep.status",
+    "travel_rep_name": "travel_rep.name",
+    "travel_rep_docs_sent": "travel_rep.documents_sent",
+    "travel_dates_scheduled": "travel_dates.scheduled",
+    "travel_start_date": "travel_dates.start_date",
+    "days_until_travel": "travel_dates.days_until_travel",
+    "is_booked": "booking.is_booked",
+    "flight_booking": "booking.flight_booking",
+    "hotel_booking": "booking.hotel_booking"
+  },
+  "usage_instructions": {
+    "when_to_call": "IMMEDIATELY at the start of every call, before greeting the customer",
+    "how_to_use": "Set phone parameter to {{call.from_number}} to automatically use caller ID",
+    "silent_execution": "Set speak_during_execution to false - this lookup is silent",
+    "agent_message": "Use {{agent_message}} variable to speak the recommended response to customer",
+    "branching": "Branch based on {{overall_status}} or {{deposit_status}} for different flows"
+  },
+  "status_values": {
+    "overall_status_options": [
+      "ready_to_travel - Deposits complete, customer booked",
+      "ready_to_schedule - Deposits complete, not yet booked",
+      "deposits_complete - Deposits complete, no travel date set",
+      "deposits_incomplete - Partial payment received",
+      "deposits_pending - No payment received",
+      "unknown - Customer not found"
+    ],
+    "deposit_status_options": [
+      "complete - All deposits paid",
+      "partial - Some payment received",
+      "none - No payment received"
+    ],
+    "travel_rep_status_options": [
+      "complete - TR assigned and docs sent",
+      "assigned_no_docs - TR assigned but no docs sent",
+      "needs_urgent - Travel date < 45 days, no TR",
+      "normal_window - Travel date 45-75 days, no TR",
+      "too_early - Travel date > 75 days",
+      "not_needed - No travel date set"
+    ],
+    "recommended_action_options": [
+      "verify_itinerary - Customer is booked, ask if they need itinerary",
+      "transfer_to_scheduling - Deposits complete, transfer to schedule travel",
+      "offer_scheduling - Deposits complete, offer to schedule",
+      "collect_payment - Need to collect remaining payment",
+      "none - Just answer their question"
+    ],
+    "customer_category_options": [
+      "active_customer - Deposits complete",
+      "pending_customer - Deposits incomplete",
+      "new_caller - Not found in database"
+    ]
+  },
+  "example_responses": {
+    "active_customer_ready_to_travel": {
+      "found": true,
+      "status": {
+        "overall": "ready_to_travel",
+        "category": "active_customer",
+        "recommended_action": "verify_itinerary",
+        "agent_message": "Great news! Your deposits are complete and you're booked. Your travel rep is John Smith. Do you need your itinerary resent?"
+      },
+      "customer": {
+        "customer_id": "123456",
+        "phone": "+18182121359",
+        "email": "sarah.johnson@email.com",
+        "full_name": "Sarah Johnson"
+      },
+      "certificate": {
+        "certificate_number": "BEACH123",
+        "package_type": "BEACH",
+        "confirmation_status": "confirm"
+      },
+      "deposits": {
+        "status": "complete",
+        "total_paid": 750,
+        "expected_deposit": 750,
+        "remaining": 0,
+        "activation_method": "online"
+      },
+      "travel_rep": {
+        "status": "complete",
+        "name": "John Smith",
+        "documents_sent": true,
+        "docs_date": "2025-05-01"
+      },
+      "travel_dates": {
+        "scheduled": true,
+        "start_date": "2025-06-15",
+        "days_until_travel": 45
+      },
+      "booking": {
+        "is_booked": true,
+        "flight_booking": "FLIGHT123",
+        "hotel_booking": "HOTEL456"
+      }
+    },
+    "incomplete_deposits": {
+      "found": true,
+      "status": {
+        "overall": "deposits_incomplete",
+        "category": "pending_customer",
+        "recommended_action": "collect_payment",
+        "agent_message": "I see you've paid $250 toward your $750 deposit. You have $500 remaining. Would you like to complete your payment today?"
+      },
+      "deposits": {
+        "status": "partial",
+        "total_paid": 250,
+        "expected_deposit": 750,
+        "remaining": 500
+      }
+    },
+    "customer_not_found": {
+      "found": false,
+      "message": "Customer not found in RIMS database",
+      "status": {
+        "overall": "unknown",
+        "category": "new_caller"
+      }
+    }
+  },
+  "agent_flow_logic": {
+    "greeting_personalization": "Use {{agent_message}} to greet customer with personalized, contextual message",
+    "deposit_complete_flow": "If {{deposit_status}} == 'complete': Transfer to scheduling or verify itinerary",
+    "deposit_incomplete_flow": "If {{deposit_status}} == 'partial' or 'none': Provide payment information using {{deposit_remaining}} amount",
+    "new_caller_flow": "If {{customer_found}} == false: Standard greeting, ask how you can help",
+    "travel_rep_urgent": "If {{travel_rep_status}} == 'needs_urgent': Create memo and escalate",
+    "ready_to_travel": "If {{overall_status}} == 'ready_to_travel': Focus on itinerary and travel rep contact"
+  }
+}

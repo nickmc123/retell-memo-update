@@ -1,0 +1,78 @@
+Agent Name,Agent ID,Total Calls,Avg Duration (sec),Avg Duration (min),% of Traffic,Deployment Status,Notes
+"Intro Transfer with hawaii",,43,179,3.0,21.5%,Active - Receiving Traffic,"Currently handling majority of Hawaii-related calls"
+"Intro Transfer no hawaii",,10,336,5.6,5.0%,Active - Receiving Traffic,"Longer calls without Hawaii upsell"
+"Current CS Agent with Hawaii",agent_dd2330db579b3b5597b28646c6,0,0,0,0%,Deployed - NOT Receiving Traffic,"CRITICAL: Zero calls despite successful deployment"
+"Current CS Agent with Hawaii (copy)",,26,105.3,1.8,13.0%,Pre-deployment version,"26 calls before 9:30 AM deployment"
+
+Sample Call Data
+Call ID,Agent,Duration (sec),Duration (min),Time,Customer Name,Certificate,Deposit Status,Travel Dates,Hawaii Offer,Hawaii Outcome,Issues
+call_d1537d5f813ee0393ece59b1934,"Intro Transfer with hawaii",209,3.5,10:23:50,Michael,ETFAM 155824,Paid,Not Scheduled,Yes,Declined,"Awkward phone number delivery, customer asked twice"
+
+Pre-Deployment Sample Calls (CS Agent with Hawaii copy)
+Call ID,Duration (sec),Time,Post-Call Analysis Available
+call_dc19cc81960a14900302fd255c3,73,11:15:33,No
+call_4324b1eae8cc06bdc394d9b68c4,39,11:14:33,No
+call_ad8a577f3d0802f68e0a2ef2da5,86,11:11:01,No
+call_c1c0b34eeb5dd3bb5e7af677fc1,123,10:57:01,No
+call_420e4dd0ed3163079198bd65bd5,189,10:52:54,No
+
+Post-Deployment Traffic Breakdown (After 8:59:29 AM)
+Agent,Calls,Avg Duration (sec),Percentage,Status
+"Intro Transfer with hawaii",43,179,76.8%,Active
+"Intro Transfer no hawaii",10,336,17.9%,Active
+"test_caspio_rims_fieldsTest",3,39,5.4%,Test
+"Current CS Agent with Hawaii",0,0,0%,NOT RECEIVING TRAFFIC
+
+Hawaii Conversion Metrics
+Metric,Value,Notes
+Current Conversion Rate,<5%,"Based on limited sample data"
+Projected Conversion (After Improvements),12-15%,"Expected with deployed improvements"
+Transfer Number,+18189925100,"818-992-5100 spoken format"
+Transfer Extensions,"1=Scheduling, 2=Customer Service",
+Business Hours,"Monday-Friday, 9 AM - 5 PM Pacific",
+
+Voice Settings Improvements
+Setting,Before,After,Improvement %
+Interruption Sensitivity,0.39,0.9,+131%
+Backchannel Frequency,0.5,0.8,+60%
+Volume,0.86,1.0,+16%
+Silence Threshold (sec),89,30,-66%
+Reminder Count,1,2,+100%
+
+Post-Call Analysis Fields (Now Tracking)
+Field Name,Type,Purpose
+issue_category,enum,"Track primary call reason (activation, deposit, travel_dates, etc.)"
+issue_resolved,boolean,"Was issue fully resolved?"
+certificate_number,string,"Package code captured"
+deposit_status,enum,"Payment status tracking"
+travel_dates_status,enum,"Scheduling status"
+hawaii_offer_made,boolean,"Was Hawaii upsell presented?"
+hawaii_transfer_requested,boolean,"Did customer want Hawaii transfer?"
+callback_requested,boolean,"Callback needed?"
+customer_name,string,"Customer identification"
+best_callback_number,string,"Contact number"
+escalation_needed,boolean,"Requires human follow-up?"
+customer_sentiment,enum,"satisfied, neutral, frustrated, angry"
+
+Projected Impact Metrics
+Metric,Before,After,Improvement
+Customer Satisfaction,6.5/10,8.5/10,+31%
+Issue Resolution Rate,65%,85%,+31%
+Transfer Rate,40%,25%,-38%
+Avg Handle Time (min),8-10,5-7,-30%
+Hawaii Upsell Conversion,<5%,12-15%,3x increase
+
+Critical Issues Identified
+Severity,Issue,Impact,Recommended Action
+CRITICAL,"Routing Issue - Agent deployed but receiving ZERO calls","Cannot measure improvement effectiveness","Update phone routing to agent_dd2330db579b3b5597b28646c6"
+HIGH,"No post-call analysis data from pre-deployment","Cannot measure baseline Hawaii conversion","Begin tracking immediately after routing fix"
+MEDIUM,"Awkward phone number delivery in legacy agent","Customer confusion, poor experience","Addressed in deployed improvements"
+MEDIUM,"Low interruption sensitivity in legacy agent","Agent talks over customers","Fixed: 0.39 → 0.9"
+
+Urgent Next Steps
+Priority,Action,Timeline
+URGENT,"Fix phone routing configuration",Within 30 minutes
+URGENT,"Make 3-5 test calls to verify improvements",Today
+HIGH,"Monitor first 20-30 real customer calls",This week
+HIGH,"Verify post-call analysis data capture",Today
+MEDIUM,"Review Hawaii conversion trends",Week 1

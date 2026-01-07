@@ -1,0 +1,776 @@
+{
+  "nodes": [
+    {
+      "id": "node-greeting",
+      "type": "conversation",
+      "name": "Greeting",
+      "display_position": {
+        "x": 100,
+        "y": 100
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Thanks for your interest in our exclusive travel membership. I'd love to tell you about how our members save up to 70% on hotels, cruises, and vacation packages. Do you have a few minutes to chat?"
+      },
+      "edges": [
+        {
+          "id": "edge-greeting-has-time",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says yes, they have time to chat"
+          },
+          "destination_node_id": "node-qualify-travel"
+        },
+        {
+          "id": "edge-greeting-no-time",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says no, they don't have time right now"
+          },
+          "destination_node_id": "node-schedule-callback"
+        }
+      ]
+    },
+    {
+      "id": "node-schedule-callback",
+      "type": "conversation",
+      "name": "Schedule Callback",
+      "display_position": {
+        "x": 300,
+        "y": 100
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "No problem! When would be a better time for me to call back? Get a specific day and time preference."
+      },
+      "edges": [
+        {
+          "id": "edge-callback-to-end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides callback time preference"
+          },
+          "destination_node_id": "node-end-callback"
+        }
+      ]
+    },
+    {
+      "id": "node-qualify-travel",
+      "type": "conversation",
+      "name": "Qualify Travel Frequency",
+      "display_position": {
+        "x": 100,
+        "y": 250
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "So I can better help you, do you enjoy traveling for vacation at least once or twice a year?"
+      },
+      "edges": [
+        {
+          "id": "edge-travel-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User confirms they travel 1-2 times per year or more"
+          },
+          "destination_node_id": "node-qualify-decision"
+        },
+        {
+          "id": "edge-travel-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says they don't travel that often"
+          },
+          "destination_node_id": "node-disqualify"
+        }
+      ]
+    },
+    {
+      "id": "node-qualify-decision",
+      "type": "conversation",
+      "name": "Qualify Decision Maker",
+      "display_position": {
+        "x": 100,
+        "y": 400
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "And are you typically the decision-maker when it comes to booking travel for yourself or your family?"
+      },
+      "edges": [
+        {
+          "id": "edge-decision-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User confirms they are the decision-maker"
+          },
+          "destination_node_id": "node-qualify-age"
+        },
+        {
+          "id": "edge-decision-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says they are not the decision-maker"
+          },
+          "destination_node_id": "node-disqualify"
+        }
+      ]
+    },
+    {
+      "id": "node-qualify-age",
+      "type": "conversation",
+      "name": "Qualify Age",
+      "display_position": {
+        "x": 100,
+        "y": 550
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Perfect! Just to make sure our membership is a good fit - are you at least 25 years old?"
+      },
+      "edges": [
+        {
+          "id": "edge-age-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User confirms they are 25 or older"
+          },
+          "destination_node_id": "node-qualify-payment"
+        },
+        {
+          "id": "edge-age-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User indicates they are under 25"
+          },
+          "destination_node_id": "node-disqualify"
+        }
+      ]
+    },
+    {
+      "id": "node-qualify-payment",
+      "type": "conversation",
+      "name": "Qualify Payment Method",
+      "display_position": {
+        "x": 100,
+        "y": 700
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Great! One last question - do you have a valid credit or debit card available if you decide to activate today?"
+      },
+      "edges": [
+        {
+          "id": "edge-payment-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User confirms they have a credit or debit card available"
+          },
+          "destination_node_id": "node-present-benefits"
+        },
+        {
+          "id": "edge-payment-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says they don't have a payment method available"
+          },
+          "destination_node_id": "node-disqualify"
+        }
+      ]
+    },
+    {
+      "id": "node-present-benefits",
+      "type": "conversation",
+      "name": "Present Benefits",
+      "display_position": {
+        "x": 100,
+        "y": 850
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Wonderful! Let me tell you what makes TravelBucks special. You'll get access to wholesale travel pricing - we're talking 50-70% off hotels, resorts, cruises, and vacation packages. Our members save an average of $2,000 per year on travel. You get a dedicated concierge team - that's us - available 24/7. No blackout dates, no restrictions. Plus exclusive members-only deals every week. The best part? Your activation fee today is just $149, and that gives you a full year of unlimited access."
+      },
+      "edges": [
+        {
+          "id": "edge-benefits-ready",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is ready to proceed and wants to activate membership"
+          },
+          "destination_node_id": "node-collect-name"
+        },
+        {
+          "id": "edge-benefits-expensive",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says it's too expensive or expresses price concern"
+          },
+          "destination_node_id": "node-objection-expensive"
+        },
+        {
+          "id": "edge-benefits-think",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says they need to think about it"
+          },
+          "destination_node_id": "node-objection-think"
+        },
+        {
+          "id": "edge-benefits-spouse",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says they need to talk to their spouse or partner"
+          },
+          "destination_node_id": "node-objection-spouse"
+        },
+        {
+          "id": "edge-benefits-scam",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User questions if this is legitimate or asks if it's a scam"
+          },
+          "destination_node_id": "node-objection-scam"
+        },
+        {
+          "id": "edge-benefits-not-interested",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User declines or says they're not interested"
+          },
+          "destination_node_id": "node-polite-end"
+        }
+      ]
+    },
+    {
+      "id": "node-objection-expensive",
+      "type": "conversation",
+      "name": "Handle Price Objection",
+      "display_position": {
+        "x": 400,
+        "y": 850
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "I totally understand. Let me put it this way - if you book just ONE hotel stay through us, you'll likely save more than the membership cost. Most members save $200-500 on their very first booking."
+      },
+      "edges": [
+        {
+          "id": "edge-expensive-proceed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is convinced and ready to proceed"
+          },
+          "destination_node_id": "node-collect-name"
+        },
+        {
+          "id": "edge-expensive-still-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User still declines or not interested"
+          },
+          "destination_node_id": "node-polite-end"
+        }
+      ]
+    },
+    {
+      "id": "node-objection-think",
+      "type": "conversation",
+      "name": "Handle Think About It",
+      "display_position": {
+        "x": 500,
+        "y": 850
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Of course, it's always smart to think things through. What specific questions can I answer to help you decide? I'm here to help, not pressure you."
+      },
+      "edges": [
+        {
+          "id": "edge-think-proceed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User's questions are answered and they're ready to proceed"
+          },
+          "destination_node_id": "node-collect-name"
+        },
+        {
+          "id": "edge-think-callback",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to think about it and call back later"
+          },
+          "destination_node_id": "node-polite-end"
+        }
+      ]
+    },
+    {
+      "id": "node-objection-spouse",
+      "type": "conversation",
+      "name": "Handle Spouse Consultation",
+      "display_position": {
+        "x": 600,
+        "y": 850
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Absolutely, that makes sense for a family decision. Would it help if I stayed on the line while you chat with them? Or I can schedule a callback when you're both available."
+      },
+      "edges": [
+        {
+          "id": "edge-spouse-stay",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User will ask spouse now and wants you to stay on the line, or spouse says yes"
+          },
+          "destination_node_id": "node-collect-name"
+        },
+        {
+          "id": "edge-spouse-callback",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to schedule a callback with spouse present"
+          },
+          "destination_node_id": "node-schedule-callback"
+        }
+      ]
+    },
+    {
+      "id": "node-objection-scam",
+      "type": "conversation",
+      "name": "Handle Scam Concern",
+      "display_position": {
+        "x": 700,
+        "y": 850
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Great question - I'm glad you're cautious! TravelBucks has been in business for over 10 years with thousands of happy members. We're BBB accredited, and I can send you our website and reviews right after this call. Your payment is also fully secured."
+      },
+      "edges": [
+        {
+          "id": "edge-scam-proceed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is satisfied with the legitimacy and ready to proceed"
+          },
+          "destination_node_id": "node-collect-name"
+        },
+        {
+          "id": "edge-scam-still-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is still skeptical or declines"
+          },
+          "destination_node_id": "node-polite-end"
+        }
+      ]
+    },
+    {
+      "id": "node-collect-name",
+      "type": "conversation",
+      "name": "Collect Name",
+      "display_position": {
+        "x": 100,
+        "y": 1000
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Fantastic! I'm excited to get you started. To activate your membership, I'll just need a few details. First, what's your full name as it appears on your card?"
+      },
+      "edges": [
+        {
+          "id": "edge-name-to-email",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides their full name"
+          },
+          "destination_node_id": "node-collect-email"
+        }
+      ]
+    },
+    {
+      "id": "node-collect-email",
+      "type": "conversation",
+      "name": "Collect Email",
+      "display_position": {
+        "x": 100,
+        "y": 1120
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "And your email address so we can send your welcome packet?"
+      },
+      "edges": [
+        {
+          "id": "edge-email-to-phone",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides their email address"
+          },
+          "destination_node_id": "node-collect-phone"
+        }
+      ]
+    },
+    {
+      "id": "node-collect-phone",
+      "type": "conversation",
+      "name": "Collect Phone",
+      "display_position": {
+        "x": 100,
+        "y": 1240
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Your phone number for your account?"
+      },
+      "edges": [
+        {
+          "id": "edge-phone-to-card",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides their phone number"
+          },
+          "destination_node_id": "node-collect-card"
+        }
+      ]
+    },
+    {
+      "id": "node-collect-card",
+      "type": "conversation",
+      "name": "Collect Card Number",
+      "display_position": {
+        "x": 100,
+        "y": 1360
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Now for the card - what's the card number?"
+      },
+      "edges": [
+        {
+          "id": "edge-card-to-exp",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides their card number"
+          },
+          "destination_node_id": "node-collect-expiration"
+        }
+      ]
+    },
+    {
+      "id": "node-collect-expiration",
+      "type": "conversation",
+      "name": "Collect Expiration",
+      "display_position": {
+        "x": 100,
+        "y": 1480
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "The expiration date?"
+      },
+      "edges": [
+        {
+          "id": "edge-exp-to-cvv",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides the expiration date"
+          },
+          "destination_node_id": "node-collect-cvv"
+        }
+      ]
+    },
+    {
+      "id": "node-collect-cvv",
+      "type": "conversation",
+      "name": "Collect CVV",
+      "display_position": {
+        "x": 100,
+        "y": 1600
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "And the 3-digit security code on the back?"
+      },
+      "edges": [
+        {
+          "id": "edge-cvv-to-zip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides the CVV code"
+          },
+          "destination_node_id": "node-collect-zip"
+        }
+      ]
+    },
+    {
+      "id": "node-collect-zip",
+      "type": "conversation",
+      "name": "Collect Zip Code",
+      "display_position": {
+        "x": 100,
+        "y": 1720
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Finally, what's the billing zip code?"
+      },
+      "edges": [
+        {
+          "id": "edge-zip-to-process",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User provides the zip code"
+          },
+          "destination_node_id": "node-process-payment"
+        }
+      ]
+    },
+    {
+      "id": "node-process-payment",
+      "type": "function",
+      "name": "Process Payment",
+      "display_position": {
+        "x": 100,
+        "y": 1840
+      },
+      "tool_id": "tool-payment-processor",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Process the payment using the collected information: name, email, phone, card_number, expiration, cvv, and zip_code for amount of $149."
+      },
+      "wait_for_result": true,
+      "speak_during_execution": true,
+      "edges": [
+        {
+          "id": "edge-payment-success",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Payment was successfully processed"
+          },
+          "destination_node_id": "node-confirmation"
+        },
+        {
+          "id": "edge-payment-declined-retry",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Payment was declined and this is attempt 1 or 2"
+          },
+          "destination_node_id": "node-retry-payment"
+        },
+        {
+          "id": "edge-payment-declined-final",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Payment was declined and this is the 3rd attempt"
+          },
+          "destination_node_id": "node-payment-failed"
+        }
+      ]
+    },
+    {
+      "id": "node-retry-payment",
+      "type": "conversation",
+      "name": "Retry Payment",
+      "display_position": {
+        "x": 300,
+        "y": 1840
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "The card was declined. Politely ask if they have another card they'd like to try."
+      },
+      "edges": [
+        {
+          "id": "edge-retry-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to try another card"
+          },
+          "destination_node_id": "node-collect-card"
+        },
+        {
+          "id": "edge-retry-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User doesn't want to try another card"
+          },
+          "destination_node_id": "node-payment-failed"
+        }
+      ]
+    },
+    {
+      "id": "node-confirmation",
+      "type": "conversation",
+      "name": "Confirmation Welcome",
+      "display_position": {
+        "x": 100,
+        "y": 1960
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Congratulations! Your TravelBucks membership is now active! You'll receive a welcome email within the next few minutes with your login details and a special new member bonus. Is there anything else I can help you with today?"
+      },
+      "edges": [
+        {
+          "id": "edge-confirmation-to-end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says no, they're all set, or finishes the conversation"
+          },
+          "destination_node_id": "node-end-success"
+        }
+      ]
+    },
+    {
+      "id": "node-disqualify",
+      "type": "conversation",
+      "name": "Disqualification",
+      "display_position": {
+        "x": 400,
+        "y": 400
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely explain that the membership requires meeting certain criteria, thank them for their time, and wish them well."
+      },
+      "edges": [
+        {
+          "id": "edge-disqualify-to-end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Always proceed to end after disqualification message"
+          },
+          "destination_node_id": "node-end-disqualified"
+        }
+      ]
+    },
+    {
+      "id": "node-polite-end",
+      "type": "conversation",
+      "name": "Polite Decline End",
+      "display_position": {
+        "x": 900,
+        "y": 850
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "I understand, and I appreciate your time today. If you change your mind or have any questions, feel free to reach out. Have a wonderful day!"
+      },
+      "edges": [
+        {
+          "id": "edge-polite-to-end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Always proceed to end"
+          },
+          "destination_node_id": "node-end-not-interested"
+        }
+      ]
+    },
+    {
+      "id": "node-payment-failed",
+      "type": "conversation",
+      "name": "Payment Failed",
+      "display_position": {
+        "x": 500,
+        "y": 1840
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Apologize that you're unable to process the payment after multiple attempts. Let them know they can call back when they have another payment method available."
+      },
+      "edges": [
+        {
+          "id": "edge-failed-to-end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Always proceed to end"
+          },
+          "destination_node_id": "node-end-payment-failed"
+        }
+      ]
+    },
+    {
+      "id": "node-end-success",
+      "type": "end",
+      "name": "End - Success",
+      "display_position": {
+        "x": 100,
+        "y": 2100
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Thank you so much for joining TravelBucks! I know you're going to love the savings. Have a wonderful day, and happy travels!"
+      }
+    },
+    {
+      "id": "node-end-callback",
+      "type": "end",
+      "name": "End - Callback Scheduled",
+      "display_position": {
+        "x": 500,
+        "y": 100
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Perfect! I'll make a note to call you back at that time. Have a great day!"
+      }
+    },
+    {
+      "id": "node-end-disqualified",
+      "type": "end",
+      "name": "End - Disqualified",
+      "display_position": {
+        "x": 600,
+        "y": 400
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Thank you for your time. Goodbye!"
+      }
+    },
+    {
+      "id": "node-end-not-interested",
+      "type": "end",
+      "name": "End - Not Interested",
+      "display_position": {
+        "x": 1100,
+        "y": 850
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Goodbye, and take care!"
+      }
+    },
+    {
+      "id": "node-end-payment-failed",
+      "type": "end",
+      "name": "End - Payment Failed",
+      "display_position": {
+        "x": 700,
+        "y": 1840
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "We appreciate your interest. Have a good day!"
+      }
+    }
+  ],
+  "start_node_id": "node-greeting",
+  "global_prompt": "You are Alex, a friendly and professional travel concierge for TravelBucks. Be warm, enthusiastic, and genuinely helpful. Use the caller's name when you learn it. Speak clearly at a moderate pace. Stay positive and never argue.",
+  "tools": [
+    {
+      "name": "process_travelbucks_payment",
+      "description": "Processes membership payment of $149 via TravelBucks webhook",
+      "tool_id": "tool-payment-processor",
+      "type": "custom",
+      "url": "https://travelbucks-voice-ops-production.up.railway.app/webhook"
+    }
+  ],
+  "model_choice": {
+    "type": "cascading",
+    "model": "gpt-4.1"
+  }
+}

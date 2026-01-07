@@ -1,0 +1,646 @@
+{
+  "version": 6,
+  "global_prompt": "## Agent Identity\nYou are Kassie, a professional customer service representative for Casablanca Express. This is the AFTER-HOURS system.\n\n## Your Role\n- You CAN look up customer information and provide status updates\n- You CAN provide next steps and helpful information\n- You CANNOT transfer calls to scheduling or sales\n- You CANNOT contact the team for help\n- For anything requiring immediate assistance, provide the customer service number: 818-992-5100\n\n## Business Hours\nMonday-Friday, 9am to 5pm Pacific Time (except major holidays)\n\n## Holiday Closures\nClosed: December 24, 25, 30, and 31\n\n## Customer Service Number\n818-992-5100 (say this VERY SLOWLY and repeat it)\n\n## Instructions\n- Be warm and professional\n- Look up customer accounts and provide accurate status information\n- Provide next steps based on their current status\n- For scheduling or transfers, provide the phone number instead: 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0\n- Use knowledge base to answer questions\n- Do not loop or repeat the same steps more than TWO TIMES",
+  "nodes": [
+    {
+      "instruction": {
+        "type": "static_text",
+        "text": "Thank you for calling Casablanca Express. All calls are recorded. You've reached us outside of our normal business hours. I can still look up your account and provide information about your trip status. To pull up your account, can you please provide the phone number associated with your vacation package?"
+      },
+      "name": "After Hours Greeting",
+      "edges": [
+        {
+          "destination_node_id": "node-phone-lookup",
+          "id": "edge-phone-provided",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer provides their phone number"
+          }
+        }
+      ],
+      "start_speaker": "agent",
+      "id": "node-after-hours-greeting",
+      "type": "conversation",
+      "display_position": {
+        "x": 550,
+        "y": 110
+      }
+    },
+    {
+      "tool_id": "tool-1765203515291",
+      "instruction": {
+        "type": "prompt",
+        "text": "Let me look that up for you."
+      },
+      "name": "Phone Lookup",
+      "edges": [
+        {
+          "destination_node_id": "node-check-destination",
+          "id": "edge-found",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer found"
+          }
+        },
+        {
+          "destination_node_id": "node-phone-not-found",
+          "id": "edge-not-found",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer not found"
+          }
+        }
+      ],
+      "id": "node-phone-lookup",
+      "type": "function",
+      "tool_type": "local",
+      "speak_during_execution": false,
+      "display_position": {
+        "x": 1100,
+        "y": 140
+      },
+      "wait_for_result": true
+    },
+    {
+      "name": "Phone Not Found - Retry",
+      "edges": [
+        {
+          "destination_node_id": "node-phone-lookup",
+          "id": "edge-retry-phone",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer provides another phone number"
+          }
+        },
+        {
+          "destination_node_id": "node-no-account-found",
+          "id": "edge-no-phone-available",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer doesn't have another phone number"
+          }
+        }
+      ],
+      "id": "node-phone-not-found",
+      "type": "conversation",
+      "display_position": {
+        "x": 1650,
+        "y": 4540
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Hmm that didn't come up, can you tell me the phone number once more or do you have another phone number you would like me to check?"
+      }
+    },
+    {
+      "name": "No Account - Provide Number",
+      "edges": [
+        {
+          "destination_node_id": "node-end-call",
+          "id": "edge-no-account-to-end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer is ready to hang up"
+          }
+        }
+      ],
+      "id": "node-no-account-found",
+      "type": "conversation",
+      "display_position": {
+        "x": 2200,
+        "y": 4530
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "I'm sorry I couldn't locate your account. For assistance with this, please call our customer service team at 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0, Monday through Friday, 9 a.m. to 5 p.m. Pacific time. They'll be able to help you. Is there anything else I can assist you with?"
+      }
+    },
+    {
+      "name": "Check Destination",
+      "edges": [
+        {
+          "destination_node_id": "node-extract-vars",
+          "id": "edge-proceed-to-extract",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer has one trip or has selected which trip to check"
+          }
+        }
+      ],
+      "id": "node-check-destination",
+      "type": "conversation",
+      "display_position": {
+        "x": 1650,
+        "y": 80
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "If the all_records array from phone lookup contains more than one trip, say: 'I show you have more than one trip with us, which destination are you calling about?' If they specify a destination and multiple records have that same destination, ask them to clarify by mentioning the package codes (pkg_code2) available for that destination. Always prioritize the record with the most recent Val_Entered_On date. If there is only one trip, proceed directly to checking their status without asking."
+      }
+    },
+    {
+      "name": "Extract Variables",
+      "edges": [
+        {
+          "destination_node_id": "node-customer-status",
+          "id": "edge-vars-to-status",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Found"
+          }
+        }
+      ],
+      "variables": [
+        {
+          "name": "pkg_code2",
+          "description": "Package code",
+          "type": "string",
+          "choices": []
+        },
+        {
+          "name": "vac_id",
+          "description": "Vacation ID",
+          "type": "number",
+          "choices": []
+        }
+      ],
+      "id": "node-extract-vars",
+      "type": "extract_dynamic_variables",
+      "display_position": {
+        "x": 2200,
+        "y": 140
+      }
+    },
+    {
+      "tool_id": "tool-1766101805019",
+      "instruction": {
+        "type": "prompt",
+        "text": "Let me check the status of that trip for you."
+      },
+      "name": "Customer Status",
+      "edges": [
+        {
+          "destination_node_id": "node-status-deposit-needed",
+          "id": "edge-deposit-needed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Deposit Needed'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-ready-schedule",
+          "id": "edge-ready-schedule",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Ready to Schedule'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-waiting-tr",
+          "id": "edge-waiting-tr",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Waiting For Travel Rep'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-tr-assigned",
+          "id": "edge-tr-assigned",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Travel Rep Assigned'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-booking-pending",
+          "id": "edge-booking-pending",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Booking Pending'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-travel-pending",
+          "id": "edge-travel-pending",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Travel Pending'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-refund-pending",
+          "id": "edge-refund-pending",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Refund Pending'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-trip-complete",
+          "id": "edge-trip-complete",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Status equals 'Trip Complete'"
+          }
+        },
+        {
+          "destination_node_id": "node-status-error",
+          "id": "edge-status-error",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Tool call failed"
+          }
+        }
+      ],
+      "id": "node-customer-status",
+      "type": "function",
+      "tool_type": "local",
+      "speak_during_execution": true,
+      "display_position": {
+        "x": 2750,
+        "y": 0
+      },
+      "wait_for_result": true
+    },
+    {
+      "name": "Deposit Needed",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-deposit-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing deposit information"
+          }
+        }
+      ],
+      "id": "node-status-deposit-needed",
+      "type": "conversation",
+      "display_position": {
+        "x": 3303.6523620177545,
+        "y": 4351.397041541496
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "So I see your certificate is activated but it looks like your deposit hasn’t posted to the account yet. If you haven’t sent it in yet, that’s going to be your next step.  our customer service team is available at 8-1-8--9-9-2--5-1-0-0, Monday through Friday, 9am to 5pm Pacific if you need help with the deposit process."
+      }
+    },
+    {
+      "name": "Ready to Schedule",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-schedule-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing scheduling information"
+          }
+        }
+      ],
+      "id": "node-status-ready-schedule",
+      "type": "conversation",
+      "display_position": {
+        "x": 3300,
+        "y": 3640
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Great news! Your deposit is all paid so you are ready to select dates. To schedule your travel dates, please call our scheduling department at 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0 and dial extension 1, Monday through Friday, 9 a.m. to 5 p.m. Pacific time. Please have a calendar available and your certificate number when you call. In general, we are scheduling into May and June for most trips, and some cruises need to be booked even further in advance."
+      }
+    },
+    {
+      "name": "Waiting For TR",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-waiting-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing status information"
+          }
+        }
+      ],
+      "id": "node-status-waiting-tr",
+      "type": "conversation",
+      "display_position": {
+        "x": 3300,
+        "y": 3120
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Looks like your dates are all set up and you're just waiting for a travel rep to be assigned. Normally that's 45 to 75 days before the trip. If you haven't been contacted about 60 days prior to your travel dates, give us a call at 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0."
+      }
+    },
+    {
+      "name": "TR Assigned",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-tr-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing status information"
+          }
+        }
+      ],
+      "id": "node-status-tr-assigned",
+      "type": "conversation",
+      "display_position": {
+        "x": 3300,
+        "y": 2600
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Looks like your travel rep has been assigned so be sure to answer any phone calls from the 805 area code. If you have questions about your booking, you can call our office at 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0, Monday through Friday, 9 a.m. to 5 p.m. Pacific."
+      }
+    },
+    {
+      "name": "Booking Pending",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-booking-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing status information"
+          }
+        }
+      ],
+      "id": "node-status-booking-pending",
+      "type": "conversation",
+      "display_position": {
+        "x": 3300,
+        "y": 2080
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Looks like you've already spoken to the travel rep but we haven't finalized the booking. Expect a call from a booking agent 7 to 14 days before the trip. If you have urgent questions, you can reach us at 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0, Monday through Friday, 9 a.m. to 5 p.m. Pacific."
+      }
+    },
+    {
+      "name": "Travel Pending",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-travel-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing status information"
+          }
+        }
+      ],
+      "id": "node-status-travel-pending",
+      "type": "conversation",
+      "display_position": {
+        "x": 3257.1175051122214,
+        "y": 1266.514175303138
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Looks like everything has been booked and emailed and your trip is coming soon! If you need to review your itinerary or have questions, call us at 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0, Monday through Friday, 9 a.m. to 5 p.m. Pacific."
+      }
+    },
+    {
+      "name": "Refund Pending",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-refund-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing status information"
+          }
+        }
+      ],
+      "id": "node-status-refund-pending",
+      "type": "conversation",
+      "display_position": {
+        "x": 3300,
+        "y": 1080
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "I see you have a refund pending. For questions about the refund status, please call us at 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0, Monday through Friday, 9 a.m. to 5 p.m. Pacific. How else can I help you?"
+      }
+    },
+    {
+      "name": "Trip Complete",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-complete-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks a question or needs help"
+          }
+        }
+      ],
+      "id": "node-status-trip-complete",
+      "type": "conversation",
+      "display_position": {
+        "x": 3300,
+        "y": 640
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "So it looks like you guys already traveled. How can I help you today?"
+      }
+    },
+    {
+      "name": "Status Check Error",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-error-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing phone number"
+          }
+        }
+      ],
+      "id": "node-status-error",
+      "type": "conversation",
+      "display_position": {
+        "x": 3300,
+        "y": 120
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Apologize that you're having trouble accessing their status information. Provide the customer service number 8-1-8--9-9-2--5-1-0-0 and let them know they can call Monday through Friday, 9am to 5pm Pacific. Ask if there's anything else you can help with using the knowledge base."
+      }
+    },
+    {
+      "name": "Anything Else",
+      "edges": [
+        {
+          "destination_node_id": "node-general-help",
+          "id": "edge-more-questions",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer has more questions"
+          }
+        },
+        {
+          "destination_node_id": "node-business-hours-reminder",
+          "id": "edge-done",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer is ready to hang up"
+          }
+        }
+      ],
+      "id": "node-anything-else-after-hours",
+      "type": "conversation",
+      "display_position": {
+        "x": 3850,
+        "y": 2050
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Ask if there is anything else you can help with. Use knowledge base to answer questions. If they ask something you cannot answer or need immediate assistance, provide the phone number 8-1-8--9-9-2--5-1-0-0, Monday through Friday, 9am to 5pm Pacific. If no further questions, customer is ready to hang up."
+      }
+    },
+    {
+      "name": "General Help",
+      "edges": [
+        {
+          "destination_node_id": "node-anything-else-after-hours",
+          "id": "edge-help-to-anything",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After answering their question"
+          }
+        }
+      ],
+      "id": "node-general-help",
+      "type": "conversation",
+      "display_position": {
+        "x": 4400,
+        "y": 2070
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Help the customer with their additional questions. Use the knowledge base to provide accurate information about deposits, travel dates, booking process, or any Casablanca Express policies. If the question requires immediate assistance or you don't have the answer, provide the customer service number 8-1-8--9-9-2--5-1-0-0."
+      }
+    },
+    {
+      "name": "Business Hours Reminder",
+      "edges": [
+        {
+          "destination_node_id": "node-end-call",
+          "id": "edge-reminder-to-end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "After providing business hours"
+          }
+        }
+      ],
+      "id": "node-business-hours-reminder",
+      "type": "conversation",
+      "display_position": {
+        "x": 4400,
+        "y": 4280
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Just a reminder, we are open Monday through Friday from 9 a.m. to 5 p.m. Pacific time, and we will be closed December 24th, 25th, 30th, and 31st. Our customer service number is 8 - 1 - 8 - - 9 - 9 - 2 - - 5 - 1 - 0 - 0."
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "node-end-call",
+      "type": "end",
+      "speak_during_execution": true,
+      "display_position": {
+        "x": 4950,
+        "y": 4355
+      },
+      "instruction": {
+        "type": "static_text",
+        "text": "Thank you so much for calling Casablanca Express. Have a wonderful day!"
+      }
+    }
+  ],
+  "components": [],
+  "start_node_id": "node-after-hours-greeting",
+  "start_speaker": "agent",
+  "tools": [
+    {
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "parameter_type": "json",
+      "method": "POST",
+      "query_params": {},
+      "description": "Look up customer account info by phone number from RIMS database",
+      "type": "custom",
+      "url": "https://web-production-4080.up.railway.app/api/rims/phone-lookup",
+      "tool_id": "tool-1765203515291",
+      "args_at_root": true,
+      "timeout_ms": 120000,
+      "name": "rims_phone_lookup",
+      "response_variables": {
+        "package_code": "$.Account_Holder[0].Package_Code",
+        "customer_name": "$.Account_Holder[0].Customer_Name"
+      },
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "phone_number": {
+            "type": "string",
+            "description": "Phone number in any format (will be normalized)"
+          }
+        },
+        "required": [
+          "phone_number"
+        ]
+      }
+    },
+    {
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "parameter_type": "json",
+      "method": "POST",
+      "query_params": {},
+      "description": "Check the current status of a customer's vacation package",
+      "type": "custom",
+      "url": "https://web-production-4080.up.railway.app/api/logic/customer-status",
+      "tool_id": "tool-1766101805019",
+      "args_at_root": false,
+      "timeout_ms": 120000,
+      "name": "customer_status_check",
+      "response_variables": {},
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pkg_code2": {
+            "type": "string",
+            "description": "Package code from the customer lookup"
+          },
+          "vac_id": {
+            "type": "number",
+            "description": "Vacation ID from the customer lookup"
+          }
+        },
+        "required": [
+          "vac_id",
+          "pkg_code2"
+        ]
+      }
+    }
+  ],
+  "model_choice": {
+    "type": "cascading",
+    "model": "gpt-4.1"
+  },
+  "kb_config": {
+    "top_k": 3,
+    "filter_score": 0.6
+  },
+  "begin_tag_display_position": {
+    "x": 0,
+    "y": 205
+  },
+  "is_published": false
+}

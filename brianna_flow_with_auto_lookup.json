@@ -1,0 +1,181 @@
+{
+  "conversation_flow_id": "conversation_flow_d722fb428385",
+  "version": 0,
+  "nodes": [
+    {
+      "id": "node-auto-phone-lookup-brianna",
+      "type": "function",
+      "name": "Auto Phone Lookup",
+      "tool_id": "tool-phone-lookup-immediate-brianna",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Silently look up the customer by their caller ID before greeting."
+      },
+      "wait_for_result": true,
+      "speak_during_execution": false,
+      "tool_parameters_json": {
+        "phone_number": "{{from_number}}"
+      },
+      "display_position": {
+        "x": 550,
+        "y": -300
+      },
+      "edges": [
+        {
+          "id": "edge-auto-lookup-success-brianna",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer found or lookup completed"
+          },
+          "destination_node_id": "start-node-1766671738943"
+        },
+        {
+          "id": "edge-auto-lookup-not-found-brianna",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer not found"
+          },
+          "destination_node_id": "start-node-1766671738943"
+        }
+      ]
+    },
+    {
+      "instruction": {
+        "type": "prompt",
+        "text": "Hey there! This is Brianna calling from TravelBucks! I saw you just reached out about our amazing travel club - I'm SO excited to chat with you! Do you have a quick minute?"
+      },
+      "name": "Welcome Node",
+      "edges": [
+        {
+          "id": "edge-2",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is not interested or busy right now"
+          }
+        },
+        {
+          "id": "edge-1766674807771-1ilu5pfl9",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User is interested and wants to learn more"
+          }
+        }
+      ],
+      "start_speaker": "agent",
+      "id": "start-node-1766671738943",
+      "type": "conversation",
+      "display_position": {
+        "x": 550,
+        "y": 0
+      }
+    },
+    {
+      "name": "End Call",
+      "id": "end-call-node-1766671738943",
+      "type": "end",
+      "display_position": {
+        "x": 0,
+        "y": 435
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Politely end the call"
+      }
+    },
+    {
+      "name": "Lead Qualification",
+      "edges": [
+        {
+          "id": "edge-1766672310030-s8wrss8vu",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User answers travel questions and is qualified"
+          }
+        }
+      ],
+      "id": "node-1766672310030",
+      "type": "conversation",
+      "display_position": {
+        "x": 0,
+        "y": 785
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Awesome! So glad you're curious! Let me tell you about our incredible travel club. TravelBucks gives you access to exclusive resort stays at prices you won't believe. Before I go into all the exciting details, I just have a couple quick questions to make sure I can find the perfect fit for you. First off, do you enjoy traveling? And how often do you typically take vacations - would you say once a year, a few times a year, or more?"
+      }
+    },
+    {
+      "name": "Lead Qualification",
+      "edges": [
+        {
+          "id": "edge-1766674457297-nwpj2b69u",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Describe the transition condition"
+          }
+        }
+      ],
+      "id": "node-1766674457297",
+      "type": "conversation",
+      "display_position": {
+        "x": 0,
+        "y": 1365
+      },
+      "instruction": {
+        "type": "prompt",
+        "text": "Awesome! So glad you're curious! Let me tell you about our incredible travel club. TravelBucks gives you access to exclusive resort stays at prices you won't believe. Before I go into all the exciting details, I just have a couple quick questions to make sure I can find the perfect fit for you. First off, do you enjoy traveling? And how often do you typically take vacations - would you say once a year, a few times a year, or more?"
+      }
+    }
+  ],
+  "start_node_id": "node-auto-phone-lookup-brianna",
+  "start_speaker": "agent",
+  "model_choice": {
+    "type": "cascading",
+    "model": "gpt-4.1"
+  },
+  "tool_call_strict_mode": true,
+  "kb_config": {
+    "top_k": 3,
+    "filter_score": 0.6
+  },
+  "begin_tag_display_position": {
+    "x": 300,
+    "y": -300
+  },
+  "is_published": false,
+  "tools": [
+    {
+      "name": "phone_lookup_immediate",
+      "tool_id": "tool-phone-lookup-immediate-brianna",
+      "type": "custom",
+      "description": "Automatically looks up customer by caller ID at call start",
+      "url": "https://web-production-4080.up.railway.app/api/rims/phone-lookup",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "parameter_type": "json",
+      "args_at_root": true,
+      "timeout_ms": 120000,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "phone_number": {
+            "type": "string",
+            "description": "Caller's phone number from caller ID"
+          }
+        },
+        "required": [
+          "phone_number"
+        ]
+      },
+      "response_variables": {
+        "vac_id": "$.Account_Holder[0].vac_id",
+        "pkg_code2": "$.Account_Holder[0].pkg_code2",
+        "customer_name": "$.Account_Holder[0].Customer_Name",
+        "all_records": "$.Account_Holder"
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "agent_name": "Brianna - Outbound Callback",
+  "response_engine": {
+    "type": "conversation-flow",
+    "conversation_flow_id": "conversation_flow_c157876f8d0f"
+  },
+  "language": "en-US",
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2_5",
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.8,
+  "backchannel_words": ["yeah", "uh-huh", "mm-hmm", "okay", "I see", "got it"],
+  "denoising_mode": "noise-and-background-speech-cancellation",
+  "normalize_for_speech": true,
+  "ambient_sound": "call-center",
+  "ambient_sound_volume": 0.80,
+  "interruption_sensitivity": 0.9,
+  "begin_message": "Hi! This is Brianna from TravelBucks - do I have a minute of your time?",
+  "post_call_analysis_data": [
+    {
+      "name": "client_id",
+      "type": "string",
+      "description": "TravelBucks client ID (e.g., tb263421)"
+    },
+    {
+      "name": "payment_collected",
+      "type": "boolean",
+      "description": "Was payment successfully collected?"
+    },
+    {
+      "name": "payment_amount",
+      "type": "number",
+      "description": "Amount of payment collected if successful"
+    },
+    {
+      "name": "lead_qualified",
+      "type": "boolean",
+      "description": "Was the lead qualified as a regular traveler?"
+    },
+    {
+      "name": "call_outcome",
+      "type": "enum",
+      "choices": ["payment_success", "declined_offer", "not_interested", "callback_requested", "payment_failed"],
+      "description": "Final outcome of the call"
+    },
+    {
+      "name": "objections_raised",
+      "type": "string",
+      "description": "Main objections raised by the prospect"
+    },
+    {
+      "name": "customer_email",
+      "type": "string",
+      "description": "Customer's email address if collected"
+    },
+    {
+      "name": "travel_frequency",
+      "type": "string",
+      "description": "How often the customer travels per year"
+    }
+  ]
+}

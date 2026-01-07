@@ -1,0 +1,55 @@
+# Directives
+
+This directory contains Standard Operating Procedures (SOPs) written in Markdown.
+
+## Purpose
+
+Directives define **what to do** in natural language, like instructions you'd give to a mid-level employee.
+
+## Format
+
+Each directive should include:
+
+1. **Goal**: What this directive accomplishes
+2. **Inputs**: What data/parameters are needed
+3. **Tools**: Which execution scripts to use (from `../execution/`)
+4. **Outputs**: What deliverables are produced
+5. **Edge Cases**: Known issues, API limits, timing considerations, error handling
+
+## Example Structure
+
+```markdown
+# Directive: [Name]
+
+## Goal
+Brief description of what this accomplishes.
+
+## Inputs
+- Input 1: Description
+- Input 2: Description
+
+## Tools
+- `execution/script_name.py` - What it does
+
+## Outputs
+- Output 1: Description (e.g., Google Sheet URL)
+- Output 2: Description
+
+## Edge Cases
+- API rate limits: X requests per minute
+- Timing: Process takes ~Y minutes for Z items
+- Common errors and how to handle them
+
+## Notes
+Any additional context or learnings from past executions.
+```
+
+## Living Documents
+
+Directives are **living documents**. When you discover:
+- API constraints
+- Better approaches
+- Common errors
+- Timing expectations
+
+...update the relevant directive so the system gets smarter over time.

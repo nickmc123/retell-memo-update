@@ -1,0 +1,149 @@
+{
+  "agent_name": "Brianna - Outbound Callback",
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2_5",
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.8,
+  "backchannel_words": ["yeah", "uh-huh", "mm-hmm", "okay", "I see", "got it"],
+  "denoising_mode": "noise-and-background-speech-cancellation",
+  "normalize_for_speech": true,
+  "ambient_sound": "call-center",
+  "ambient_sound_volume": 0.80,
+  "interruption_sensitivity": 0.9,
+  "begin_message": "Hi! This is Brianna from TravelBucks - do I have a minute of your time?",
+  "tools": [
+    {
+      "id": "tool-authorize-payment",
+      "type": "custom",
+      "name": "Authorize Payment",
+      "description": "Process credit card payment through Authorize.Net for TravelBucks membership",
+      "url": "https://travelbucks-voice-ops-production.up.railway.app/webhooks/authorize-payment",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "TravelBucks client ID (e.g., tb263421)"
+          },
+          "full_name": {
+            "type": "string",
+            "description": "Customer's full name as it appears on the card"
+          },
+          "email": {
+            "type": "string",
+            "description": "Customer's email address"
+          },
+          "card_number": {
+            "type": "string",
+            "description": "Credit card number"
+          },
+          "expiration_date": {
+            "type": "string",
+            "description": "Card expiration date in MM/YY format"
+          },
+          "cvv": {
+            "type": "string",
+            "description": "3-digit security code"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Payment amount (199 for promotional rate)"
+          }
+        },
+        "required": ["client_id", "full_name", "email", "card_number", "expiration_date", "cvv", "amount"]
+      }
+    },
+    {
+      "id": "tool-update-lead",
+      "type": "custom",
+      "name": "Update Lead in Caspio",
+      "description": "Save or update lead information in Caspio database",
+      "url": "https://travelbucks-voice-ops-production.up.railway.app/webhooks/caspio-lead-update",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "TravelBucks client ID (e.g., tb263421)"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Lead's phone number"
+          },
+          "email": {
+            "type": "string",
+            "description": "Lead's email address"
+          },
+          "status": {
+            "type": "string",
+            "description": "Lead status: qualified, interested, declined, payment_collected"
+          },
+          "travel_frequency": {
+            "type": "string",
+            "description": "How often they travel"
+          },
+          "travel_preferences": {
+            "type": "string",
+            "description": "Their travel preferences (hotels, cruises, etc.)"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes about the conversation"
+          }
+        },
+        "required": ["client_id", "phone", "status"]
+      }
+    }
+  ],
+  "post_call_analysis_data": [
+    {
+      "name": "client_id",
+      "type": "string",
+      "description": "TravelBucks client ID (e.g., tb263421)"
+    },
+    {
+      "name": "payment_collected",
+      "type": "boolean",
+      "description": "Was payment successfully collected?"
+    },
+    {
+      "name": "payment_amount",
+      "type": "number",
+      "description": "Amount of payment collected if successful"
+    },
+    {
+      "name": "lead_qualified",
+      "type": "boolean",
+      "description": "Was the lead qualified as a regular traveler?"
+    },
+    {
+      "name": "call_outcome",
+      "type": "enum",
+      "choices": ["payment_success", "declined_offer", "not_interested", "callback_requested", "payment_failed"],
+      "description": "Final outcome of the call"
+    },
+    {
+      "name": "objections_raised",
+      "type": "string",
+      "description": "Main objections raised by the prospect"
+    },
+    {
+      "name": "customer_email",
+      "type": "string",
+      "description": "Customer's email address if collected"
+    },
+    {
+      "name": "travel_frequency",
+      "type": "string",
+      "description": "How often the customer travels per year"
+    }
+  ]
+}

@@ -1,0 +1,774 @@
+{
+  "conversationFlow": {
+    "version": 0,
+    "global_prompt": "You are Alex, a professional voice AI assistant for the County Services Appointment Center. You help residents schedule in-person appointments for government services including driver's licenses, vehicle registration, vital records, and property tax services.\n\nIMPORTANT GUIDELINES:\n- You MUST say the scripted verification questions EXACTLY as written - these are legal compliance requirements\n- Be professional, patient, and courteous at all times\n- Speak clearly and at a moderate pace appropriate for government services\n- If a caller seems confused or frustrated, offer to transfer to a staff member\n- User input is speech-to-text transcription, so expect some errors. Do your best to understand.\n- Only ask ONE question at a time\n- When spelling back information, say each letter clearly with a brief pause between letters\n- Use the 12-hour clock format with AM/PM when discussing appointment times",
+    "model_choice": {
+      "type": "cascading",
+      "model": "gpt-4.1"
+    },
+    "begin_tag_display_position": {
+      "x": 50,
+      "y": 400
+    },
+    "is_published": false,
+    "knowledge_base_ids": [],
+    "start_node_id": "start-node-greeting",
+    "start_speaker": "agent",
+    "nodes": [
+      {
+        "id": "start-node-greeting",
+        "name": "Greeting",
+        "type": "conversation",
+        "display_position": {"x": 250, "y": 400},
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you for calling the County Services Appointment Center. My name is Alex, and I'll be helping you schedule your appointment today. How may I assist you?"
+        },
+        "start_speaker": "agent",
+        "interruption_sensitivity": 0,
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-greeting-to-service",
+            "condition": "User indicates they need an appointment or service",
+            "transition_condition": {"type": "prompt", "prompt": "User indicates they want to schedule an appointment or mentions a specific service (license, registration, records, tax)"},
+            "destination_node_id": "node-service-selection"
+          },
+          {
+            "id": "edge-greeting-to-question",
+            "condition": "User has a general question",
+            "transition_condition": {"type": "prompt", "prompt": "User asks a general question about services, hours, location, or requirements"},
+            "destination_node_id": "node-general-question"
+          },
+          {
+            "id": "edge-greeting-to-transfer",
+            "condition": "User requests human immediately",
+            "transition_condition": {"type": "prompt", "prompt": "User immediately asks to speak with a person, representative, or human agent"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-service-selection",
+        "name": "Service Selection",
+        "type": "conversation",
+        "display_position": {"x": 750, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "If the user hasn't specified a service, ask which service they need. Options are: Driver's License or State ID, Vehicle Registration and Title, Vital Records (birth, death, marriage certificates), or Property Tax services. If they already mentioned a service, confirm it."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-service-drivers-license",
+            "condition": "Driver's License or State ID selected",
+            "transition_condition": {"type": "prompt", "prompt": "User selects driver's license, license renewal, state ID, Real ID, or identification card"},
+            "destination_node_id": "node-verify-identity"
+          },
+          {
+            "id": "edge-service-vehicle",
+            "condition": "Vehicle Registration or Title selected",
+            "transition_condition": {"type": "prompt", "prompt": "User selects vehicle registration, title transfer, license plates, or vehicle-related service"},
+            "destination_node_id": "node-verify-identity"
+          },
+          {
+            "id": "edge-service-vital-records",
+            "condition": "Vital Records selected",
+            "transition_condition": {"type": "prompt", "prompt": "User selects birth certificate, death certificate, marriage certificate, or vital records"},
+            "destination_node_id": "node-verify-identity"
+          },
+          {
+            "id": "edge-service-property-tax",
+            "condition": "Property Tax selected",
+            "transition_condition": {"type": "prompt", "prompt": "User selects property tax, tax assessment, tax payment, or property-related service"},
+            "destination_node_id": "node-verify-identity"
+          },
+          {
+            "id": "edge-service-other",
+            "condition": "User needs a different service",
+            "transition_condition": {"type": "prompt", "prompt": "User requests a service not listed, is unsure what they need, or their request doesn't match any category"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-verify-identity",
+        "name": "Identity Verification - Legal Name",
+        "type": "conversation",
+        "display_position": {"x": 1250, "y": 400},
+        "instruction": {
+          "type": "static_text",
+          "text": "For identity verification purposes, I need to ask you a few questions. Please state your full legal name exactly as it appears on your government-issued ID."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-name-to-confirm",
+            "condition": "User provides their name",
+            "transition_condition": {"type": "prompt", "prompt": "User states their full name"},
+            "destination_node_id": "node-confirm-name"
+          },
+          {
+            "id": "edge-name-refused",
+            "condition": "User refuses to provide name",
+            "transition_condition": {"type": "prompt", "prompt": "User refuses to provide their name, asks why it's needed, or expresses privacy concerns"},
+            "destination_node_id": "node-explain-verification"
+          }
+        ]
+      },
+      {
+        "id": "node-confirm-name",
+        "name": "Confirm Name Spelling",
+        "type": "conversation",
+        "display_position": {"x": 1750, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Spell back the name character by character to confirm accuracy. Say: 'Let me confirm I have that correct. Your name is spelled [spell out first name, letter by letter], [spell out last name, letter by letter]. Is that correct?' If the name has an unusual spelling, be extra careful to spell it slowly."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-name-confirmed",
+            "condition": "Name is confirmed correct",
+            "transition_condition": {"type": "prompt", "prompt": "User confirms the spelled name is correct"},
+            "destination_node_id": "node-collect-dob"
+          },
+          {
+            "id": "edge-name-incorrect",
+            "condition": "Name spelling was wrong",
+            "transition_condition": {"type": "prompt", "prompt": "User indicates the spelling is wrong or provides a correction"},
+            "destination_node_id": "node-verify-identity"
+          }
+        ]
+      },
+      {
+        "id": "node-explain-verification",
+        "name": "Explain Verification Requirement",
+        "type": "conversation",
+        "display_position": {"x": 1250, "y": 700},
+        "instruction": {
+          "type": "static_text",
+          "text": "I understand your concern. This information is required by county policy to verify your identity and ensure we schedule your appointment correctly. Your information is protected under our privacy policy and will only be used for scheduling purposes. Would you like to proceed with the verification, or would you prefer to speak with a staff member?"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-explain-proceed",
+            "condition": "User agrees to proceed",
+            "transition_condition": {"type": "prompt", "prompt": "User agrees to provide information or says they'll proceed"},
+            "destination_node_id": "node-verify-identity"
+          },
+          {
+            "id": "edge-explain-transfer",
+            "condition": "User wants to speak with staff",
+            "transition_condition": {"type": "prompt", "prompt": "User prefers to speak with a person or doesn't want to provide information to the AI"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-collect-dob",
+        "name": "Collect Date of Birth",
+        "type": "conversation",
+        "display_position": {"x": 2250, "y": 300},
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you. What is your date of birth? Please state the month, day, and year."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-dob-provided",
+            "condition": "User provides date of birth",
+            "transition_condition": {"type": "prompt", "prompt": "User states a date of birth with month, day, and year"},
+            "destination_node_id": "node-confirm-dob"
+          },
+          {
+            "id": "edge-dob-refused",
+            "condition": "User refuses",
+            "transition_condition": {"type": "prompt", "prompt": "User refuses to provide date of birth or asks to speak with someone"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-confirm-dob",
+        "name": "Confirm Date of Birth",
+        "type": "conversation",
+        "display_position": {"x": 2750, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Confirm the date of birth by reading it back using the full month name. Say: 'I have your date of birth as [month] [day], [year]. Is that correct?'"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-dob-confirmed",
+            "condition": "Date of birth confirmed",
+            "transition_condition": {"type": "prompt", "prompt": "User confirms the date of birth is correct"},
+            "destination_node_id": "node-collect-ssn"
+          },
+          {
+            "id": "edge-dob-incorrect",
+            "condition": "Date of birth was wrong",
+            "transition_condition": {"type": "prompt", "prompt": "User indicates the date is incorrect or provides a correction"},
+            "destination_node_id": "node-collect-dob"
+          }
+        ]
+      },
+      {
+        "id": "node-collect-ssn",
+        "name": "Collect Last 4 SSN",
+        "type": "conversation",
+        "display_position": {"x": 3250, "y": 300},
+        "instruction": {
+          "type": "static_text",
+          "text": "And for final verification, what are the last four digits of your Social Security Number?"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-ssn-provided",
+            "condition": "User provides last 4 SSN",
+            "transition_condition": {"type": "prompt", "prompt": "User states four digits"},
+            "destination_node_id": "node-confirm-ssn"
+          },
+          {
+            "id": "edge-ssn-refused",
+            "condition": "User refuses",
+            "transition_condition": {"type": "prompt", "prompt": "User refuses to provide SSN or has concerns about giving this information"},
+            "destination_node_id": "node-ssn-concern"
+          }
+        ]
+      },
+      {
+        "id": "node-confirm-ssn",
+        "name": "Confirm SSN Digits",
+        "type": "conversation",
+        "display_position": {"x": 3750, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Confirm the last four digits by saying each digit individually with a brief pause. Say: 'I have the last four digits as [digit]-[digit]-[digit]-[digit]. Is that correct?'"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-ssn-confirmed",
+            "condition": "SSN digits confirmed",
+            "transition_condition": {"type": "prompt", "prompt": "User confirms the digits are correct"},
+            "destination_node_id": "node-collect-phone"
+          },
+          {
+            "id": "edge-ssn-incorrect",
+            "condition": "SSN digits were wrong",
+            "transition_condition": {"type": "prompt", "prompt": "User indicates the digits are incorrect or provides a correction"},
+            "destination_node_id": "node-collect-ssn"
+          }
+        ]
+      },
+      {
+        "id": "node-ssn-concern",
+        "name": "Address SSN Concern",
+        "type": "conversation",
+        "display_position": {"x": 3250, "y": 600},
+        "instruction": {
+          "type": "static_text",
+          "text": "I understand your concern about providing this information. The last four digits of your Social Security Number are used solely for identity verification to prevent fraud and protect your appointment. This information is encrypted and not stored after verification. Would you like to proceed, or would you prefer to schedule your appointment in person with a staff member?"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-ssn-concern-proceed",
+            "condition": "User agrees to proceed",
+            "transition_condition": {"type": "prompt", "prompt": "User agrees to provide the information"},
+            "destination_node_id": "node-collect-ssn"
+          },
+          {
+            "id": "edge-ssn-concern-transfer",
+            "condition": "User wants in-person or staff",
+            "transition_condition": {"type": "prompt", "prompt": "User prefers to speak with staff or schedule in person"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-collect-phone",
+        "name": "Collect Phone Number",
+        "type": "conversation",
+        "display_position": {"x": 4250, "y": 300},
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you for verifying your identity. Now I'll collect your contact information for appointment reminders. What is the best phone number to reach you regarding this appointment?"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-phone-provided",
+            "condition": "Phone number provided",
+            "transition_condition": {"type": "prompt", "prompt": "User provides a phone number"},
+            "destination_node_id": "node-confirm-phone"
+          }
+        ]
+      },
+      {
+        "id": "node-confirm-phone",
+        "name": "Confirm Phone Number",
+        "type": "conversation",
+        "display_position": {"x": 4750, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Read back the phone number digit by digit. Say: 'I have your phone number as [area code], [first three digits], [last four digits]. Is that correct?'"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-phone-confirmed",
+            "condition": "Phone confirmed",
+            "transition_condition": {"type": "prompt", "prompt": "User confirms the phone number is correct"},
+            "destination_node_id": "node-collect-email"
+          },
+          {
+            "id": "edge-phone-incorrect",
+            "condition": "Phone was wrong",
+            "transition_condition": {"type": "prompt", "prompt": "User indicates the phone number is incorrect or provides a correction"},
+            "destination_node_id": "node-collect-phone"
+          }
+        ]
+      },
+      {
+        "id": "node-collect-email",
+        "name": "Collect Email Address",
+        "type": "conversation",
+        "display_position": {"x": 5250, "y": 300},
+        "instruction": {
+          "type": "static_text",
+          "text": "And what is your email address? This is where we'll send your appointment confirmation and any required forms."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-email-provided",
+            "condition": "Email provided",
+            "transition_condition": {"type": "prompt", "prompt": "User provides an email address"},
+            "destination_node_id": "node-confirm-email"
+          },
+          {
+            "id": "edge-no-email",
+            "condition": "User has no email",
+            "transition_condition": {"type": "prompt", "prompt": "User says they don't have email or don't want to provide it"},
+            "destination_node_id": "node-get-preferences"
+          }
+        ]
+      },
+      {
+        "id": "node-confirm-email",
+        "name": "Confirm Email Address",
+        "type": "conversation",
+        "display_position": {"x": 5750, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Spell out the email address character by character to confirm. Say: 'Let me confirm your email. That's [spell out username]-at-[domain]-dot-[extension]. Is that correct?' Use dashes between letters."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-email-confirmed",
+            "condition": "Email confirmed",
+            "transition_condition": {"type": "prompt", "prompt": "User confirms the email is correct"},
+            "destination_node_id": "node-get-preferences"
+          },
+          {
+            "id": "edge-email-incorrect",
+            "condition": "Email was wrong",
+            "transition_condition": {"type": "prompt", "prompt": "User indicates the email is incorrect or provides a correction"},
+            "destination_node_id": "node-collect-email"
+          }
+        ]
+      },
+      {
+        "id": "node-get-preferences",
+        "name": "Get Appointment Preferences",
+        "type": "conversation",
+        "display_position": {"x": 6250, "y": 400},
+        "instruction": {
+          "type": "static_text",
+          "text": "Now let's find a convenient time for your appointment. Do you have a preferred date in mind? And would you prefer a morning or afternoon appointment? Our office hours are Monday through Friday, 8 AM to 5 PM."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-preferences-provided",
+            "condition": "User provides preferences",
+            "transition_condition": {"type": "prompt", "prompt": "User mentions a specific date, day of week, or time preference"},
+            "destination_node_id": "node-check-availability"
+          },
+          {
+            "id": "edge-preferences-flexible",
+            "condition": "User is flexible",
+            "transition_condition": {"type": "prompt", "prompt": "User says they are flexible, asks what's available, or has no preference"},
+            "destination_node_id": "node-check-availability"
+          }
+        ]
+      },
+      {
+        "id": "node-check-availability",
+        "name": "Check Calendar Availability",
+        "type": "function",
+        "tool_id": "tool-check-availability",
+        "tool_type": "local",
+        "display_position": {"x": 6750, "y": 400},
+        "instruction": {
+          "type": "prompt",
+          "text": "Check the calendar for available appointment slots based on the user's preferences and selected service type."
+        },
+        "wait_for_result": true,
+        "speak_during_execution": true,
+        "edges": [
+          {
+            "id": "edge-slots-available",
+            "condition": "Slots found",
+            "transition_condition": {"type": "prompt", "prompt": "Calendar returned available time slots"},
+            "destination_node_id": "node-offer-slots"
+          },
+          {
+            "id": "edge-no-slots",
+            "condition": "No slots available",
+            "transition_condition": {"type": "prompt", "prompt": "No available slots for the requested time, or calendar check failed"},
+            "destination_node_id": "node-no-availability"
+          }
+        ]
+      },
+      {
+        "id": "node-offer-slots",
+        "name": "Offer Available Slots",
+        "type": "conversation",
+        "display_position": {"x": 7250, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Present 2-3 available time slots using conversational date format (e.g., 'This Thursday, December 12th at 10 AM'). Ask which works best. Only offer on-the-hour or half-hour times."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-slot-selected",
+            "condition": "User selects a slot",
+            "transition_condition": {"type": "prompt", "prompt": "User selects one of the offered time slots"},
+            "destination_node_id": "node-confirm-appointment"
+          },
+          {
+            "id": "edge-different-time",
+            "condition": "User wants different time",
+            "transition_condition": {"type": "prompt", "prompt": "User doesn't want any offered slots, asks for different dates"},
+            "destination_node_id": "node-get-preferences"
+          }
+        ]
+      },
+      {
+        "id": "node-no-availability",
+        "name": "No Availability Handler",
+        "type": "conversation",
+        "display_position": {"x": 7250, "y": 600},
+        "instruction": {
+          "type": "static_text",
+          "text": "I apologize, but I don't see any available appointments for your requested time. Would you like me to check a different date or time? Our office hours are Monday through Friday, 8 AM to 5 PM."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-try-different",
+            "condition": "User wants to try different time",
+            "transition_condition": {"type": "prompt", "prompt": "User provides a different date or time to check"},
+            "destination_node_id": "node-check-availability"
+          },
+          {
+            "id": "edge-callback-later",
+            "condition": "User will call back",
+            "transition_condition": {"type": "prompt", "prompt": "User says they'll call back later or doesn't want to schedule now"},
+            "destination_node_id": "node-end-no-booking"
+          },
+          {
+            "id": "edge-speak-to-staff",
+            "condition": "User wants to speak to staff",
+            "transition_condition": {"type": "prompt", "prompt": "User asks to speak with a person or staff member"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-confirm-appointment",
+        "name": "Confirm Appointment Details",
+        "type": "conversation",
+        "display_position": {"x": 7750, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Confirm all details: 'Before I book this appointment, let me confirm the details. You are scheduling a [SERVICE TYPE] appointment for [DAY], [DATE] at [TIME] at our County Services office located at 123 Government Plaza, Suite 100. Is all of this information correct?'"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-details-confirmed",
+            "condition": "User confirms details",
+            "transition_condition": {"type": "prompt", "prompt": "User confirms all details are correct"},
+            "destination_node_id": "node-book-appointment"
+          },
+          {
+            "id": "edge-change-time",
+            "condition": "User wants to change time",
+            "transition_condition": {"type": "prompt", "prompt": "User wants a different time or date"},
+            "destination_node_id": "node-get-preferences"
+          },
+          {
+            "id": "edge-change-service",
+            "condition": "User wants different service",
+            "transition_condition": {"type": "prompt", "prompt": "User wants to change the service type"},
+            "destination_node_id": "node-service-selection"
+          }
+        ]
+      },
+      {
+        "id": "node-book-appointment",
+        "name": "Book Appointment",
+        "type": "function",
+        "tool_id": "tool-book-appointment",
+        "tool_type": "local",
+        "display_position": {"x": 8250, "y": 300},
+        "instruction": {
+          "type": "prompt",
+          "text": "Book the appointment with all collected information."
+        },
+        "wait_for_result": true,
+        "speak_during_execution": false,
+        "edges": [
+          {
+            "id": "edge-booking-success",
+            "condition": "Booking successful",
+            "transition_condition": {"type": "prompt", "prompt": "Appointment was successfully booked"},
+            "destination_node_id": "node-booking-confirmation"
+          },
+          {
+            "id": "edge-booking-failed",
+            "condition": "Booking failed",
+            "transition_condition": {"type": "prompt", "prompt": "Booking failed or system error occurred"},
+            "destination_node_id": "node-booking-error"
+          }
+        ]
+      },
+      {
+        "id": "node-booking-confirmation",
+        "name": "Booking Confirmation",
+        "type": "conversation",
+        "display_position": {"x": 8750, "y": 200},
+        "instruction": {
+          "type": "prompt",
+          "text": "Confirm the booking: 'Excellent! Your appointment has been successfully booked. Your confirmation number is [NUMBER]. You will receive a confirmation email shortly.' Then remind them what to bring based on their service type. Ask if there's anything else."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-nothing-else",
+            "condition": "User has no more questions",
+            "transition_condition": {"type": "prompt", "prompt": "User says no, that's all, or indicates they're done"},
+            "destination_node_id": "node-goodbye-booked"
+          },
+          {
+            "id": "edge-has-question",
+            "condition": "User has a question",
+            "transition_condition": {"type": "prompt", "prompt": "User has another question or concern"},
+            "destination_node_id": "node-general-question"
+          }
+        ]
+      },
+      {
+        "id": "node-booking-error",
+        "name": "Booking Error Handler",
+        "type": "conversation",
+        "display_position": {"x": 8750, "y": 500},
+        "instruction": {
+          "type": "static_text",
+          "text": "I apologize, but I encountered an issue while booking your appointment. The time slot may have just been taken by another caller. Would you like me to check for other available times, or would you prefer to speak with a staff member who can assist you directly?"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-try-again",
+            "condition": "User wants to try again",
+            "transition_condition": {"type": "prompt", "prompt": "User wants to check for other times"},
+            "destination_node_id": "node-get-preferences"
+          },
+          {
+            "id": "edge-error-transfer",
+            "condition": "User wants staff",
+            "transition_condition": {"type": "prompt", "prompt": "User prefers to speak with a staff member"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-general-question",
+        "name": "Handle General Questions",
+        "type": "conversation",
+        "display_position": {"x": 750, "y": 700},
+        "instruction": {
+          "type": "prompt",
+          "text": "Answer common questions: Office hours Mon-Fri 8AM-5PM. Location: 123 Government Plaza, Suite 100 with free parking. What to bring varies by service. Fees vary, payment accepts cash/check/card. After answering, ask if they'd like to schedule an appointment."
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-question-to-schedule",
+            "condition": "User wants to schedule",
+            "transition_condition": {"type": "prompt", "prompt": "User wants to schedule an appointment"},
+            "destination_node_id": "node-service-selection"
+          },
+          {
+            "id": "edge-question-answered",
+            "condition": "User is satisfied",
+            "transition_condition": {"type": "prompt", "prompt": "User's question is answered and they don't need anything else"},
+            "destination_node_id": "node-end-no-booking"
+          },
+          {
+            "id": "edge-question-transfer",
+            "condition": "User needs more help",
+            "transition_condition": {"type": "prompt", "prompt": "User has a complex question or needs to speak with staff"},
+            "destination_node_id": "node-transfer-to-staff"
+          }
+        ]
+      },
+      {
+        "id": "node-transfer-to-staff",
+        "name": "Transfer to Staff",
+        "type": "transfer_call",
+        "display_position": {"x": 1750, "y": 1200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Please hold while I transfer you to a staff member who can assist you further."
+        },
+        "global_node_setting": {
+          "condition": "User asks to speak with a human, representative, real person, supervisor, or staff member at any point in the conversation"
+        },
+        "transfer_destination": {
+          "type": "predefined",
+          "number": "+14155551234"
+        },
+        "transfer_option": {
+          "type": "cold_transfer",
+          "show_transferee_as_caller": false,
+          "enable_bridge_audio_cue": true
+        },
+        "edge": {
+          "id": "edge-transfer-failed",
+          "condition": "Transfer failed",
+          "transition_condition": {"type": "prompt", "prompt": "Transfer failed"},
+          "destination_node_id": "node-transfer-failed"
+        }
+      },
+      {
+        "id": "node-transfer-failed",
+        "name": "Transfer Failed Handler",
+        "type": "conversation",
+        "display_position": {"x": 2250, "y": 1200},
+        "instruction": {
+          "type": "static_text",
+          "text": "I apologize, but I'm unable to connect you with a staff member at the moment. All lines may be busy. Would you like me to try the transfer again, continue scheduling your appointment with me, or you can call back during business hours at 415-555-1234?"
+        },
+        "knowledge_base_ids": [],
+        "edges": [
+          {
+            "id": "edge-retry-transfer",
+            "condition": "User wants to try again",
+            "transition_condition": {"type": "prompt", "prompt": "User wants to try the transfer again"},
+            "destination_node_id": "node-transfer-to-staff"
+          },
+          {
+            "id": "edge-continue-with-ai",
+            "condition": "User continues with AI",
+            "transition_condition": {"type": "prompt", "prompt": "User agrees to continue scheduling with the AI"},
+            "destination_node_id": "node-service-selection"
+          },
+          {
+            "id": "edge-will-callback",
+            "condition": "User will call back",
+            "transition_condition": {"type": "prompt", "prompt": "User says they'll call back later"},
+            "destination_node_id": "node-end-no-booking"
+          }
+        ]
+      },
+      {
+        "id": "node-goodbye-booked",
+        "name": "Goodbye - Appointment Booked",
+        "type": "conversation",
+        "display_position": {"x": 9250, "y": 200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you for scheduling your appointment with the County Services Center. We look forward to seeing you. Have a great day!"
+        },
+        "knowledge_base_ids": [],
+        "edges": [],
+        "skip_response_edge": {
+          "id": "edge-skip-to-end-booked",
+          "condition": "Skip response",
+          "transition_condition": {"type": "prompt", "prompt": "Skip response"},
+          "destination_node_id": "node-end-booked"
+        }
+      },
+      {
+        "id": "node-end-booked",
+        "name": "End Call - Booked",
+        "type": "end",
+        "display_position": {"x": 9750, "y": 200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Goodbye."
+        }
+      },
+      {
+        "id": "node-end-no-booking",
+        "name": "End Call - No Booking",
+        "type": "conversation",
+        "display_position": {"x": 2750, "y": 1200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you for calling the County Services Appointment Center. If you need to schedule an appointment in the future, please call us back or visit our website at countyservices.gov. Have a great day!"
+        },
+        "knowledge_base_ids": [],
+        "edges": [],
+        "skip_response_edge": {
+          "id": "edge-skip-to-end-no-book",
+          "condition": "Skip response",
+          "transition_condition": {"type": "prompt", "prompt": "Skip response"},
+          "destination_node_id": "node-end-final"
+        }
+      },
+      {
+        "id": "node-end-final",
+        "name": "End Call",
+        "type": "end",
+        "display_position": {"x": 3250, "y": 1200},
+        "instruction": {
+          "type": "static_text",
+          "text": "Goodbye."
+        }
+      }
+    ],
+    "tools": [
+      {
+        "tool_id": "tool-check-availability",
+        "type": "check_availability_cal",
+        "name": "check_calendar_availability",
+        "description": "Check the county services appointment calendar for available time slots.",
+        "event_type_id": 123456,
+        "cal_api_key": "cal_live_xxxxxxxxxxxxxxxx",
+        "timezone": "America/New_York"
+      },
+      {
+        "tool_id": "tool-book-appointment",
+        "type": "book_appointment_cal",
+        "name": "book_appointment",
+        "description": "Book an appointment on the county services calendar.",
+        "event_type_id": 123456,
+        "cal_api_key": "cal_live_xxxxxxxxxxxxxxxx",
+        "timezone": "America/New_York"
+      }
+    ]
+  }
+}

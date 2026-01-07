@@ -1,0 +1,941 @@
+{
+  "agent_id": "",
+  "channel": "voice",
+  "last_modification_timestamp": 0,
+  "agent_name": "Car Dealership Outbound Sales Agent",
+  "response_engine": {
+    "type": "conversation-flow",
+    "version": 0,
+    "conversation_flow_id": "conversation_flow_car_dealership_001"
+  },
+  "language": "en-US",
+  "opt_out_sensitive_data_storage": false,
+  "data_storage_setting": "everything",
+  "version": 0,
+  "is_published": false,
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2_5",
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.8,
+  "backchannel_words": ["yeah", "uh-huh", "mm-hmm", "okay", "I see", "got it"],
+  "denoising_mode": "noise-and-background-speech-cancellation",
+  "normalize_for_speech": true,
+  "ambient_sound": "call-center",
+  "ambient_sound_volume": 0.80,
+  "max_call_duration_ms": 3600000,
+  "interruption_sensitivity": 0.9,
+  "user_dtmf_options": {},
+  "retellLlmData": null,
+  "conversationFlow": {
+    "conversation_flow_id": "conversation_flow_car_dealership_001",
+    "version": 0,
+    "global_prompt": "## Role\nYou are Alex, a business development representative calling car dealerships on behalf of a professional automotive services company. You are friendly, professional, and respectful of their time.\n\n## Objective\nYour goal is to connect with decision makers (General Manager, Sales Manager, or Service Director) at car dealerships to discuss partnership opportunities. If you reach them, qualify their interest and schedule a call with your team. If you reach a gatekeeper, professionally navigate to get connected or collect decision maker contact information.\n\n## Communication Style\nProfessional yet conversational; confident but not pushy; respectful of gatekeepers; clear and concise; friendly tone.\n\n## Important Notes\n- The transcript may contain transcription errors - use context to understand intent\n- Be prepared for gatekeepers who screen calls\n- Don't be discouraged by initial resistance - be persistent but polite\n- Always offer value in your pitch\n- Keep the call brief and focused",
+    "nodes": [
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "Hi! This is Alex calling from a business development team. May I speak with your General Manager or Sales Manager please?"
+        },
+        "name": "Initial Greeting",
+        "edges": [
+          {
+            "condition": "They are the decision maker or willing to transfer",
+            "id": "edge-initial-to-dm",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "The person says they are the General Manager, Sales Manager, Service Director, or another decision maker, OR they say they will transfer the call"
+            },
+            "destination_node_id": "node-connected-dm"
+          },
+          {
+            "condition": "Gatekeeper asks screening questions",
+            "id": "edge-initial-to-gatekeeper",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "The person asks what the call is regarding, who you are, what company, or other screening questions"
+            },
+            "destination_node_id": "node-handle-gatekeeper"
+          },
+          {
+            "condition": "Decision maker not available or busy",
+            "id": "edge-initial-to-unavailable",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say the decision maker is not available, in a meeting, busy, or not there right now"
+            },
+            "destination_node_id": "node-dm-unavailable"
+          },
+          {
+            "condition": "Hard rejection or not interested",
+            "id": "edge-initial-to-reject",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say they're not interested, to remove from list, or give a hard no"
+            },
+            "destination_node_id": "node-not-interested"
+          }
+        ],
+        "start_speaker": "agent",
+        "id": "start-node-greeting",
+        "type": "conversation",
+        "display_position": {
+          "x": 400,
+          "y": 1200
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Tell them: 'I'm reaching out to dealerships in the area about a partnership opportunity that's been helping dealers increase their service revenue and customer retention. It just takes a few minutes - do you have a moment?' If they ask for more details, briefly mention you help dealerships optimize their operations and would love to share some case studies."
+        },
+        "name": "Handle Gatekeeper",
+        "edges": [
+          {
+            "condition": "Gatekeeper agrees to transfer",
+            "id": "edge-gatekeeper-to-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "The gatekeeper says they will transfer you, put you through, or connect you to the decision maker"
+            },
+            "destination_node_id": "node-connected-dm"
+          },
+          {
+            "condition": "Gatekeeper provides decision maker contact info",
+            "id": "edge-gatekeeper-to-info",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "The gatekeeper provides an email, direct phone number, best time to call, or suggests you call back at a specific time"
+            },
+            "destination_node_id": "node-collect-callback-info"
+          },
+          {
+            "condition": "Still resistant or wants to take message",
+            "id": "edge-gatekeeper-to-message",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say they'll take a message, have the manager call back, or continue to resist"
+            },
+            "destination_node_id": "node-leave-callback-info"
+          },
+          {
+            "condition": "Hard no or not interested",
+            "id": "edge-gatekeeper-to-reject",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They firmly say not interested, hang up, or give a clear rejection"
+            },
+            "destination_node_id": "node-not-interested"
+          }
+        ],
+        "id": "node-handle-gatekeeper",
+        "type": "conversation",
+        "display_position": {
+          "x": 900,
+          "y": 1500
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "Perfect! Is this the General Manager or Sales Manager I'm speaking with?"
+        },
+        "name": "Connected to Decision Maker",
+        "edges": [
+          {
+            "condition": "Confirms they are decision maker",
+            "id": "edge-dm-to-pitch",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They confirm they are the GM, Sales Manager, Service Director, or another decision maker"
+            },
+            "destination_node_id": "node-pitch-value"
+          },
+          {
+            "condition": "They are not the decision maker",
+            "id": "edge-dm-to-wrong-person",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say they are not the decision maker or ask to be transferred to someone else"
+            },
+            "destination_node_id": "node-handle-gatekeeper"
+          }
+        ],
+        "id": "node-connected-dm",
+        "type": "conversation",
+        "display_position": {
+          "x": 1400,
+          "y": 1200
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Great! I'll keep this brief - I'm reaching out to dealerships in your area about a partnership that's been helping dealers increase service revenue and improve customer retention. We've worked with several dealerships and they're seeing measurable results. I'd love to share some quick insights and see if this might be a fit for your operation. Do you have just a couple minutes now, or would you prefer I schedule a brief call with more details?"
+        },
+        "name": "Pitch Value Proposition",
+        "edges": [
+          {
+            "condition": "Interested and wants to hear more now",
+            "id": "edge-pitch-to-qualify",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They express interest, ask questions, or want to hear more right now"
+            },
+            "destination_node_id": "node-qualify-interest"
+          },
+          {
+            "condition": "Interested but wants to schedule a call later",
+            "id": "edge-pitch-to-schedule",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say they're interested but busy now, prefer to schedule a call, or want to talk at another time"
+            },
+            "destination_node_id": "node-schedule-intro"
+          },
+          {
+            "condition": "Has specific questions or concerns",
+            "id": "edge-pitch-to-questions",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They have detailed questions that require expert answers, or want to speak to someone more senior"
+            },
+            "destination_node_id": "node-transfer-intro"
+          },
+          {
+            "condition": "Not interested",
+            "id": "edge-pitch-to-reject",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say they're not interested, already have something similar, or decline"
+            },
+            "destination_node_id": "node-not-interested"
+          }
+        ],
+        "id": "node-pitch-value",
+        "type": "conversation",
+        "display_position": {
+          "x": 1900,
+          "y": 1200
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Excellent! So what we do is help dealerships optimize their service operations and increase customer lifetime value through proven strategies. We focus on three areas: service retention programs, digital marketing for service departments, and operational efficiency. Our clients typically see a 15-20% increase in service revenue within the first 6 months. Does any of this sound relevant to your current goals?"
+        },
+        "name": "Qualify Interest",
+        "edges": [
+          {
+            "condition": "Definitely interested and engaged",
+            "id": "edge-qualify-to-schedule",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They express strong interest, say this sounds relevant, or ask how to move forward"
+            },
+            "destination_node_id": "node-schedule-intro"
+          },
+          {
+            "condition": "Interested but has more questions",
+            "id": "edge-qualify-to-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They have detailed technical questions, want to discuss pricing, or need to speak with an expert"
+            },
+            "destination_node_id": "node-transfer-intro"
+          },
+          {
+            "condition": "Somewhat interested but hesitant",
+            "id": "edge-qualify-to-followup",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They seem interested but hesitant, want to think about it, or need to discuss with partners"
+            },
+            "destination_node_id": "node-leave-callback-info"
+          },
+          {
+            "condition": "Not interested after hearing details",
+            "id": "edge-qualify-to-reject",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say this isn't for them, not interested, or decline"
+            },
+            "destination_node_id": "node-not-interested"
+          }
+        ],
+        "id": "node-qualify-interest",
+        "type": "conversation",
+        "display_position": {
+          "x": 2400,
+          "y": 900
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "Perfect! Let me connect you with one of our dealership specialists who can walk you through everything in detail and answer all your questions. They'll be able to show you some case studies from similar dealerships. Just give me one moment to transfer you."
+        },
+        "name": "Transfer Introduction",
+        "edges": [
+          {
+            "condition": "Continue to transfer",
+            "id": "edge-transfer-intro-to-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Continue to transfer"
+            }
+          }
+        ],
+        "id": "node-transfer-intro",
+        "type": "conversation",
+        "display_position": {
+          "x": 2900,
+          "y": 600
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-transfer-intro-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-transfer-call"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "transfer_destination": {
+          "type": "predefined",
+          "number": "+12134447777"
+        },
+        "edge": {
+          "condition": "Transfer failed",
+          "id": "edge-transfer-fail",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Transfer failed"
+          },
+          "destination_node_id": "node-transfer-failed"
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Transferring you now to our dealership specialist."
+        },
+        "name": "Transfer to Sales Team",
+        "id": "node-transfer-call",
+        "transfer_option": {
+          "type": "warm_transfer",
+          "option": {
+            "type": "prompt",
+            "prompt": "This is a warm transfer. The prospect is a decision maker at a car dealership. They expressed interest in our dealership partnership program. Brief summary of their interest level and any specific questions they mentioned."
+          }
+        },
+        "type": "transfer_call",
+        "display_position": {
+          "x": 3400,
+          "y": 600
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "I apologize, it seems our specialist is currently with another client. Let me get your best contact information and we'll have someone reach out to you within the next hour. What's the best number and email to reach you?"
+        },
+        "name": "Transfer Failed",
+        "edges": [
+          {
+            "condition": "Contact info collected",
+            "id": "edge-transfer-fail-to-collect",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They provided contact information"
+            },
+            "destination_node_id": "node-confirm-callback"
+          }
+        ],
+        "id": "node-transfer-failed",
+        "type": "conversation",
+        "display_position": {
+          "x": 3400,
+          "y": 900
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "Fantastic! I'd love to set up a brief 15-minute call with one of our dealership specialists. They can share specific case studies, answer all your questions, and see if this is a good fit. Let me check what times are available."
+        },
+        "name": "Schedule Call Introduction",
+        "edges": [
+          {
+            "condition": "Continue to check calendar",
+            "id": "edge-schedule-intro-to-check",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Continue to check calendar"
+            }
+          }
+        ],
+        "id": "node-schedule-intro",
+        "type": "conversation",
+        "display_position": {
+          "x": 2900,
+          "y": 1200
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-schedule-intro-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-check-availability"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "tool_id": "tool-check-calendar",
+        "edges": [
+          {
+            "condition": "Availability found",
+            "id": "edge-check-to-present",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "There are available time slots"
+            },
+            "destination_node_id": "node-present-times"
+          },
+          {
+            "condition": "No availability",
+            "id": "edge-check-to-manual",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "There are no available slots"
+            },
+            "destination_node_id": "node-manual-schedule"
+          }
+        ],
+        "name": "Check Calendar Availability",
+        "id": "node-check-availability",
+        "type": "function",
+        "display_position": {
+          "x": 3400,
+          "y": 1200
+        },
+        "speak_during_execution": false,
+        "tool_type": "local",
+        "wait_for_result": true
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "I have availability on [first option], [second option], and [third option]. Which one works best for your schedule?"
+        },
+        "name": "Present Available Times",
+        "edges": [
+          {
+            "condition": "They choose a time slot",
+            "id": "edge-present-to-book",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They select one of the available time slots"
+            },
+            "destination_node_id": "node-book-appointment"
+          },
+          {
+            "condition": "None of those times work",
+            "id": "edge-present-to-alternate",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They say none of those times work or need different options"
+            },
+            "destination_node_id": "node-get-preferred-time"
+          }
+        ],
+        "id": "node-present-times",
+        "type": "conversation",
+        "display_position": {
+          "x": 3900,
+          "y": 1050
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "No problem! What day and time works best for you? I'll check if we can make that work."
+        },
+        "name": "Get Preferred Time",
+        "edges": [
+          {
+            "condition": "They provide preferred time",
+            "id": "edge-preferred-to-recheck",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They provide a preferred day and time range"
+            },
+            "destination_node_id": "node-check-availability"
+          }
+        ],
+        "id": "node-get-preferred-time",
+        "type": "conversation",
+        "display_position": {
+          "x": 4400,
+          "y": 900
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "tool_id": "tool-book-appointment",
+        "edges": [
+          {
+            "condition": "Appointment booked successfully",
+            "id": "edge-book-to-confirm",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "The appointment was successfully booked"
+            },
+            "destination_node_id": "node-confirm-appointment"
+          },
+          {
+            "condition": "Booking failed",
+            "id": "edge-book-to-manual",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "The booking failed or encountered an error"
+            },
+            "destination_node_id": "node-manual-schedule"
+          }
+        ],
+        "name": "Book Appointment",
+        "id": "node-book-appointment",
+        "type": "function",
+        "display_position": {
+          "x": 4400,
+          "y": 1200
+        },
+        "speak_during_execution": false,
+        "tool_type": "local",
+        "wait_for_result": true
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Perfect! I've scheduled you for [day] at [time]. You'll receive a calendar invite with a video call link at the email address we have on file. Before I let you go, can I confirm your email address? We have [email if available, otherwise ask for it]."
+        },
+        "name": "Confirm Appointment",
+        "edges": [
+          {
+            "condition": "Email confirmed",
+            "id": "edge-confirm-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They confirm the email is correct or provide the correct email"
+            },
+            "destination_node_id": "node-successful-end"
+          }
+        ],
+        "id": "node-confirm-appointment",
+        "type": "conversation",
+        "display_position": {
+          "x": 4900,
+          "y": 1200
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Let me take down your information and have our team reach out directly to schedule a time that works best. What's the best phone number and email to reach you?"
+        },
+        "name": "Manual Schedule",
+        "edges": [
+          {
+            "condition": "Contact info provided",
+            "id": "edge-manual-to-callback",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They provide contact information"
+            },
+            "destination_node_id": "node-confirm-callback"
+          }
+        ],
+        "id": "node-manual-schedule",
+        "type": "conversation",
+        "display_position": {
+          "x": 3900,
+          "y": 1500
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "I understand! What's the best time to reach them? And could you provide their direct number or email so we can follow up?"
+        },
+        "name": "Decision Maker Unavailable",
+        "edges": [
+          {
+            "condition": "Contact info or callback time provided",
+            "id": "edge-unavailable-to-collect",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They provide decision maker contact info or best time to call back"
+            },
+            "destination_node_id": "node-collect-callback-info"
+          },
+          {
+            "condition": "Will not provide information",
+            "id": "edge-unavailable-to-message",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They refuse to give information or say to just call back"
+            },
+            "destination_node_id": "node-leave-callback-info"
+          }
+        ],
+        "id": "node-dm-unavailable",
+        "type": "conversation",
+        "display_position": {
+          "x": 900,
+          "y": 900
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Great, I have [repeat back the information they provided]. Our team will reach out within 24 hours. Thank you so much for your time!"
+        },
+        "name": "Collect Callback Information",
+        "edges": [
+          {
+            "condition": "Information confirmed",
+            "id": "edge-collect-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They confirm the information is correct"
+            }
+          }
+        ],
+        "id": "node-collect-callback-info",
+        "type": "conversation",
+        "display_position": {
+          "x": 1400,
+          "y": 600
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-collect-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-polite-end"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "No problem! Could I leave my name and number in case they're interested? Just let them know Alex called about a dealership partnership opportunity. Our number is [your callback number]. What's the best way to reach the decision maker if they want to follow up?"
+        },
+        "name": "Leave Callback Info",
+        "edges": [
+          {
+            "condition": "They provide some info or take message",
+            "id": "edge-leave-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "They agree to pass on the message or provide some contact method"
+            }
+          }
+        ],
+        "id": "node-leave-callback-info",
+        "type": "conversation",
+        "display_position": {
+          "x": 1400,
+          "y": 1800
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-leave-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-polite-end"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Excellent! You're all set. We'll send you the calendar invite right away, and our specialist will give you a call at the scheduled time. Looking forward to speaking with you then. Have a great day!"
+        },
+        "name": "Successful End",
+        "edges": [
+          {
+            "condition": "End call",
+            "id": "edge-success-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "End the call"
+            }
+          }
+        ],
+        "id": "node-successful-end",
+        "type": "conversation",
+        "display_position": {
+          "x": 5400,
+          "y": 1200
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-success-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-end-call"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Perfect! I have your information: [repeat back phone and email]. Someone from our team will reach out shortly to schedule a time. Thanks so much for your time today!"
+        },
+        "name": "Confirm Callback",
+        "edges": [
+          {
+            "condition": "Confirmed",
+            "id": "edge-callback-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Information confirmed"
+            }
+          }
+        ],
+        "id": "node-confirm-callback",
+        "type": "conversation",
+        "display_position": {
+          "x": 4400,
+          "y": 1500
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-callback-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-polite-end"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "I completely understand. Thank you for your time, and have a great day!"
+        },
+        "name": "Not Interested",
+        "edges": [
+          {
+            "condition": "End call",
+            "id": "edge-notinterested-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "End the call"
+            }
+          }
+        ],
+        "id": "node-not-interested",
+        "type": "conversation",
+        "display_position": {
+          "x": 2400,
+          "y": 1800
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-notinterested-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-end-call"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "Thank you for your time. Have a wonderful day!"
+        },
+        "name": "Polite End",
+        "edges": [
+          {
+            "condition": "End call",
+            "id": "edge-polite-to-end",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "End the call"
+            }
+          }
+        ],
+        "id": "node-polite-end",
+        "type": "conversation",
+        "display_position": {
+          "x": 1900,
+          "y": 600
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-polite-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-end-call"
+        },
+        "knowledge_base_ids": []
+      },
+      {
+        "name": "End Call",
+        "id": "node-end-call",
+        "type": "end",
+        "display_position": {
+          "x": 5900,
+          "y": 1200
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Of course! Let me connect you with one of our specialists who can answer all your questions. Please hold for just a moment."
+        },
+        "name": "Human Escalation",
+        "edges": [
+          {
+            "condition": "Continue to transfer",
+            "id": "edge-human-to-transfer",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Continue to transfer"
+            }
+          }
+        ],
+        "global_node_setting": {
+          "condition": "The person explicitly asks to speak with a human, representative, or someone else"
+        },
+        "id": "node-human-escalation",
+        "type": "conversation",
+        "display_position": {
+          "x": 400,
+          "y": 300
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-human-skip",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-transfer-call"
+        },
+        "knowledge_base_ids": []
+      }
+    ],
+    "start_node_id": "start-node-greeting",
+    "start_speaker": "agent",
+    "tools": [
+      {
+        "tool_id": "tool-check-calendar",
+        "event_type_id": 0,
+        "cal_api_key": "",
+        "timezone": "America/Los_Angeles",
+        "name": "check_calendar_availability",
+        "description": "Check calendar for available time slots to schedule calls with decision makers",
+        "type": "check_availability_cal"
+      },
+      {
+        "tool_id": "tool-book-appointment",
+        "event_type_id": 0,
+        "cal_api_key": "",
+        "timezone": "America/Los_Angeles",
+        "name": "book_appointment",
+        "description": "Book an appointment on the calendar for a call with the dealership decision maker",
+        "type": "book_appointment_cal"
+      }
+    ],
+    "model_choice": {
+      "type": "cascading",
+      "model": "gpt-4.1"
+    },
+    "begin_tag_display_position": {
+      "x": 100,
+      "y": 1200
+    },
+    "is_published": false,
+    "knowledge_base_ids": [],
+    "post_call_analysis_data": [
+      {
+        "name": "decision_maker_reached",
+        "type": "boolean",
+        "description": "Did we successfully speak with a decision maker (GM, Sales Manager, Service Director)?"
+      },
+      {
+        "name": "outcome",
+        "type": "enum",
+        "options": ["appointment_booked", "transferred_to_human", "callback_scheduled", "left_message", "not_interested", "gatekeeper_blocked"],
+        "description": "Overall outcome of the call"
+      },
+      {
+        "name": "interest_level",
+        "type": "enum",
+        "options": ["hot", "warm", "cold", "not_interested"],
+        "description": "Decision maker's interest level in the partnership opportunity"
+      },
+      {
+        "name": "appointment_datetime",
+        "type": "string",
+        "description": "Date and time of scheduled appointment if booked"
+      },
+      {
+        "name": "decision_maker_name",
+        "type": "string",
+        "description": "Name of the decision maker if obtained"
+      },
+      {
+        "name": "decision_maker_title",
+        "type": "string",
+        "description": "Title/role of the decision maker (GM, Sales Manager, etc.)"
+      },
+      {
+        "name": "dealership_name",
+        "type": "string",
+        "description": "Name of the car dealership"
+      },
+      {
+        "name": "contact_info_collected",
+        "type": "string",
+        "description": "Email and/or direct phone number collected for follow-up"
+      },
+      {
+        "name": "objections_mentioned",
+        "type": "string",
+        "description": "Any objections or concerns raised by the prospect"
+      }
+    ]
+  },
+  "llmURL": null
+}

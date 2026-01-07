@@ -1,0 +1,202 @@
+{
+  "feature_name": "Hawaii Pre-Qualification Question",
+  "purpose": "Filter for interested customers before full pitch to increase conversion from 26% to 35%",
+  "hypothesis": "By asking if customer is interested BEFORE the pitch, we reduce wasted pitches and increase conversion among those who engage",
+
+  "implementation_approach": "Add intermediate node between sentiment check and Hawaii offer",
+
+  "new_nodes": [
+    {
+      "id": "node-hawaii-prequalify",
+      "type": "conversation",
+      "name": "Hawaii Pre-Qualification",
+      "display_position": {"x": 350, "y": 680},
+      "instruction": {
+        "type": "static_text",
+        "text": "I'm so glad I could help! Before you go, quick question - have you ever been interested in visiting Hawaii?"
+      },
+      "edges": [
+        {
+          "id": "edge-prequalify-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer expresses interest, says yes, or shows curiosity about Hawaii"
+          },
+          "destination_node_id": "node-hawaii-offer-qualified"
+        },
+        {
+          "id": "edge-prequalify-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer says no, not interested, or already been many times"
+          },
+          "destination_node_id": "node-closing-no-offer"
+        },
+        {
+          "id": "edge-prequalify-maybe",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer is uncertain, says maybe, or asks why you're asking"
+          },
+          "destination_node_id": "node-hawaii-soft-offer"
+        }
+      ]
+    },
+
+    {
+      "id": "node-hawaii-offer-qualified",
+      "type": "conversation",
+      "name": "Hawaii Offer (Qualified Lead)",
+      "display_position": {"x": 250, "y": 830},
+      "instruction": {
+        "type": "static_text",
+        "text": "Wonderful! Then you're going to love this. We're offering an exclusive 5-night Hawaii vacation package in Waikiki for just $699. It's normally over $1,500, but we're extending this limited-time offer to our customers for just the next few days. Would you like to hear more details about what's included?"
+      },
+      "edges": [
+        {
+          "id": "edge-qualified-yes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer wants more details or says yes"
+          },
+          "destination_node_id": "node-hawaii-details"
+        },
+        {
+          "id": "edge-qualified-no",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer declines"
+          },
+          "destination_node_id": "node-soft-followup"
+        }
+      ]
+    },
+
+    {
+      "id": "node-hawaii-soft-offer",
+      "type": "conversation",
+      "name": "Hawaii Soft Offer (Maybe)",
+      "display_position": {"x": 450, "y": 830},
+      "instruction": {
+        "type": "static_text",
+        "text": "I'm asking because we have an incredible limited-time offer right now - 5 nights in Hawaii for just $699, which is over 50% off the regular price. It's only available for a few more days. Would you like to hear the details, or should we wrap up?"
+      },
+      "edges": [
+        {
+          "id": "edge-soft-interested",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer wants to hear details"
+          },
+          "destination_node_id": "node-hawaii-details"
+        },
+        {
+          "id": "edge-soft-decline",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer wants to wrap up or declines"
+          },
+          "destination_node_id": "node-closing-no-offer"
+        }
+      ]
+    }
+  ],
+
+  "flow_modification_instructions": {
+    "step_1": "Replace direct edge from 'node-sentiment-check' to 'node-hawaii-offer'",
+    "step_2": "Add new edge from 'node-sentiment-check' (positive/neutral) to 'node-hawaii-prequalify'",
+    "step_3": "Add three new nodes: node-hawaii-prequalify, node-hawaii-offer-qualified, node-hawaii-soft-offer",
+    "step_4": "Update edges to route through pre-qualification filter"
+  },
+
+  "expected_outcomes": {
+    "conversion_rate_impact": {
+      "current": "26% of all offered",
+      "expected": "35-40% of qualified offered (but fewer total offers)",
+      "mechanism": "Pre-qualification filters out 'no' responses before pitch, increasing yes rate among those pitched"
+    },
+    "offer_frequency_impact": {
+      "current": "51.5% of calls receive offer",
+      "expected": "45-50% of calls pass pre-qualification",
+      "net_result": "Slightly fewer offers, but much higher conversion per offer"
+    },
+    "customer_experience": {
+      "improvement": "Customers who aren't interested get a quick out without full pitch",
+      "benefit": "Reduces feeling of being 'sold to' for uninterested customers"
+    },
+    "revenue_impact": {
+      "current_conversions": "27 per day (51.5% × 211 calls × 26%)",
+      "expected_conversions": "30-32 per day (48% × 211 calls × 35%)",
+      "net_increase": "+3-5 conversions per day = +$2,097 to $3,495 per day"
+    }
+  },
+
+  "post_call_analysis_additions": {
+    "new_fields": [
+      {
+        "name": "prequalification_response",
+        "type": "enum",
+        "options": ["yes", "no", "maybe", "not_asked"],
+        "description": "Customer's response to Hawaii interest pre-qualification question"
+      },
+      {
+        "name": "prequalification_to_offer_conversion",
+        "type": "boolean",
+        "description": "Did customer who showed interest in pre-qual proceed to full offer?"
+      }
+    ]
+  },
+
+  "ab_test_recommendation": {
+    "test_prequalification_vs_direct": "Test pre-qualification approach vs direct offer to measure true impact",
+    "split": "50% with pre-qual, 50% direct offer (control)",
+    "duration": "200 calls per variant (400 total, ~2 days)",
+    "metrics": [
+      "Overall conversion rate (transfers/total calls)",
+      "Pitch conversion rate (transfers/offers made)",
+      "Customer sentiment impact",
+      "Average call duration"
+    ],
+    "hypothesis": "Pre-qual will have lower conversion per total calls but higher per offer, with better customer sentiment"
+  },
+
+  "alternative_pre_qualification_questions": [
+    {
+      "version": "Dream State",
+      "question": "Have you ever thought about taking a vacation to Hawaii?",
+      "pros": "Creates visualization, emotional connection",
+      "cons": "Slightly longer"
+    },
+    {
+      "version": "Direct Interest",
+      "question": "Would you be interested in an exclusive Hawaii vacation offer?",
+      "pros": "Very direct, clear intent",
+      "cons": "May trigger sales resistance"
+    },
+    {
+      "version": "Permission Based",
+      "question": "Before you go, would it be okay if I shared a quick special offer we have for Hawaii?",
+      "pros": "Asks permission, respectful",
+      "cons": "Can feel like delayed sales pitch"
+    },
+    {
+      "version": "Experience Based (Recommended)",
+      "question": "Have you ever been interested in visiting Hawaii?",
+      "pros": "Non-threatening, opens conversation naturally",
+      "cons": "None identified"
+    }
+  ],
+
+  "implementation_checklist": [
+    "✓ Design pre-qualification question node",
+    "✓ Create qualified offer script",
+    "✓ Create soft offer script (for 'maybe' responses)",
+    "✓ Add routing logic from sentiment check",
+    "✓ Update post-call analysis fields",
+    "- Deploy to Retell via API (NEEDS API KEY)",
+    "- Run A/B test vs direct offer approach",
+    "- Monitor for 2-3 days (400 calls minimum)",
+    "- Analyze results and select winning approach",
+    "- Roll out winner to 100% of traffic"
+  ]
+}

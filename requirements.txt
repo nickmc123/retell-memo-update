@@ -1,0 +1,22 @@
+# Core dependencies for the 3-layer architecture
+
+# Environment variables
+python-dotenv
+
+# HTTP requests
+requests
+
+# Google API integration (uncomment if needed)
+# google-api-python-client
+# google-auth-httplib2
+# google-auth-oauthlib
+
+# Data processing (uncomment if needed)
+# pandas
+# numpy
+
+# Web scraping (uncomment if needed)
+# beautifulsoup4
+# selenium
+
+# Add other dependencies as needed for your specific scripts

@@ -1,0 +1,103 @@
+{
+  "agent_name": "TravelBucks Travel Concierge",
+  "voice_id": "11labs-Cimo",
+  "voice_model": "eleven_flash_v2_5",
+  "response_engine": {
+    "type": "conversation-flow",
+    "conversation_flow": {
+      "global_prompt": "You are Alex, a friendly and professional travel concierge for TravelBucks. Be warm, enthusiastic, and genuinely helpful. Use the caller's name when you learn it. Speak clearly at a moderate pace. Stay positive and never argue.",
+      "start_node_id": "node-greeting",
+      "model_choice": {
+        "type": "cascading",
+        "model": "gpt-4.1"
+      },
+      "tools": [
+        {
+          "name": "process_travelbucks_payment",
+          "description": "Processes membership payment of $149 via TravelBucks webhook",
+          "tool_id": "tool-payment-processor",
+          "type": "custom",
+          "url": "https://travelbucks-voice-ops-production.up.railway.app/webhook"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "node-greeting",
+          "type": "conversation",
+          "name": "Greeting",
+          "display_position": {"x": 100, "y": 100},
+          "instruction": {
+            "type": "static_text",
+            "text": "Thanks for your interest in our exclusive travel membership. I'd love to tell you about how our members save up to 70% on hotels, cruises, and vacation packages. Do you have a few minutes to chat?"
+          },
+          "edges": [
+            {
+              "id": "edge-greeting-has-time",
+              "transition_condition": {
+                "type": "prompt",
+                "prompt": "User says yes, they have time to chat"
+              },
+              "destination_node_id": "node-qualify-travel"
+            },
+            {
+              "id": "edge-greeting-no-time",
+              "transition_condition": {
+                "type": "prompt",
+                "prompt": "User says no, they don't have time right now"
+              },
+              "destination_node_id": "node-schedule-callback"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.8,
+  "backchannel_words": ["yeah", "uh-huh", "mm-hmm", "okay", "I see", "got it"],
+  "denoising_mode": "noise-and-background-speech-cancellation",
+  "normalize_for_speech": true,
+  "ambient_sound": "call-center",
+  "ambient_sound_volume": 0.80,
+  "interruption_sensitivity": 0.9,
+  "begin_message": "Hi there! This is Alex from TravelBucks.",
+  "post_call_analysis_data": [
+    {
+      "name": "lead_qualified",
+      "type": "boolean",
+      "description": "Did the caller pass all qualification questions?"
+    },
+    {
+      "name": "membership_activated",
+      "type": "boolean",
+      "description": "Was membership successfully activated with payment?"
+    },
+    {
+      "name": "disqualification_reason",
+      "type": "enum",
+      "options": ["no_time", "doesnt_travel", "not_decision_maker", "under_25", "no_payment_method", "not_interested", "none"],
+      "description": "Reason for disqualification if applicable"
+    },
+    {
+      "name": "objections_raised",
+      "type": "string",
+      "description": "Main objections the prospect raised"
+    },
+    {
+      "name": "outcome",
+      "type": "enum",
+      "options": ["activated", "callback_scheduled", "disqualified", "not_interested", "payment_failed", "transferred"],
+      "description": "Final outcome of the call"
+    },
+    {
+      "name": "customer_email",
+      "type": "string",
+      "description": "Customer email if collected"
+    },
+    {
+      "name": "customer_phone",
+      "type": "string",
+      "description": "Customer phone if collected"
+    }
+  ]
+}

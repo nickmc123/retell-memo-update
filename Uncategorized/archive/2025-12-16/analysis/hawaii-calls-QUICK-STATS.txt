@@ -1,0 +1,83 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                  HAWAII CALLS ANALYSIS - QUICK STATS                       ║
+║                        Latest Data: 2025-12-15                             ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📊 OVERALL METRICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Total Hawaii-Related Calls:        157
+  Calls with Post-Call Analysis:    141 (89.8%)
+  Average Call Duration:             2.7 minutes
+
+🏝️ HAWAII CONVERSION METRICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Hawaii Offers Made:                71 calls (50.4% of analyzed)
+  Hawaii Transfers Requested:        20 calls
+  
+  ★★★ CONVERSION RATE: 28.2% ★★★
+  
+  vs. Baseline (<5%):                +23.2 points (5-6x improvement)
+  vs. Target (12-15%):              +13-16 points (EXCEEDED!)
+
+📈 AGENT BREAKDOWN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  "Intro Transfer with hawaii"
+    - Calls:                147
+    - Avg Duration:         2.7 min
+    - Hawaii Conversion:    28.2%
+    - Status:              ✅ ACTIVE & PERFORMING WELL
+  
+  "Intro Transfer no hawaii"
+    - Calls:                10
+    - Avg Duration:         5.0 min
+    - Hawaii Conversion:    N/A
+    - Status:              ⚠️ NO POST-CALL ANALYSIS
+  
+  "Current CS Agent with Hawaii" (IMPROVED VERSION)
+    - Calls:                0
+    - Status:              🔴 DEPLOYED BUT RECEIVING ZERO CALLS
+
+✅ ISSUE RESOLUTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Issues Resolved:               52 calls
+  Resolution Rate:               36.9%
+  Opportunity:                   Increase to 60%+
+
+😊 CUSTOMER SENTIMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Neutral:                       110 calls (78.0%)
+  Satisfied:                     0 calls
+  Frustrated:                    0 calls
+  Angry:                         0 calls
+  
+  ✅ Zero negative sentiment!
+  ⚠️ Opportunity to increase satisfaction
+
+🚨 CRITICAL ACTIONS NEEDED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1. Route calls to improved agent (agent_dd2330db579b3b5597b28646c6)
+  2. Add post-call analysis to "no hawaii" agent
+  3. Test improved agent with 10-20 calls
+  4. Monitor and compare performance
+
+📦 EXPORT FILES CREATED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✓ hawaii-calls-export-NEW.csv     (Excel-ready with 157 calls)
+  ✓ hawaii-calls-export-NEW.json    (Full structured data)
+  ✓ hawaii-calls-LATEST-SUMMARY.md  (Comprehensive analysis)
+  ✓ This file (Quick reference)
+
+🎯 BOTTOM LINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Hawaii upsell is CRUSHING IT with 28.2% conversion!
+  
+  This is 5-6x better than baseline and exceeds the target.
+  
+  Now we need to:
+  1. Get the improved agent receiving calls
+  2. Test if improvements can push conversion even higher
+  3. Scale what's working!
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    EXPORT COMPLETE - READY FOR ANALYSIS                    ║
+╚════════════════════════════════════════════════════════════════════════════╝

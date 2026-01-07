@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Dealership Outbound Sales Agent - Flow Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .meta {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .diagram {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        .legend-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            vertical-align: middle;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Car Dealership Outbound Sales Agent</h1>
+        <div class="meta">
+            <strong>Type:</strong> Conversational Flow Agent<br>
+            <strong>Nodes:</strong> 24<br>
+            <strong>Edges:</strong> 40
+        </div>
+        
+        <div class="diagram">
+            <div class="mermaid">
+flowchart TD
+
+    start_node_greeting[Initial Greeting]:::startNode
+    node_handle_gatekeeper[Handle Gatekeeper]
+    node_connected_dm[Connected to Decision Maker]
+    node_pitch_value[Pitch Value Proposition]
+    node_qualify_interest[Qualify Interest]
+    node_transfer_intro[Transfer Introduction]
+    node_transfer_call[/Transfer to Sales Team\]:::transferNode
+    node_transfer_failed[Transfer Failed]
+    node_schedule_intro[Schedule Call Introduction]
+    node_check_availability[[Check Calendar Availability]]
+    node_present_times[Present Available Times]
+    node_get_preferred_time[Get Preferred Time]
+    node_book_appointment[[Book Appointment]]
+    node_confirm_appointment[Confirm Appointment]
+    node_manual_schedule[Manual Schedule]
+    node_dm_unavailable[Decision Maker Unavailable]
+    node_collect_callback_info[Collect Callback Information]
+    node_leave_callback_info[Leave Callback Info]
+    node_successful_end[Successful End]
+    node_confirm_callback[Confirm Callback]
+    node_not_interested[Not Interested]
+    node_polite_end[Polite End]
+    node_end_call([End Call]):::endNode
+    node_human_escalation[Human Escalation]:::globalNode
+
+    start_node_greeting -->|They are the decision maker or willing to transfer| node_connected_dm
+    start_node_greeting -->|Gatekeeper asks screening questions| node_handle_gatekeeper
+    start_node_greeting -->|Decision maker not available or busy| node_dm_unavailable
+    start_node_greeting -->|Hard rejection or not interested| node_not_interested
+    node_handle_gatekeeper -->|Gatekeeper agrees to transfer| node_connected_dm
+    node_handle_gatekeeper -->|Gatekeeper provides decision maker contact info| node_collect_callback_info
+    node_handle_gatekeeper -->|Still resistant or wants to take message| node_leave_callback_info
+    node_handle_gatekeeper -->|Hard no or not interested| node_not_interested
+    node_connected_dm -->|Confirms they are decision maker| node_pitch_value
+    node_connected_dm -->|They are not the decision maker| node_handle_gatekeeper
+    node_pitch_value -->|Interested and wants to hear more now| node_qualify_interest
+    node_pitch_value -->|Interested but wants to schedule a call later| node_schedule_intro
+    node_pitch_value -->|Has specific questions or concerns| node_transfer_intro
+    node_pitch_value -->|Not interested| node_not_interested
+    node_qualify_interest -->|Definitely interested and engaged| node_schedule_intro
+    node_qualify_interest -->|Interested but has more questions| node_transfer_intro
+    node_qualify_interest -->|Somewhat interested but hesitant| node_leave_callback_info
+    node_qualify_interest -->|Not interested after hearing details| node_not_interested
+    node_transfer_intro -.->|skip response| node_transfer_call
+    node_transfer_call -->|transfer failed| node_transfer_failed
+    node_transfer_failed -->|Contact info collected| node_confirm_callback
+    node_schedule_intro -.->|skip response| node_check_availability
+    node_check_availability -->|Availability found| node_present_times
+    node_check_availability -->|No availability| node_manual_schedule
+    node_present_times -->|They choose a time slot| node_book_appointment
+    node_present_times -->|None of those times work| node_get_preferred_time
+    node_get_preferred_time -->|They provide preferred time| node_check_availability
+    node_book_appointment -->|Appointment booked successfully| node_confirm_appointment
+    node_book_appointment -->|Booking failed| node_manual_schedule
+    node_confirm_appointment -->|Email confirmed| node_successful_end
+    node_manual_schedule -->|Contact info provided| node_confirm_callback
+    node_dm_unavailable -->|Contact info or callback time provided| node_collect_callback_info
+    node_dm_unavailable -->|Will not provide information| node_leave_callback_info
+    node_collect_callback_info -.->|skip response| node_polite_end
+    node_leave_callback_info -.->|skip response| node_polite_end
+    node_successful_end -.->|skip response| node_end_call
+    node_confirm_callback -.->|skip response| node_polite_end
+    node_not_interested -.->|skip response| node_end_call
+    node_polite_end -.->|skip response| node_end_call
+    node_human_escalation -.->|skip response| node_transfer_call
+
+    classDef startNode fill:#90EE90,stroke:#2E8B57,stroke-width:3px
+    classDef endNode fill:#FFB6C1,stroke:#DC143C,stroke-width:2px
+    classDef globalNode fill:#FFD700,stroke:#FF8C00,stroke-width:2px
+    classDef transferNode fill:#87CEEB,stroke:#4682B4,stroke-width:2px
+            </div>
+        </div>
+        
+        <div class="legend">
+            <h3>Legend</h3>
+            <div class="legend-item">
+                <span class="legend-box" style="background:#90EE90;border:2px solid #2E8B57;"></span>
+                Start Node
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background:#FFB6C1;border:2px solid #DC143C;"></span>
+                End Node
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background:#FFD700;border:2px solid #FF8C00;"></span>
+                Global Node
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background:#87CEEB;border:2px solid #4682B4;"></span>
+                Transfer Node
+            </div>
+            <div style="margin-top:15px;">
+                <strong>Node Shapes:</strong><br>
+                Rectangle = Conversation | Double Rectangle = Function | Diamond = Logic Split | Stadium = End | Trapezoid = Transfer
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

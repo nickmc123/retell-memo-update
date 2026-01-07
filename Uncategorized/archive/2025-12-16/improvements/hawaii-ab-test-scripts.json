@@ -1,0 +1,152 @@
+{
+  "test_name": "Hawaii Offer Script A/B/C Test",
+  "test_goal": "Increase conversion rate from 26% to 30%+ by optimizing initial offer language",
+  "test_duration": "150 calls per variant (450 calls total, ~2-3 days at current volume)",
+  "success_metric": "Conversion rate (% of offered who request transfer)",
+
+  "current_baseline": {
+    "conversion_rate": "26.0%",
+    "sample_size": "104 offers",
+    "script_description": "Current production script (longer, benefit-focused)"
+  },
+
+  "variants": [
+    {
+      "variant_name": "Script A - Urgency First (Control - Current)",
+      "hypothesis": "Lead with urgency and scarcity to create FOMO",
+      "script": "I'm so glad I could help! Before you go, I want to let you know about an exclusive offer we have right now. We're offering a limited-time Hawaii vacation package at a significantly discounted rate - 5 nights in Waikiki for just $699 total, which includes your accommodations and some amazing perks. It's only available for the next few days. Would you be interested in hearing more details about this Hawaii offer?",
+      "key_elements": [
+        "Limited-time framing",
+        "Price anchor ($699)",
+        "Location specificity (Waikiki)",
+        "Urgency (next few days)",
+        "Question to gauge interest"
+      ],
+      "predicted_conversion": "26% (baseline)",
+      "word_count": 71
+    },
+
+    {
+      "variant_name": "Script B - Short & Punchy",
+      "hypothesis": "Shorter script with immediate value prop reduces cognitive load and increases yes rate",
+      "script": "Great! Quick question before you go - would you be interested in a 5-night Hawaii vacation for only $699? It's a limited-time offer we're extending to you today, and it's an incredible deal. Interested?",
+      "key_elements": [
+        "Very concise (38 words vs 71)",
+        "Immediate value statement",
+        "Price upfront",
+        "Direct question",
+        "Casual tone (\"Quick question\")"
+      ],
+      "predicted_conversion": "28-30%",
+      "word_count": 38,
+      "rationale": "Reduces decision fatigue. Customer hears price + destination immediately. Less overwhelming than long pitch."
+    },
+
+    {
+      "variant_name": "Script C - Question-Led Qualifying",
+      "hypothesis": "Pre-qualifying with a question filters for genuinely interested customers, increasing conversion of those who engage",
+      "script": "I'm so glad I could help you today! One last thing - have you ever thought about visiting Hawaii? We have an exclusive offer right now for our customers - 5 nights in Waikiki for just $699. It's only available for a few more days. Would you like to hear more about it?",
+      "key_elements": [
+        "Dream-state question first",
+        "Emotional connection to Hawaii",
+        "Exclusivity positioning",
+        "Still includes urgency",
+        "Two-step engagement (qualify, then offer)"
+      ],
+      "predicted_conversion": "30-33%",
+      "word_count": 56,
+      "rationale": "The 'Have you ever thought about Hawaii?' question creates mental visualization and emotional connection before the offer."
+    },
+
+    {
+      "variant_name": "Script D - Value Comparison",
+      "hypothesis": "Showing the savings (not just price) emphasizes value and justifies purchase",
+      "script": "Perfect! Before we wrap up, I want to share something special with you. We're offering 5 nights in Hawaii - normally $1,500 or more - for just $699. That's over 50% off, and it's only available to our customers for the next few days. Would you like to take advantage of this while it's available?",
+      "key_elements": [
+        "Price anchoring ($1,500 vs $699)",
+        "Explicit savings calculation (50% off)",
+        "Exclusivity (only our customers)",
+        "Action-oriented question",
+        "Urgency (few days)"
+      ],
+      "predicted_conversion": "29-32%",
+      "word_count": 58,
+      "rationale": "Showing savings rather than just price makes the value concrete. Comparison to $1,500 makes $699 feel like a steal."
+    }
+  ],
+
+  "testing_methodology": {
+    "setup": "Deploy 4 versions of the agent with identical flow except Hawaii offer script",
+    "distribution": "Route 25% of traffic to each variant randomly",
+    "sample_size": "150 offers per variant (600 total offers ≈ 3-4 days)",
+    "tracking": "Use post_call_analysis_data field 'ab_test_variant' to tag each call",
+    "metrics_to_track": [
+      "Conversion rate (primary)",
+      "Decline reason distribution",
+      "Customer sentiment after offer",
+      "Objection handling engagement rate",
+      "Average call duration impact"
+    ]
+  },
+
+  "implementation_in_retell": {
+    "method_1_recommended": {
+      "approach": "Create 4 identical agents with only script difference",
+      "steps": [
+        "Clone 'Intro Transfer with Hawaii - IMPROVED' 4 times",
+        "Name: 'Hawaii AB Test - Script A' through 'Hawaii AB Test - Script D'",
+        "Update node 'node-hawaii-offer' instruction.text with respective script",
+        "Add post_call_analysis field: {\"name\": \"ab_test_variant\", \"type\": \"enum\", \"options\": [\"A\", \"B\", \"C\", \"D\"]}",
+        "Route traffic randomly via phone number routing or load balancer"
+      ]
+    },
+    "method_2_alternative": {
+      "approach": "Single agent with dynamic script selection via variable",
+      "steps": [
+        "Create dynamic variable {{hawaii_script_variant}}",
+        "Set to rotate A/B/C/D on each call",
+        "Use conditional logic in node instruction",
+        "Track variant in post-call analysis"
+      ]
+    }
+  },
+
+  "post_call_analysis_addition": {
+    "new_field": {
+      "name": "ab_test_variant",
+      "type": "enum",
+      "options": ["A", "B", "C", "D"],
+      "description": "Which Hawaii offer script variant was used (for A/B testing)"
+    }
+  },
+
+  "analysis_query_template": {
+    "description": "Query to run after test completion",
+    "pseudo_sql": "SELECT ab_test_variant, COUNT(*) as offers, SUM(hawaii_transfer_requested) as conversions, (SUM(hawaii_transfer_requested) / COUNT(*)) as conversion_rate, AVG(customer_sentiment) as avg_sentiment FROM calls WHERE hawaii_offered = true AND call_date >= [test_start_date] GROUP BY ab_test_variant ORDER BY conversion_rate DESC"
+  },
+
+  "decision_criteria": {
+    "statistical_significance": "Use 95% confidence interval, minimum 100 offers per variant",
+    "winner_selection": "Variant with highest conversion rate + positive sentiment maintenance",
+    "secondary_factors": [
+      "Does not increase negative sentiment",
+      "Does not significantly increase call duration",
+      "Maintains or improves objection handling engagement"
+    ]
+  },
+
+  "expected_results": {
+    "best_case": "Script C or D achieves 30-33% conversion (vs 26% baseline)",
+    "moderate_case": "Script B achieves 28-30% conversion",
+    "worst_case": "All variants perform similarly to baseline (26%)",
+    "if_worst_case": "Test additional variables: timing, tone, voice delivery, or offer structure"
+  },
+
+  "rollout_plan_after_test": {
+    "step_1": "Identify winning variant",
+    "step_2": "Deploy winner to 100% of traffic",
+    "step_3": "Monitor for 1 week to confirm sustained performance",
+    "step_4": "Calculate ROI: (new_conversion_rate - 26%) × daily_offers × $699 × 30 days",
+    "step_5": "Document learnings for future optimization tests"
+  }
+}

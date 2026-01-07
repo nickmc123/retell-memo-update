@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Inspection Flow - Mermaid Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+        }
+        .mermaid {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px;
+            padding: 15px;
+            background: #16213e;
+            border-radius: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .stats {
+            text-align: center;
+            margin: 20px;
+            padding: 15px;
+            background: #16213e;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Home Inspection Booking Flow (Kate)</h1>
+
+    <div class="stats">
+        <strong>Flow Statistics:</strong> 20 Nodes | 4 Tools | Voice-Only Collection
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: #90EE90;"></div>
+            <span>Start Node</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #FFB6C1;"></div>
+            <span>End Node</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #87CEEB;"></div>
+            <span>Conversation</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #DDA0DD;"></div>
+            <span>Function Call</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #FFD700;"></div>
+            <span>Transfer</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #FFA500;"></div>
+            <span>Global Trigger</span>
+        </div>
+    </div>
+
+    <div class="mermaid">
+flowchart TD
+    subgraph MAIN["Main Booking Flow"]
+        START([START]) --> greeting
+        greeting[/"Greeting<br/>Thanks for calling..."/]
+
+        greeting -->|"Wants to book/pricing"| collect_address
+        greeting -->|"Has question"| answer_faq
+        greeting -->|"Reschedule/Cancel"| transfer_announce
+
+        collect_address["Collect Address<br/>(voice)"]
+        collect_address -->|"Address provided"| confirm_address
+
+        confirm_address["Confirm Address<br/>(spell back)"]
+        confirm_address -->|"Confirmed"| collect_property_details
+        confirm_address -->|"Incorrect"| collect_address
+
+        collect_property_details["Collect Details<br/>(sqft, year)"]
+        collect_property_details -->|"Details collected"| ask_addons
+
+        ask_addons["Ask Add-ons<br/>(mold/radon)"]
+        ask_addons -->|"Decision made"| calculate_cost
+
+        calculate_cost[["calculate_charge<br/>API Call"]]
+        calculate_cost -->|"Success"| present_price
+        calculate_cost -->|"Failed"| calculation_error
+
+        calculation_error["Calculation Error"]
+        calculation_error -->|"Retry"| calculate_cost
+        calculation_error -->|"Callback"| offer_callback
+
+        present_price["Present Price<br/>($total)"]
+        present_price -->|"Wants to book"| ask_date
+        present_price -->|"Just pricing"| closing
+
+        ask_date["Ask Date"]
+        ask_date -->|"Date provided"| check_availability
+
+        check_availability[["get_availability<br/>API Call"]]
+        check_availability -->|"Times found"| offer_times
+        check_availability -->|"No slots"| no_availability
+
+        offer_times["Offer Times<br/>(9AM, 1PM...)"]
+        offer_times -->|"Time selected"| collect_buyer_info
+
+        no_availability["No Availability"]
+        no_availability -->|"Try another"| ask_date
+        no_availability -->|"Callback"| offer_callback
+
+        collect_buyer_info["Collect Buyer Info<br/>(name, email)"]
+        collect_buyer_info -->|"Info collected"| final_confirmation
+
+        final_confirmation["Final Confirmation<br/>(verify all details)"]
+        final_confirmation -->|"Confirmed"| create_booking
+        final_confirmation -->|"Changes needed"| collect_address
+
+        create_booking[["create_inspection<br/>API Call"]]
+        create_booking -->|"Success"| booking_confirmed
+        create_booking -->|"Failed"| manual_followup
+
+        booking_confirmed["Booking Confirmed!"]
+        booking_confirmed -.->|"skip"| closing
+
+        manual_followup["Manual Followup"]
+        manual_followup -.->|"skip"| closing
+    end
+
+    subgraph FAQ["FAQ Path"]
+        answer_faq["Answer FAQ"]
+        answer_faq -->|"Wants to book"| collect_address
+        answer_faq -->|"Done"| closing
+    end
+
+    subgraph TRANSFER["Transfer Path"]
+        transfer_announce["Transfer Announce"]
+        transfer_announce -.->|"skip"| transfer_call
+
+        transfer_call{{"Transfer Call<br/>+18563630633"}}
+        transfer_call -->|"Failed"| transfer_fallback
+
+        transfer_fallback["Transfer Fallback"]
+        transfer_fallback -.->|"skip"| closing
+    end
+
+    subgraph CALLBACK["Callback Path"]
+        offer_callback["Offer Callback"]
+        offer_callback -.->|"skip"| closing
+    end
+
+    closing(["CLOSING<br/>End Call"])
+
+    %% Global trigger
+    greeting -.->|"GLOBAL: Human request"| transfer_announce
+
+    style greeting fill:#90EE90,stroke:#333,stroke-width:2px
+    style closing fill:#FFB6C1,stroke:#333,stroke-width:2px
+    style calculate_cost fill:#DDA0DD,stroke:#333,stroke-width:2px
+    style check_availability fill:#DDA0DD,stroke:#333,stroke-width:2px
+    style create_booking fill:#DDA0DD,stroke:#333,stroke-width:2px
+    style transfer_call fill:#FFD700,stroke:#333,stroke-width:2px
+    style transfer_announce fill:#FFA500,stroke:#333,stroke-width:2px
+    style booking_confirmed fill:#98FB98,stroke:#333,stroke-width:2px
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

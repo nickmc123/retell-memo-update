@@ -1,0 +1,699 @@
+{
+  "agent_id": "",
+  "channel": "voice",
+  "last_modification_timestamp": 1764943673737,
+  "agent_name": "Retail Receptionist (from template)",
+  "response_engine": {
+    "type": "conversation-flow",
+    "version": 0,
+    "conversation_flow_id": "conversation_flow_74e750ad5b3a"
+  },
+  "language": "en-US",
+  "data_storage_setting": "everything",
+  "version": 0,
+  "is_published": false,
+  "voice_id": "11labs-Cimo",
+  "max_call_duration_ms": 3600000,
+  "interruption_sensitivity": 0.9,
+  "user_dtmf_options": {},
+  "conversationFlow": {
+    "conversation_flow_id": "conversation_flow_74e750ad5b3a",
+    "version": 0,
+    "global_prompt": "You're Myra, receptionist at Retell Retail Store. \n\nYou can assist callers with the following:\n- Placing an order\n- Transfer to a human representative\n- General inquiries, such as product information\n\nUser transcript might contain transcription errors. Use your best judgement to guess and respond.",
+    "nodes": [
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Hello, thank you for calling Retell Retail Store. How can I help you today?"
+        },
+        "edges": [],
+        "name": "Welcome Node",
+        "start_speaker": "agent",
+        "id": "start-node-1735345705961",
+        "type": "conversation",
+        "display_position": {
+          "x": 483.32624148914385,
+          "y": -199.8766801488872
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "No problem! Have you placed an order with us before?"
+        },
+        "edges": [
+          {
+            "condition": "If They Have an Existing Account",
+            "id": "edge-1735346947451",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If They Have an Existing Account"
+            },
+            "destination_node_id": "node-1735346986031"
+          },
+          {
+            "condition": "If They Are a New Customer",
+            "id": "edge-1735347578266",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If They Are a New Customer"
+            },
+            "destination_node_id": "node-1735347615404"
+          }
+        ],
+        "name": "Conversation",
+        "global_node_setting": {
+          "condition": "User wants to place a new order"
+        },
+        "id": "node-1735346947451",
+        "type": "conversation",
+        "display_position": {
+          "x": 0,
+          "y": 873
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "If they have it",
+            "id": "edge-1735346986031",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If they have it"
+            },
+            "destination_node_id": "node-1735347018128"
+          },
+          {
+            "condition": "If they don’t have it",
+            "id": "edge-1735346999741",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If they don’t have it"
+            },
+            "destination_node_id": "node-1735347042415"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735346986031",
+        "type": "conversation",
+        "display_position": {
+          "x": 500,
+          "y": 888
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Great! Do you happen to have your customer number?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "User responds",
+            "id": "edge-1735347018128",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User responds"
+            },
+            "destination_node_id": "node-1735347487651"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735347018128",
+        "type": "conversation",
+        "display_position": {
+          "x": 1000,
+          "y": 910
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Thank you. Let me also confirm your name and address to ensure I have the correct account. Could you share those with me, please?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "User responds",
+            "id": "edge-1735347042415",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User responds"
+            },
+            "destination_node_id": "node-1735347487651"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735347042415",
+        "type": "conversation",
+        "display_position": {
+          "x": 1000,
+          "y": 534
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "That’s okay. May I have your full name and address so I can look up your account?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "User confirms what you read back is correct",
+            "id": "edge-1735347487651-3t57gs61f",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User confirms what you read back is correct"
+            },
+            "destination_node_id": "node-1735347533196"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735347487651",
+        "type": "conversation",
+        "display_position": {
+          "x": 1500,
+          "y": 902
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Confirm the above information with the user by reading it back to them. If the user says that's not correct, ask them to clarify and reconfirm it by reading it back to the user."
+        }
+      },
+      {
+        "tool_id": "tool-1735347531712",
+        "edges": [
+          {
+            "condition": "account found",
+            "id": "edge-1735347539375",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "account found"
+            },
+            "destination_node_id": "node-1735347686533"
+          },
+          {
+            "condition": "No account is found",
+            "id": "edge-1735347556525",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "No account is found"
+            }
+          }
+        ],
+        "name": "Look Up Account",
+        "id": "node-1735347533196",
+        "type": "function",
+        "display_position": {
+          "x": 2000,
+          "y": 949
+        },
+        "speak_during_execution": false,
+        "tool_type": "local",
+        "wait_for_result": true
+      },
+      {
+        "edges": [
+          {
+            "condition": "User responds",
+            "id": "edge-1735347615404",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User responds"
+            },
+            "destination_node_id": "node-1735347647804"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735347615404",
+        "type": "conversation",
+        "display_position": {
+          "x": 1000,
+          "y": 146
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "I’m happy to help with your first order. Let’s create your account. May I have your first and last name? Please spell it for me if there’s any uncertainty. Also, a good phone number, and your full address?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "User confirms",
+            "id": "edge-1735347647804-z4zgnaknx",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User confirms"
+            },
+            "destination_node_id": "node-1735347782300"
+          },
+          {
+            "condition": "User cannot confirm",
+            "id": "edge-1735347647804-agd1a21e9",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User cannot confirm"
+            },
+            "destination_node_id": "node-1735347615404"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735347647804",
+        "type": "conversation",
+        "display_position": {
+          "x": 1500,
+          "y": 130
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Confirm the above information with the customer. \n\nFor example: \nLet me read that back to you…"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "If user confirms what you read back is correct",
+            "id": "edge-1735347686533",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If user confirms what you read back is correct"
+            },
+            "destination_node_id": "node-1735348490588"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735347686533",
+        "type": "conversation",
+        "display_position": {
+          "x": 2500,
+          "y": 902
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Ask user for product details like the product names and quantities. Then confirm the product and quantity with user by reading it back."
+        }
+      },
+      {
+        "tool_id": "tool-1735347780911",
+        "edges": [
+          {
+            "condition": "If successful",
+            "id": "edge-1735347947041",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If successful"
+            },
+            "destination_node_id": "node-1735347686533"
+          }
+        ],
+        "name": "Create Account",
+        "id": "node-1735347782300",
+        "type": "function",
+        "display_position": {
+          "x": 2000,
+          "y": 213
+        },
+        "speak_during_execution": false,
+        "tool_type": "local",
+        "wait_for_result": true
+      },
+      {
+        "edges": [
+          {
+            "condition": "If card is on file",
+            "id": "edge-1735348490588",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If card is on file"
+            },
+            "destination_node_id": "node-1735348525917"
+          },
+          {
+            "condition": "If using new card",
+            "id": "edge-1735348510323",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If using new card"
+            },
+            "destination_node_id": "node-1735348548657"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735348490588",
+        "type": "conversation",
+        "display_position": {
+          "x": 3000,
+          "y": 888
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Great! I’ll note your card details for processing. Do you have a card on file, or are you using a new card?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "last four digit obtained",
+            "id": "edge-1735348525917",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "last four digit obtained"
+            },
+            "destination_node_id": "node-1735348604307"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735348525917",
+        "type": "conversation",
+        "display_position": {
+          "x": 3500,
+          "y": 910
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Can you confirm the CVC?"
+        }
+      },
+      {
+        "edges": [
+          {
+            "condition": "Payment details obtained from user, and user confirms what you read back is correct",
+            "id": "edge-1735348548657",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Payment details obtained from user, and user confirms what you read back is correct"
+            },
+            "destination_node_id": "node-1735348604307"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735348548657",
+        "type": "conversation",
+        "display_position": {
+          "x": 3500,
+          "y": 490
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "I’ll take down the new card number, expiry date, and the CVC for our team to process.\n\nAfter user provides the card info, confirm it by reading it back to user."
+        }
+      },
+      {
+        "tool_id": "tool-1735348602998",
+        "edges": [
+          {
+            "condition": "Payment successful",
+            "id": "edge-1735348614453",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Payment successful"
+            },
+            "destination_node_id": "node-1735348620795"
+          },
+          {
+            "condition": "Payment failed",
+            "id": "edge-1737531975067",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Payment failed"
+            },
+            "destination_node_id": "node-1737531989301"
+          }
+        ],
+        "name": "Process Payment",
+        "id": "node-1735348604307",
+        "type": "function",
+        "display_position": {
+          "x": 4000,
+          "y": 949
+        },
+        "speak_during_execution": false,
+        "tool_type": "local",
+        "wait_for_result": true
+      },
+      {
+        "edges": [
+          {
+            "condition": "If no other questions",
+            "id": "edge-1735348620795",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "If no other questions"
+            },
+            "destination_node_id": "node-1735348680044"
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735348620795",
+        "type": "conversation",
+        "display_position": {
+          "x": 4500,
+          "y": 526
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Thank you! Is there anything else I can help you with today?"
+        }
+      },
+      {
+        "name": "End Call",
+        "id": "node-1735348666364",
+        "type": "end",
+        "display_position": {
+          "x": 5500,
+          "y": 636
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735348680044",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735348680044",
+        "type": "conversation",
+        "display_position": {
+          "x": 5000,
+          "y": 526
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1737528372501",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1735348666364"
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Let me transfer you to a human representative. Hold on one moment please."
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735348912266",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "global_node_setting": {
+          "condition": "Caller Immediately Asks for a Human Representative"
+        },
+        "name": "Conversation",
+        "id": "node-1735348912266",
+        "type": "conversation",
+        "display_position": {
+          "x": 0,
+          "y": 1323
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1735348973661",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1735348918721"
+        }
+      },
+      {
+        "edge": {
+          "condition": "Transfer failed",
+          "id": "edge-1735348918721",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Transfer failed"
+          },
+          "destination_node_id": "node-1735349014233"
+        },
+        "transfer_destination": {
+          "type": "predefined",
+          "number": "+12134447777"
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Transferring your call now."
+        },
+        "name": "Transfer Call",
+        "id": "node-1735348918721",
+        "transfer_option": {
+          "type": "cold_transfer",
+          "show_transferee_as_caller": false,
+          "enable_bridge_audio_cue": true
+        },
+        "type": "transfer_call",
+        "display_position": {
+          "x": 500,
+          "y": 1399
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "It seems like all the agents are busy at the moment. We will give you a call back soon."
+        },
+        "edges": [
+          {
+            "condition": "Describe the transition condition",
+            "id": "edge-1735349014233",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Describe the transition condition"
+            }
+          }
+        ],
+        "name": "Conversation",
+        "id": "node-1735349014233",
+        "type": "conversation",
+        "display_position": {
+          "x": 1000,
+          "y": 1338
+        },
+        "skip_response_edge": {
+          "condition": "Skip response",
+          "id": "edge-1737533855044",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Skip response"
+          },
+          "destination_node_id": "node-1737533859087"
+        }
+      },
+      {
+        "instruction": {
+          "type": "prompt",
+          "text": "Sure, could you tell me a bit more about what you’re looking for?\n\nNote: answer the questions using knowledge base information"
+        },
+        "edges": [
+          {
+            "condition": "User's question has been answered",
+            "id": "edge-1735349082440",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User's question has been answered"
+            },
+            "destination_node_id": "node-1735348620795"
+          }
+        ],
+        "name": "Conversation",
+        "global_node_setting": {
+          "condition": "If User has a general inquiry (e.g., product info)"
+        },
+        "id": "node-1735349082440",
+        "type": "conversation",
+        "display_position": {
+          "x": 4000,
+          "y": 483
+        }
+      },
+      {
+        "name": "Conversation",
+        "edges": [
+          {
+            "condition": "Payment details obtained and confirmed",
+            "id": "edge-1737531989301",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "Payment details obtained and confirmed"
+            },
+            "destination_node_id": "node-1735348604307"
+          }
+        ],
+        "id": "node-1737531989301",
+        "type": "conversation",
+        "display_position": {
+          "x": 4500,
+          "y": 902
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Let user know that the payment did not go through. Ask for a new payment method (new card number, expiry date, and the CVC). Confirm it by reading it back to user"
+        }
+      },
+      {
+        "name": "End Call",
+        "id": "node-1737533859087",
+        "type": "end",
+        "display_position": {
+          "x": 1500,
+          "y": 1448
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Politely end the call"
+        }
+      }
+    ],
+    "start_node_id": "start-node-1735345705961",
+    "start_speaker": "agent",
+    "tools": [
+      {
+        "name": "look_up_account",
+        "description": "",
+        "tool_id": "tool-1735347531712",
+        "type": "custom",
+        "url": "https://api.retellai.com/var_test"
+      },
+      {
+        "name": "create_account",
+        "description": "",
+        "tool_id": "tool-1735347780911",
+        "type": "custom",
+        "url": "https://api.retellai.com/replace_with_your_url"
+      },
+      {
+        "name": "process_payment",
+        "description": "",
+        "tool_id": "tool-1735348602998",
+        "type": "custom",
+        "url": "https://api.retellai.com/random_status"
+      }
+    ],
+    "model_choice": {
+      "type": "cascading",
+      "model": "gpt-4.1"
+    },
+    "knowledge_base_ids": [],
+    "begin_tag_display_position": {
+      "x": 111.5,
+      "y": 101
+    },
+    "is_published": false
+  }
+}

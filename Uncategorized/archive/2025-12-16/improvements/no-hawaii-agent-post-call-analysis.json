@@ -1,0 +1,109 @@
+{
+  "agent_name": "Intro Transfer no hawaii - POST-CALL ANALYSIS CONFIG",
+  "note": "This configuration should be added to the existing 'Intro Transfer no hawaii' agent to enable post-call analysis tracking",
+
+  "post_call_analysis_data": [
+    {
+      "name": "issue_resolved",
+      "type": "boolean",
+      "description": "Was the customer's issue resolved by the AI agent?"
+    },
+    {
+      "name": "issue_category",
+      "type": "enum",
+      "options": [
+        "deposit_payment",
+        "travel_dates",
+        "certificate_activation",
+        "refund_inquiry",
+        "package_verification",
+        "general_inquiry",
+        "booking_change",
+        "complaint",
+        "other"
+      ],
+      "description": "Primary category of customer's issue"
+    },
+    {
+      "name": "customer_sentiment",
+      "type": "enum",
+      "options": [
+        "positive",
+        "neutral",
+        "negative",
+        "frustrated"
+      ],
+      "description": "Customer's overall sentiment during the call"
+    },
+    {
+      "name": "transfer_occurred",
+      "type": "boolean",
+      "description": "Was the customer transferred to a human agent?"
+    },
+    {
+      "name": "transfer_reason",
+      "type": "enum",
+      "options": [
+        "complex_issue",
+        "refund_request",
+        "customer_request",
+        "escalation",
+        "no_transfer",
+        "other"
+      ],
+      "description": "Reason for transfer if applicable"
+    },
+    {
+      "name": "call_outcome",
+      "type": "enum",
+      "options": [
+        "fully_resolved",
+        "transferred_to_support",
+        "callback_scheduled",
+        "customer_declined_help",
+        "incomplete"
+      ],
+      "description": "Final outcome of the call"
+    },
+    {
+      "name": "call_duration_category",
+      "type": "enum",
+      "options": [
+        "under_2_min",
+        "2_to_4_min",
+        "4_to_6_min",
+        "over_6_min"
+      ],
+      "description": "Duration category to help analyze why calls are longer on this agent vs Hawaii agent"
+    },
+    {
+      "name": "reason_for_long_duration",
+      "type": "enum",
+      "options": [
+        "complex_issue",
+        "customer_talkative",
+        "multiple_issues",
+        "technical_difficulties",
+        "transfer_delays",
+        "not_applicable_short_call",
+        "other"
+      ],
+      "description": "If call exceeded 4 minutes, what contributed to longer duration?"
+    }
+  ],
+
+  "implementation_notes": [
+    "This agent currently has 2x longer average call duration (5.0 min vs 2.7 min for Hawaii version)",
+    "These post-call analysis fields are designed to help diagnose WHY calls are longer",
+    "Once configured, monitor next 20-50 calls to identify patterns",
+    "Compare results with 'Intro Transfer with Hawaii' agent to understand differences"
+  ],
+
+  "recommended_actions_after_configuration": [
+    "1. Deploy this post-call analysis configuration via Retell API",
+    "2. Monitor calls for 2-3 days to collect sufficient data",
+    "3. Run analysis query to compare duration patterns vs Hawaii agent",
+    "4. Investigate top 'reason_for_long_duration' responses",
+    "5. Based on findings, consider: consolidating agents, optimizing prompts, or adjusting routing logic"
+  ]
+}

@@ -1,0 +1,727 @@
+{
+  "name": "Home Inspection Booking Flow",
+  "description": "Conversational flow for Kate - Home Inspection scheduling assistant",
+  "start_node_id": "greeting",
+  "nodes": [
+    {
+      "id": "greeting",
+      "type": "conversation",
+      "display_position": {"x": 250, "y": 400},
+      "instruction": {
+        "type": "static",
+        "text": "Thanks for calling Home inspection, this is Kate on a recorded line how can I help you?"
+      },
+      "edges": [
+        {
+          "id": "edge_greeting_to_collect_address",
+          "condition": "Wants to book or get pricing",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to schedule an inspection, get a quote, or asks about pricing"
+          },
+          "destination_node_id": "collect_address"
+        },
+        {
+          "id": "edge_greeting_to_faq",
+          "condition": "Has a question",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has a general question about services, the company, or inspections"
+          },
+          "destination_node_id": "answer_faq"
+        },
+        {
+          "id": "edge_greeting_to_transfer",
+          "condition": "Reschedule or cancel",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to reschedule or cancel an existing appointment"
+          },
+          "destination_node_id": "transfer_announce"
+        }
+      ],
+      "global_node_setting": {
+        "interruptible": true,
+        "edges": [
+          {
+            "id": "edge_global_transfer",
+            "condition": "User requests human or reschedule/cancel",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User explicitly asks for a human, manager, or wants to reschedule or cancel an appointment"
+            },
+            "destination_node_id": "transfer_announce"
+          }
+        ]
+      }
+    },
+    {
+      "id": "collect_address",
+      "type": "conversation",
+      "display_position": {"x": 750, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Ask for the property address. Say: 'Alright, um, what's the address of the property?' Listen carefully and collect the full street address, city, state, and zip code."
+      },
+      "edges": [
+        {
+          "id": "edge_address_to_confirm",
+          "condition": "Address provided",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has provided a complete address including street, city, state, and zip"
+          },
+          "destination_node_id": "confirm_address"
+        }
+      ]
+    },
+    {
+      "id": "confirm_address",
+      "type": "conversation",
+      "display_position": {"x": 1250, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Spell back the address for confirmation. For any uncommon street names, spell them out letter by letter. Say something like: 'Okay so that's [address], spelled [spell out street name], correct?' Be concise and curt but professional."
+      },
+      "edges": [
+        {
+          "id": "edge_confirm_to_details",
+          "condition": "Address confirmed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User confirms the address is correct"
+          },
+          "destination_node_id": "collect_property_details"
+        },
+        {
+          "id": "edge_confirm_to_recollect",
+          "condition": "Address incorrect",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says the address is wrong or needs correction"
+          },
+          "destination_node_id": "collect_address"
+        }
+      ]
+    },
+    {
+      "id": "collect_property_details",
+      "type": "conversation",
+      "display_position": {"x": 1750, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Collect square footage and year built. Ask: 'And uh, what's the square footage?' After they answer, ask: 'Got it. And what year was it built?' Store both values. Be concise - one question at a time."
+      },
+      "edges": [
+        {
+          "id": "edge_details_to_addons",
+          "condition": "Details collected",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has provided both square footage and year built"
+          },
+          "destination_node_id": "ask_addons"
+        }
+      ]
+    },
+    {
+      "id": "ask_addons",
+      "type": "conversation",
+      "display_position": {"x": 2250, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Ask about add-on services. Say: 'Would you like to add mold testing, radon testing, or both to your inspection?' Mold is $200 extra, radon is $225. Store their selection. If they ask about prices, tell them. If they decline add-ons, that's fine too."
+      },
+      "edges": [
+        {
+          "id": "edge_addons_to_calculate",
+          "condition": "Add-on decision made",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has either selected add-ons or declined them"
+          },
+          "destination_node_id": "calculate_cost"
+        }
+      ]
+    },
+    {
+      "id": "calculate_cost",
+      "type": "function",
+      "display_position": {"x": 2750, "y": 300},
+      "tool_id": "calculate_charge",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Call the calculate_charge function with the collected property details. Use format: sqft, year, address, zip, county (empty string), foundation (empty string), company_id '4811', discount (empty string), inspector_id (empty string), custom_fields (empty array)."
+      },
+      "speak_during_execution": false,
+      "speak_after_execution": true,
+      "wait_for_result": true,
+      "edges": [
+        {
+          "id": "edge_calculate_success",
+          "condition": "Cost calculated",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "The calculate_charge function returned successfully with a price"
+          },
+          "destination_node_id": "present_price"
+        },
+        {
+          "id": "edge_calculate_fail",
+          "condition": "Calculation failed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "The calculate_charge function failed or returned an error"
+          },
+          "destination_node_id": "calculation_error"
+        }
+      ]
+    },
+    {
+      "id": "calculation_error",
+      "type": "conversation",
+      "display_position": {"x": 2750, "y": 600},
+      "instruction": {
+        "type": "prompt",
+        "text": "Apologize for the issue. Say: 'Um, I'm having trouble pulling up the exact price right now. Would you like me to have someone call you back with a quote, or would you like to try again?' Be helpful but concise."
+      },
+      "edges": [
+        {
+          "id": "edge_error_retry",
+          "condition": "Try again",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to try getting the price again"
+          },
+          "destination_node_id": "calculate_cost"
+        },
+        {
+          "id": "edge_error_callback",
+          "condition": "Callback requested",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants a callback instead"
+          },
+          "destination_node_id": "offer_callback"
+        }
+      ]
+    },
+    {
+      "id": "present_price",
+      "type": "conversation",
+      "display_position": {"x": 3250, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Present the total cost. Add $200 for mold, $225 for radon, or $425 for both to the base price. Say: 'Based on that property, your inspection total comes to about $[total]. Would you like to see available dates?' Be direct and concise."
+      },
+      "edges": [
+        {
+          "id": "edge_price_to_date",
+          "condition": "Wants to book",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to proceed with booking and check available dates"
+          },
+          "destination_node_id": "ask_date"
+        },
+        {
+          "id": "edge_price_to_closing",
+          "condition": "Just wanted price",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User only wanted a price quote and doesn't want to book right now"
+          },
+          "destination_node_id": "closing"
+        }
+      ]
+    },
+    {
+      "id": "ask_date",
+      "type": "conversation",
+      "display_position": {"x": 3750, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Ask for preferred date. Say: 'What date works best for you?' Listen for their response and convert to YYYY-MM-DD format for the availability check."
+      },
+      "edges": [
+        {
+          "id": "edge_date_to_availability",
+          "condition": "Date provided",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has provided a date they want to check"
+          },
+          "destination_node_id": "check_availability"
+        }
+      ]
+    },
+    {
+      "id": "check_availability",
+      "type": "function",
+      "display_position": {"x": 4250, "y": 300},
+      "tool_id": "get_availability",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Say 'hang on a sec let me check that for you' then call get_availability with the date in YYYY-MM-DD format and duration from the calculate_charge response (typically 2-3 hours depending on sqft and add-ons)."
+      },
+      "speak_during_execution": true,
+      "speak_after_execution": true,
+      "wait_for_result": true,
+      "edges": [
+        {
+          "id": "edge_avail_found",
+          "condition": "Times available",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "The get_availability function returned one or more available time slots"
+          },
+          "destination_node_id": "offer_times"
+        },
+        {
+          "id": "edge_avail_none",
+          "condition": "No availability",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "The get_availability function returned no available slots or an empty response"
+          },
+          "destination_node_id": "no_availability"
+        }
+      ]
+    },
+    {
+      "id": "offer_times",
+      "type": "conversation",
+      "display_position": {"x": 4750, "y": 200},
+      "instruction": {
+        "type": "prompt",
+        "text": "Present 2-3 available time options. Say: 'We have openings at [time1] and [time2]. Which do you prefer?' Be concise - just list the times and ask for their choice."
+      },
+      "edges": [
+        {
+          "id": "edge_times_to_buyer",
+          "condition": "Time selected",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has selected one of the offered time slots"
+          },
+          "destination_node_id": "collect_buyer_info"
+        }
+      ]
+    },
+    {
+      "id": "no_availability",
+      "type": "conversation",
+      "display_position": {"x": 4750, "y": 500},
+      "instruction": {
+        "type": "prompt",
+        "text": "Inform about no availability. Say: 'It looks like that day is full. Would you like me to check another date?' If yes, go back to ask_date. If they want a callback instead, offer that."
+      },
+      "edges": [
+        {
+          "id": "edge_no_avail_retry",
+          "condition": "Check another date",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to check a different date"
+          },
+          "destination_node_id": "ask_date"
+        },
+        {
+          "id": "edge_no_avail_callback",
+          "condition": "Wants callback",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants someone to call them back instead"
+          },
+          "destination_node_id": "offer_callback"
+        }
+      ]
+    },
+    {
+      "id": "collect_buyer_info",
+      "type": "conversation",
+      "display_position": {"x": 5250, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Collect buyer name and email. Say: 'Perfect. Can I have your full name and email for the booking?' Listen carefully. For the email, spell it back letter by letter: 'So that's j-o-h-n at gmail dot com, correct?' Use um/uh naturally. Phone will be captured automatically from {{user_number}}."
+      },
+      "edges": [
+        {
+          "id": "edge_buyer_to_confirm",
+          "condition": "Info collected",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has provided their full name and email, and the email has been confirmed"
+          },
+          "destination_node_id": "final_confirmation"
+        }
+      ]
+    },
+    {
+      "id": "final_confirmation",
+      "type": "conversation",
+      "display_position": {"x": 5750, "y": 300},
+      "instruction": {
+        "type": "prompt",
+        "text": "Confirm all booking details. Say: 'Just to confirm — you're scheduling a Residential Inspection for [address] on [date] at [time], total $[amount]. Correct?' Wait for their confirmation before proceeding."
+      },
+      "edges": [
+        {
+          "id": "edge_confirm_to_book",
+          "condition": "Confirmed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User confirms all the details are correct"
+          },
+          "destination_node_id": "create_booking"
+        },
+        {
+          "id": "edge_confirm_to_edit",
+          "condition": "Needs changes",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says something is wrong and needs to be corrected"
+          },
+          "destination_node_id": "collect_address"
+        }
+      ]
+    },
+    {
+      "id": "create_booking",
+      "type": "function",
+      "display_position": {"x": 6250, "y": 300},
+      "tool_id": "create_inspection",
+      "tool_type": "local",
+      "instruction": {
+        "type": "prompt",
+        "text": "Say 'okay give me a second here..' then call create_inspection with the full payload: company_id 4811, inspector_id 6746, services ['8335'], add_ons (if any), scheduled_at in ISO format, datetime in human format, duration, buyer_attributes (first_name, last_name, email, phone from {{user_number}}), property_attributes (address, city, state, zip)."
+      },
+      "speak_during_execution": true,
+      "speak_after_execution": true,
+      "wait_for_result": true,
+      "edges": [
+        {
+          "id": "edge_book_success",
+          "condition": "Booking successful",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "The create_inspection function returned successfully"
+          },
+          "destination_node_id": "booking_confirmed"
+        },
+        {
+          "id": "edge_book_fail",
+          "condition": "Booking failed",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "The create_inspection function failed or returned an error"
+          },
+          "destination_node_id": "manual_followup"
+        }
+      ]
+    },
+    {
+      "id": "booking_confirmed",
+      "type": "conversation",
+      "display_position": {"x": 6750, "y": 200},
+      "instruction": {
+        "type": "prompt",
+        "text": "Confirm the successful booking. Say: 'All set! Your inspection has been booked for [date] at [time]. You'll receive a confirmation email shortly.' Be warm but concise."
+      },
+      "skip_response_edge": {
+        "id": "edge_confirmed_to_closing",
+        "condition": "Skip response",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Skip response"
+        },
+        "destination_node_id": "closing"
+      },
+      "edges": []
+    },
+    {
+      "id": "manual_followup",
+      "type": "conversation",
+      "display_position": {"x": 6750, "y": 500},
+      "instruction": {
+        "type": "prompt",
+        "text": "Handle booking failure gracefully. Say: 'It looks like our booking system didn't confirm just yet. I'll pass your details to our office so they can finalize it manually. You should hear back within the hour.' Be apologetic but reassuring."
+      },
+      "skip_response_edge": {
+        "id": "edge_followup_to_closing",
+        "condition": "Skip response",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Skip response"
+        },
+        "destination_node_id": "closing"
+      },
+      "edges": []
+    },
+    {
+      "id": "answer_faq",
+      "type": "conversation",
+      "display_position": {"x": 750, "y": 700},
+      "instruction": {
+        "type": "prompt",
+        "text": "Answer general questions about home inspections. Knowledge: Residential Inspection is the main service. Add-ons available: Mold Testing ($200) and Radon Testing ($225). Be helpful, concise, and use um/uh naturally. After answering, ask if they'd like to schedule an inspection."
+      },
+      "edges": [
+        {
+          "id": "edge_faq_to_book",
+          "condition": "Wants to book",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to schedule an inspection after their question"
+          },
+          "destination_node_id": "collect_address"
+        },
+        {
+          "id": "edge_faq_to_closing",
+          "condition": "Done with questions",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User has no more questions and doesn't want to book"
+          },
+          "destination_node_id": "closing"
+        }
+      ]
+    },
+    {
+      "id": "transfer_announce",
+      "type": "conversation",
+      "display_position": {"x": 750, "y": 1200},
+      "instruction": {
+        "type": "static",
+        "text": "Sure, let me transfer you to someone who can help with that."
+      },
+      "skip_response_edge": {
+        "id": "edge_announce_to_transfer",
+        "condition": "Skip response",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Skip response"
+        },
+        "destination_node_id": "transfer_call"
+      },
+      "edges": []
+    },
+    {
+      "id": "transfer_call",
+      "type": "transfer_call",
+      "display_position": {"x": 1250, "y": 1200},
+      "instruction": {
+        "type": "prompt",
+        "text": "Transferring your call now."
+      },
+      "transfer_destination": {
+        "type": "predefined",
+        "number": "+15551234567"
+      },
+      "transfer_option": {
+        "type": "cold_transfer",
+        "show_transferee_as_caller": false
+      },
+      "edge": {
+        "id": "edge_transfer_fail",
+        "condition": "Transfer failed",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Transfer failed"
+        },
+        "destination_node_id": "transfer_fallback"
+      }
+    },
+    {
+      "id": "transfer_fallback",
+      "type": "conversation",
+      "display_position": {"x": 1750, "y": 1200},
+      "instruction": {
+        "type": "prompt",
+        "text": "Handle failed transfer. Say: 'I'm sorry, it looks like no one is available to take your call right now. Can I have someone call you back?' If yes, confirm their number and let them know someone will reach out shortly."
+      },
+      "skip_response_edge": {
+        "id": "edge_fallback_to_closing",
+        "condition": "Skip response",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Skip response"
+        },
+        "destination_node_id": "closing"
+      },
+      "edges": []
+    },
+    {
+      "id": "offer_callback",
+      "type": "conversation",
+      "display_position": {"x": 3250, "y": 700},
+      "instruction": {
+        "type": "prompt",
+        "text": "Offer a callback. Say: 'No problem, I'll have someone from our team give you a call back. Is this number the best one to reach you at?' Confirm the callback number and let them know someone will reach out soon."
+      },
+      "skip_response_edge": {
+        "id": "edge_callback_to_closing",
+        "condition": "Skip response",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Skip response"
+        },
+        "destination_node_id": "closing"
+      },
+      "edges": []
+    },
+    {
+      "id": "closing",
+      "type": "end_call",
+      "display_position": {"x": 7250, "y": 400},
+      "instruction": {
+        "type": "prompt",
+        "text": "Thank you for scheduling with us. Is there anything else I can help you with today? If no, say: 'Alright, it was great speaking with you today. Have a good one, bye.'"
+      },
+      "end_call_reason": "Call completed"
+    }
+  ],
+  "tools": [
+    {
+      "type": "end_call",
+      "name": "end_call",
+      "description": "End the call when user has to leave (like says bye) or you are instructed to do so."
+    },
+    {
+      "type": "custom",
+      "name": "calculate_charge",
+      "description": "Calculates the base inspection charge for a property based on its size, year built, and address.",
+      "url": "https://app-staging.spectora.com/api/v1/public/services/8335/calculate_charge",
+      "method": "POST",
+      "parameter_type": "json",
+      "args_at_root": true,
+      "headers": {},
+      "query_params": {},
+      "timeout_ms": 120000,
+      "speak_during_execution": false,
+      "speak_after_execution": true,
+      "response_variables": {
+        "{{duration}}": "\"base_amount\""
+      },
+      "parameters": {
+        "type": "object",
+        "additional_properties": false,
+        "properties": {
+          "sqft": {"type": "string"},
+          "year": {"type": "string"},
+          "address": {"type": "string"},
+          "zip": {"type": "string"},
+          "county": {"type": "string"},
+          "foundation": {"type": "string"},
+          "company_id": {"type": "string"},
+          "discount": {"type": "string"},
+          "inspector_id": {"type": "string"},
+          "custom_fields": {"type": "array", "items": {"type": "object"}}
+        },
+        "required": ["sqft", "year", "address", "zip", "county", "foundation", "company_id", "discount", "inspector_id", "custom_fields"]
+      }
+    },
+    {
+      "type": "custom",
+      "name": "get_availability",
+      "description": "This function is used to get the availability for inspection times for a date",
+      "url": "https://your-n8n-instance.app.n8n.cloud/webhook/YOUR_WEBHOOK_ID_HERE",
+      "method": "POST",
+      "parameter_type": "json",
+      "args_at_root": true,
+      "headers": {},
+      "query_params": {},
+      "timeout_ms": 120000,
+      "speak_during_execution": false,
+      "speak_after_execution": true,
+      "response_variables": {},
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The target date for checking availability, formatted as YYYY-MM-DD (e.g. 2025-11-10).",
+            "example": "2025-11-10"
+          },
+          "duration": {
+            "type": "number",
+            "description": "The appointment duration in hours or decimal format (e.g. 2.5).",
+            "example": 2.5
+          }
+        },
+        "required": ["date", "duration"]
+      }
+    },
+    {
+      "type": "custom",
+      "name": "create_inspection",
+      "description": "Books a confirmed inspection in Spectora for the specified property and buyer details.",
+      "url": "https://app-staging.spectora.com/inspections.json",
+      "method": "POST",
+      "parameter_type": "form",
+      "args_at_root": true,
+      "headers": {},
+      "query_params": {},
+      "timeout_ms": 120000,
+      "speak_during_execution": false,
+      "speak_after_execution": true,
+      "response_variables": {},
+      "parameters": {
+        "type": "object",
+        "required": ["inspection"],
+        "properties": {
+          "inspection": {
+            "type": "object",
+            "required": ["company_id", "inspector_id", "services", "scheduled_at", "datetime", "duration", "buyer_attributes", "property_attributes"],
+            "properties": {
+              "company_id": {"type": "string", "description": "Spectora company ID. Example: 4811"},
+              "inspector_id": {"type": "integer", "description": "Spectora inspector ID. Example: 6746"},
+              "services": {"type": "array", "description": "Primary service ID(s) to include, typically ['8335']", "items": {"type": "string"}},
+              "add_ons": {"type": "array", "description": "Optional add-ons, e.g. ['5721'] for mold, ['5722'] for radon, or both", "items": {"type": "string"}},
+              "scheduled_at": {"type": "string", "description": "ISO date-time for the appointment, e.g. 2025-11-04T08:00:00-04:00"},
+              "datetime": {"type": "string", "description": "Human-readable appointment date and time, e.g. Tue Nov 4 2025 08:00 AM"},
+              "duration": {"type": "number", "description": "Duration of the inspection in hours"},
+              "buyer_attributes": {
+                "type": "object",
+                "required": ["first_name", "last_name", "email", "phone"],
+                "properties": {
+                  "first_name": {"type": "string", "description": "Buyer's first name"},
+                  "last_name": {"type": "string", "description": "Buyer's last name"},
+                  "email": {"type": "string", "description": "Buyer's email address"},
+                  "phone": {"type": "string", "description": "Buyer's phone number"}
+                }
+              },
+              "property_attributes": {
+                "type": "object",
+                "required": ["address", "city", "state", "zip"],
+                "properties": {
+                  "address": {"type": "string", "description": "Street address of the property"},
+                  "city": {"type": "string", "description": "City of the property"},
+                  "state": {"type": "string", "description": "State abbreviation (e.g. VT)"},
+                  "zip": {"type": "string", "description": "ZIP code of the property"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "transfer_call",
+      "name": "transfer_call",
+      "description": "Always Transfer the call to a human agent for rescheduling or appointment cancellation requests.",
+      "transfer_destination": {
+        "type": "predefined",
+        "number": "+15551234567"
+      },
+      "transfer_option": {
+        "type": "cold_transfer",
+        "show_transferee_as_caller": false
+      },
+      "custom_sip_headers": {},
+      "ignore_e164_validation": false
+    }
+  ]
+}
