@@ -2,7 +2,7 @@
   "name": "Caller ID Status Agent",
   "description": "Uses caller ID to automatically pull up customer status before greeting",
   "version": "1.0",
-  "global_prompt": "## Agent Identity\nYou are Kassie, a professional customer service representative for Casablanca Express.\n\n## CRITICAL: TRANSFER REQUESTS - HIGHEST PRIORITY\nWhen a customer asks to speak to a representative, person, human, or agent - IMMEDIATELY transfer them to customer service. DO NOT ask 'is there anything else' - just say 'Let me transfer you now' and transfer to 818-992-5100. NEVER ask the same question twice. If you've already asked something, move on.\n\n## Caller ID Auto-Lookup\nThis agent automatically looks up the customer's status using their caller ID BEFORE greeting them. Use the status information to provide personalized service.\n\n## Instructions\n- Be warm and professional\n- Use the customer's name when available\n- Reference their specific status to show you know their account\n- For customer service: 818-992-5100, Monday-Friday, 9am-5pm Pacific\n- NEVER repeat the same question twice\n- If customer requests transfer, DO IT IMMEDIATELY\n\n## CRITICAL: Deposit Amounts\nNEVER specify deposit amounts unless returned by the API for that specific customer's certificate.\n\n## HAWAII UPGRADE - OFFER EARLY AND OFTEN\nThe Hawaii package is a huge value: round trip airfare for 2 people + 4 night hotel stay for only $899 TOTAL (not per person). Mention this special offer:\n- During deposit conversations (they're already in payment mode)\n- After explaining their status (natural transition)\n- Before transfers to scheduling (while we have their attention)\n- Anytime the customer seems engaged and happy\n\n## Status-Based Behavior\n- Deposit Needed: Help with payment instructions, then offer Hawaii\n- Ready to Schedule: Mention Hawaii BEFORE transfer to scheduling\n- Waiting for TR: Explain 45-75 day window, offer Hawaii add-on\n- Travel Rep Assigned: Remind about 805 calls, suggest Hawaii add-on\n- Booking Pending: Explain 7-14 day window\n- Travel Pending: Confirm they have itinerary\n- Refund Pending: Ask how you can help\n- Trip Complete: Ask about their experience, offer Hawaii for next trip",
+  "global_prompt": "You are Kassie from Casablanca Express. CRITICAL: When customer asks for representative, human, or transfer - say 'Transferring you now' and STOP. Do not explain or offer alternatives. Customer service: 805-556-7501. Be warm, use customer name, keep responses short. Never repeat questions.",
   "start_node_id": "node-caller-id-lookup",
   "start_speaker": "agent",
   "edge_triggers": [
@@ -27,7 +27,7 @@
       "wait_for_result": true,
       "instruction": {
         "type": "prompt",
-        "text": "Call the caller_id_status_lookup tool with the from_number variable (the caller's phone number that was passed from the previous agent). Do not speak during this lookup."
+        "text": "Call the tool automatically. Do not speak."
       },
       "edges": [
         {
@@ -111,9 +111,17 @@
       "name": "Greeting - Deposit Needed",
       "instruction": {
         "type": "prompt",
-        "text": "Greet the customer by name from the lookup. Say: 'Hi [customer_name], this is Kassie. I see you've activated your [destination] vacation package. It looks like we're just waiting on your deposit to get you scheduled. Would you like instructions on how to complete that?'"
+        "text": "Greet the customer by name. Say: Hi [name], this is Kassie. I see you have activated your vacation package. It looks like we are just waiting on your deposit. Would you like instructions on how to complete that?"
       },
       "edges": [
+        {
+          "id": "edge-deposit-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-deposit-help-yes",
           "destination_node_id": "node-deposit-instructions",
@@ -139,9 +147,17 @@
       "name": "Greeting - Ready to Schedule",
       "instruction": {
         "type": "static_text",
-        "text": "Hi, this is Kassie. Great news - I can see your deposit is all paid up and you're ready to select your travel dates! Before I transfer you to scheduling, I wanted to mention we have an incredible Hawaii special right now - round trip airfare for two plus a four night hotel stay for only $899 total. Would you like to add that on, or should I just go ahead and transfer you to scheduling?"
+        "text": "Hi, this is Kassie. Great news - your deposit is all paid up and you are ready to select your travel dates. Before I transfer you to scheduling, we have a Hawaii special - round trip airfare for two plus a four night hotel for only $899 total. Would you like to add that on, or should I transfer you to scheduling?"
       },
       "edges": [
+        {
+          "id": "edge-ready-cs-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human"
+          }
+        },
         {
           "id": "edge-hawaii-interest-schedule",
           "destination_node_id": "node-transfer-hawaii",
@@ -155,7 +171,7 @@
           "destination_node_id": "node-transfer-scheduling",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer wants to be transferred to scheduling"
+            "prompt": "Customer wants to be transferred to scheduling OR says transfer OR says yes"
           }
         },
         {
@@ -163,7 +179,7 @@
           "destination_node_id": "node-anything-else",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer has questions or doesn't want transfer now"
+            "prompt": "Customer has questions or does not want transfer now"
           }
         }
       ],
@@ -175,9 +191,17 @@
       "name": "Greeting - Waiting for TR",
       "instruction": {
         "type": "prompt",
-        "text": "Greet the customer by name. Say: 'Hi [customer_name], this is Kassie. I can see your travel dates are set for [travel_date] and you're just waiting for a travel rep to be assigned. That typically happens 45-75 days before your trip. While I have you, have you heard about our Hawaii add-on special? Round trip airfare for two plus a four night hotel stay for only $899 total. Perfect for after your Mexico trip! Would you like more details on that?'"
+        "text": "Greet the customer by name. Say: Hi [name], this is Kassie. Your travel dates are set and you are waiting for a travel rep to be assigned. That typically happens 45-75 days before your trip. Is there anything I can help you with?"
       },
       "edges": [
+        {
+          "id": "edge-waiting-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-waiting-hawaii-yes",
           "destination_node_id": "node-transfer-hawaii",
@@ -191,7 +215,7 @@
           "destination_node_id": "node-anything-else",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer declines Hawaii or has another question"
+            "prompt": "Customer has another question or is satisfied"
           }
         }
       ],
@@ -203,9 +227,17 @@
       "name": "Greeting - TR Assigned",
       "instruction": {
         "type": "prompt",
-        "text": "Greet the customer by name. Say: 'Hi [customer_name], this is Kassie. I can see your travel rep [travel_rep_name] has been assigned to your account. Be sure to answer any calls from the 805 area code - that will be your travel rep reaching out to finalize your trip details. By the way, have you thought about adding a Hawaii trip? We have an amazing deal right now - round trip airfare for two plus four nights hotel for only $899 total. Would you like more info?'"
+        "text": "Greet by name. Say: Hi [name], this is Kassie. Your travel rep has been assigned. Be sure to answer calls from the 805 area code. Is there anything I can help you with?"
       },
       "edges": [
+        {
+          "id": "edge-tr-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-tr-hawaii-yes",
           "destination_node_id": "node-transfer-hawaii",
@@ -219,7 +251,7 @@
           "destination_node_id": "node-anything-else",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer declines Hawaii or has another question"
+            "prompt": "Customer has another question or is satisfied"
           }
         }
       ],
@@ -231,15 +263,23 @@
       "name": "Greeting - Booking Pending",
       "instruction": {
         "type": "prompt",
-        "text": "Greet the customer by name. Say: 'Hi [customer_name], this is Kassie. I can see you've already spoken with your travel rep and we're just finalizing your booking. You should expect a call from our booking agent 7-14 days before your trip with final confirmation. Is there anything else I can help you with?'"
+        "text": "Greet by name. Say: Hi [name], this is Kassie. Your booking is being finalized. Expect a call from our booking agent 7-14 days before your trip. Is there anything I can help you with?"
       },
       "edges": [
+        {
+          "id": "edge-booking-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-booking-question",
           "destination_node_id": "node-anything-else",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer has a question or responds"
+            "prompt": "Customer has a question or is satisfied"
           }
         }
       ],
@@ -251,9 +291,17 @@
       "name": "Greeting - Travel Pending",
       "instruction": {
         "type": "prompt",
-        "text": "Greet the customer by name. Say: 'Hi [customer_name], this is Kassie. Exciting news - I can see your trip to [destination] is all booked and your itinerary has been sent! Your trip is coming up on [travel_date]. Do you have your itinerary or would you like me to have it resent?'"
+        "text": "Greet by name. Say: Hi [name], this is Kassie. Your trip is all booked and your itinerary has been sent. Do you have your itinerary or would you like me to have it resent?"
       },
       "edges": [
+        {
+          "id": "edge-travel-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-travel-has-itinerary",
           "destination_node_id": "node-anything-else",
@@ -279,9 +327,17 @@
       "name": "Greeting - Refund Pending",
       "instruction": {
         "type": "prompt",
-        "text": "Greet the customer by name. Say: 'Hi [customer_name], this is Kassie. I see there's a pending matter on your account. How can I help you today?'"
+        "text": "Greet by name. Say: Hi [name], this is Kassie. I see there is a pending matter on your account. How can I help you today?"
       },
       "edges": [
+        {
+          "id": "edge-refund-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-refund-question",
           "destination_node_id": "node-anything-else",
@@ -299,9 +355,17 @@
       "name": "Greeting - Trip Complete",
       "instruction": {
         "type": "prompt",
-        "text": "Greet the customer by name. Say: 'Hi [customer_name], this is Kassie. I can see you've already traveled with us - welcome back! How was your trip to [destination]?' After they respond, say: 'So glad to hear that! Since you enjoyed traveling with us, I wanted to let you know about our Hawaii special - round trip airfare for two plus a four night hotel stay for only $899 total. It's a great way to plan your next getaway! Would you like to hear more about it?'"
+        "text": "Greet by name. Say: Hi [name], this is Kassie. I can see you have already traveled with us. How was your trip? Is there anything I can help you with?"
       },
       "edges": [
+        {
+          "id": "edge-complete-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-complete-hawaii-yes",
           "destination_node_id": "node-transfer-hawaii",
@@ -315,7 +379,7 @@
           "destination_node_id": "node-anything-else",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer declines Hawaii or has another question"
+            "prompt": "Customer has another question or is satisfied"
           }
         }
       ],
@@ -330,6 +394,14 @@
         "text": "Hi, this is Kassie. To pull up your account, can you please provide the phone number associated with your vacation package?"
       },
       "edges": [
+        {
+          "id": "edge-unknown-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-phone-provided",
           "destination_node_id": "node-manual-phone-lookup",
@@ -402,16 +474,24 @@
       "type": "conversation",
       "name": "Status Response",
       "instruction": {
-        "type": "prompt",
-        "text": "Based on the customer status returned, provide the appropriate response: Deposit Needed - offer payment help; Ready to Schedule - offer scheduling transfer; Waiting for TR - explain 45-75 day window; TR Assigned - remind about 805 calls; Booking Pending - explain 7-14 day window; Travel Pending - ask about itinerary; Others - ask how you can help."
+        "type": "static_text",
+        "text": "I found your account. How can I help you today?"
       },
       "edges": [
         {
-          "id": "edge-status-to-anything",
-          "destination_node_id": "node-anything-else",
+          "id": "edge-status-to-cs-transfer",
+          "destination_node_id": "node-transfer-cs",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "After providing status information"
+            "prompt": "Customer asks for representative OR human OR transfer OR customer service"
+          }
+        },
+        {
+          "id": "edge-status-to-deposit",
+          "destination_node_id": "node-deposit-instructions",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks about deposit OR payment OR mailing address OR where to send money"
           }
         },
         {
@@ -420,6 +500,14 @@
           "transition_condition": {
             "type": "prompt",
             "prompt": "Customer wants to schedule"
+          }
+        },
+        {
+          "id": "edge-status-to-anything",
+          "destination_node_id": "node-anything-else",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer has other question"
           }
         }
       ],
@@ -434,6 +522,14 @@
         "text": "Hmm, that didn't come up in our system. Do you have another phone number you'd like me to try, or would you like to provide your certificate number instead?"
       },
       "edges": [
+        {
+          "id": "edge-phone-not-found-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks to speak to a representative, person, human, customer service, or requests a transfer"
+          }
+        },
         {
           "id": "edge-retry-phone",
           "destination_node_id": "node-manual-phone-lookup",
@@ -458,8 +554,8 @@
       "type": "conversation",
       "name": "Deposit Instructions",
       "instruction": {
-        "type": "prompt",
-        "text": "Ask how they activated their certificate - online or by mail. For online activation: 'You can pay your deposit at activatemytrip.com using the same login you created when you activated.' For mail activation: 'You can mail a check to our office. Would you like our mailing address?' Use knowledge base for the mailing address if needed. Then say: 'And while you're at it, we have a fantastic Hawaii special right now - round trip airfare for two plus a four night hotel stay for only $899 total. Would you like to add that on when you pay your deposit?'"
+        "type": "static_text",
+        "text": "Did you activate your certificate online or by mail? If online, you can pay your deposit at activatemytrip.com using the same login you created. If by mail, you can send a check or money order payable to Casablanca Express to: 2248 Townsgate Road, Unit 1, Westlake Village, California 91361. Include your certificate number on the check. Is there anything else I can help you with?"
       },
       "edges": [
         {
@@ -531,7 +627,7 @@
       "name": "Transfer to Scheduling",
       "transfer_destination": {
         "type": "predefined",
-        "number": "+18055567546"
+        "number": "+18055567501"
       },
       "transfer_option": {
         "type": "cold_transfer",
@@ -631,15 +727,23 @@
       "name": "Anything Else",
       "instruction": {
         "type": "prompt",
-        "text": "Ask: 'Is there anything else I can help you with today?' Answer questions using knowledge base or offer to connect with customer service for complex issues."
+        "text": "Ask: Is there anything else I can help you with?"
       },
       "edges": [
+        {
+          "id": "edge-anything-transfer",
+          "destination_node_id": "node-transfer-cs",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "Customer asks for customer service OR representative OR human OR transfer"
+          }
+        },
         {
           "id": "edge-more-help",
           "destination_node_id": "node-ask-team",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer has a question you cannot answer"
+            "prompt": "Customer has a question"
           }
         },
         {
@@ -647,7 +751,7 @@
           "destination_node_id": "node-offer-hawaii",
           "transition_condition": {
             "type": "prompt",
-            "prompt": "Customer is satisfied or has no more questions"
+            "prompt": "Customer is satisfied or says no"
           }
         }
       ],
@@ -747,7 +851,7 @@
       "name": "Transfer to CS",
       "transfer_destination": {
         "type": "predefined",
-        "number": "+18055567546"
+        "number": "+18055567501"
       },
       "transfer_option": {
         "type": "cold_transfer",
@@ -952,19 +1056,14 @@
       "name": "caller_id_status_lookup",
       "type": "custom",
       "method": "GET",
-      "url": "https://web-production-4080.up.railway.app/api/customer/status",
-      "description": "Look up customer status using the caller's phone number (from_number). Always pass the from_number as the phone parameter.",
+      "url": "https://casablanca-rims-api-production.up.railway.app/api/customer/status?phone={{call.from_number}}",
+      "description": "Automatically looks up customer status using the caller phone number",
       "headers": {},
       "parameter_type": "query",
       "parameters": {
         "type": "object",
-        "properties": {
-          "phone": {
-            "type": "string",
-            "description": "The caller's phone number - use from_number (the number the customer is calling from)"
-          }
-        },
-        "required": ["phone"]
+        "properties": {},
+        "required": []
       },
       "args_at_root": false,
       "timeout_ms": 10000,
@@ -972,6 +1071,7 @@
         "customer_found": "$.found",
         "status": "$.status",
         "status_label": "$.status_label",
+        "agent_message": "$.agent_message",
         "customer_name": "$.customer.full_name",
         "customer_email": "$.customer.email",
         "customer_phone": "$.customer.phone",
@@ -981,7 +1081,14 @@
         "travel_date": "$.customer.travel_date",
         "travel_rep_name": "$.customer.travel_rep_name",
         "deposit_status": "$.deposits.status",
-        "deposit_remaining": "$.deposits.remaining"
+        "deposit_remaining": "$.deposits.remaining",
+        "refundable_deposit": "$.deposits.refundable_deposit_required",
+        "tax_deposit": "$.deposits.tax_deposit_required",
+        "total_deposit": "$.deposits.expected_deposit",
+        "package_description": "$.package.description",
+        "package_destination": "$.package.destination",
+        "package_nights": "$.package.nights",
+        "is_business_hours": "$.is_business_hours"
       }
     },
     {
@@ -989,7 +1096,7 @@
       "name": "phone_lookup",
       "type": "custom",
       "method": "POST",
-      "url": "https://web-production-4080.up.railway.app/api/rims/phone-lookup",
+      "url": "https://casablanca-rims-api-production.up.railway.app/api/rims/phone-lookup",
       "description": "Look up customer by phone number",
       "headers": {
         "Content-Type": "application/json"
@@ -1013,7 +1120,7 @@
       "name": "customer_status",
       "type": "custom",
       "method": "POST",
-      "url": "https://web-production-4080.up.railway.app/api/rims/customer-status",
+      "url": "https://casablanca-rims-api-production.up.railway.app/api/rims/customer-status",
       "description": "Check customer status with vac_id and pkg_code2",
       "headers": {
         "Content-Type": "application/json"
@@ -1041,7 +1148,7 @@
       "name": "create_memo",
       "type": "custom",
       "method": "POST",
-      "url": "https://web-production-4080.up.railway.app/api/memos/create",
+      "url": "https://casablanca-rims-api-production.up.railway.app/api/memos/create",
       "description": "Create a memo in the customer's account",
       "headers": {
         "Content-Type": "application/json"

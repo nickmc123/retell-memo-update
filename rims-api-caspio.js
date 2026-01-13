@@ -269,6 +269,63 @@ function stripCertificateCode(code) {
     return variations;
 }
 
+/**
+ * Query destsel table to get package info by pkgcode2
+ * Returns deposit amount and package details
+ */
+async function getPackageFromDestsel(pkgCode2) {
+    if (!pkgCode2) return null;
+
+    const code = pkgCode2.toUpperCase();
+    console.log(`[Destsel Lookup] Looking up pkgcode2: ${code}`);
+
+    if (USE_MOCK_DATA) {
+        // Return mock data for testing
+        return null;
+    }
+
+    try {
+        // Query destsel table using pkgcode2 field (exact match)
+        const results = await queryCaspioTable(
+            CASPIO_CONFIG.tables.destsel,
+            `pkgcode2='${code}'`
+        );
+
+        if (results && results.length > 0) {
+            const pkg = results[0];
+            console.log(`[Destsel Lookup] Found package:`, JSON.stringify(pkg));
+
+            // destsel has two deposit fields:
+            // - ref_dep: validation/reference deposit (paid first, stored in val_dep)
+            // - deposit: confirmation deposit (paid second, stored in conf_deposit)
+            const refDeposit = pkg.ref_dep || 0;
+            const confDeposit = pkg.deposit || 0;
+            const totalExpected = refDeposit + confDeposit;
+
+            return {
+                found: true,
+                pkgcode2: code,
+                // Individual deposit amounts from destsel
+                ref_dep: refDeposit,           // Expected validation deposit
+                deposit: confDeposit,          // Expected confirmation deposit
+                total_expected: totalExpected, // Total of both deposits
+                destination: pkg.destination || pkg.dest || null,
+                nights: pkg.ngts || pkg.nights || pkg.num_nights || null,
+                vacation_type: pkg.vacation_type || pkg.vac_type || null,
+                depart_city: pkg.depart_city || pkg.city || null,
+                vaca_desc: pkg.vaca_desc || null,
+                raw: pkg
+            };
+        }
+
+        console.log(`[Destsel Lookup] No exact match for ${code}`);
+        return null;
+    } catch (error) {
+        console.error(`[Destsel Lookup] Error:`, error.message);
+        return null;
+    }
+}
+
 // =============================================================================
 // RIMS_DATA ENDPOINTS
 // =============================================================================
@@ -579,22 +636,7 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
         return daysUntilDate(dateString) < 0;
     }
 
-    function getExpectedDeposit(pkg_code) {
-        const depositMap = {
-            'ECF': 500,
-            'ECFWIN': 500,
-            'EKCA': 500,
-            'BEACH': 500,
-            'CRUISE': 500,
-            'E': 500,
-            'E7': 500,
-            'E78': 500,
-            'E789': 500,
-            'EVX': 50,
-            'EVXV': 50,
-        };
-        return depositMap[pkg_code] || null;
-    }
+    // getExpectedDeposit moved to use destsel lookup - see below
 
     // Lookup customer using priority: phone+pkg → phone → vac_id
     let customerData = null;
@@ -673,10 +715,30 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
         date_agncy_book
     } = customerData;
 
-    const expectedDeposit = getExpectedDeposit(pkg_code);
-    const totalPaid = (val_dep || 0) + (conf_deposit || 0);
-    const remaining = expectedDeposit !== null ? Math.max(0, expectedDeposit - totalPaid) : null;
-    const depositsComplete = expectedDeposit !== null ? totalPaid >= expectedDeposit : false;
+    // Look up deposit amounts from destsel table using pkg_code2
+    const packageInfo = await getPackageFromDestsel(custPkgCode2);
+
+    // Compare customer deposits to destsel expected amounts:
+    // - val_dep (customer) vs ref_dep (destsel) - validation/reference deposit
+    // - conf_deposit (customer) vs deposit (destsel) - confirmation deposit
+    const expectedRefDep = packageInfo ? packageInfo.ref_dep : null;
+    const expectedConfDep = packageInfo ? packageInfo.deposit : null;
+    const expectedTotal = packageInfo ? packageInfo.total_expected : null;
+
+    const paidValDep = val_dep || 0;
+    const paidConfDep = conf_deposit || 0;
+    const totalPaid = paidValDep + paidConfDep;
+
+    // Determine deposit status
+    const valDepPaid = expectedRefDep !== null ? paidValDep >= expectedRefDep : false;
+    const confDepPaid = expectedConfDep !== null ? paidConfDep >= expectedConfDep : false;
+    const depositsComplete = expectedTotal !== null ? totalPaid >= expectedTotal : false;
+    const remaining = expectedTotal !== null ? Math.max(0, expectedTotal - totalPaid) : null;
+
+    console.log(`[Customer Status] pkg_code2: ${custPkgCode2}`);
+    console.log(`[Customer Status] Expected: ref_dep=${expectedRefDep}, deposit=${expectedConfDep}, total=${expectedTotal}`);
+    console.log(`[Customer Status] Paid: val_dep=${paidValDep}, conf_deposit=${paidConfDep}, total=${totalPaid}`);
+    console.log(`[Customer Status] Status: valDepPaid=${valDepPaid}, confDepPaid=${confDepPaid}, complete=${depositsComplete}`);
 
     const daysUntilTravel = asgn_trv_dt ? daysUntilDate(asgn_trv_dt) : null;
     const daysUntilArrival = arv_date ? daysUntilDate(arv_date) : null;
@@ -725,12 +787,30 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
         next_action = 'offer_scheduling';
         message = 'Deposits complete. Ready to schedule travel dates.';
     }
-    // 8. DEPOSIT NEEDED
+    // 8. DATES SCHEDULED - deposits paid, dates set, confirmed, but outside TR window (>75 days out)
+    else if (depositsComplete && asgn_trv_dt && (!tm || tm.trim() === '') && conf_valid_code === 'CONFIRM' && daysUntilTravel > 75) {
+        status = 'Dates Scheduled';
+        next_action = 'confirm_all_set';
+        message = `Travel dates are set for ${asgn_trv_dt} (${daysUntilTravel} days away). A travel rep will be assigned 45-75 days before your trip.`;
+    }
+    // 9. SCHEDULED NOT CONFIRMED - dates set but not confirmed, decReady not true
+    else if (asgn_trv_dt && conf_valid_code !== 'CONFIRM' && decReady !== true) {
+        if (daysUntilTravel <= 75) {
+            status = 'Scheduled Not Confirmed - Must Reschedule';
+            next_action = 'transfer_to_scheduling';
+            message = `Travel date ${asgn_trv_dt} (${daysUntilTravel} days away) was not confirmed and may no longer be available. Customer needs to reschedule.`;
+        } else {
+            status = 'Scheduled Not Confirmed - Can Confirm';
+            next_action = 'confirm_over_phone';
+            message = `Travel date ${asgn_trv_dt} (${daysUntilTravel} days away) is scheduled but not yet confirmed. Customer can confirm over the phone.`;
+        }
+    }
+    // 10. DEPOSIT NEEDED
     else {
         status = 'Deposit Needed';
         next_action = 'direct_to_payment';
-        if (expectedDeposit !== null) {
-            message = `Deposit required: $${remaining} remaining of $${expectedDeposit} total.`;
+        if (expectedTotal !== null) {
+            message = `Deposit required: $${remaining} remaining of $${expectedTotal} total.`;
         } else {
             message = `Deposit required as shown on your certificate.`;
         }
@@ -749,11 +829,18 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
         },
         details: {
             deposits: {
-                val_dep: val_dep || 0,
-                conf_deposit: conf_deposit || 0,
+                // What customer has paid
+                val_dep_paid: paidValDep,
+                conf_deposit_paid: paidConfDep,
                 total_paid: totalPaid,
-                expected: expectedDeposit,
+                // What destsel says is expected
+                ref_dep_expected: expectedRefDep,
+                deposit_expected: expectedConfDep,
+                total_expected: expectedTotal,
+                // Status
                 remaining: remaining,
+                val_dep_complete: valDepPaid,
+                conf_dep_complete: confDepPaid,
                 complete: depositsComplete
             },
             travel_info: {
@@ -770,6 +857,21 @@ app.post('/api/rims/customer-status', asyncHandler(async (req, res) => {
             refund: {
                 amount: cash_back_amt || 0,
                 docs_mailed: Fnl_Doc_MO_Date || null
+            },
+            package: packageInfo ? {
+                source: 'destsel',
+                pkgcode2: packageInfo.pkgcode2,
+                ref_dep: packageInfo.ref_dep,
+                deposit: packageInfo.deposit,
+                total_expected: packageInfo.total_expected,
+                destination: packageInfo.destination,
+                nights: packageInfo.nights,
+                vacation_type: packageInfo.vacation_type,
+                vaca_desc: packageInfo.vaca_desc
+            } : {
+                source: 'not_found',
+                pkgcode2: custPkgCode2,
+                note: 'Package not found in destsel table'
             }
         }
     });
@@ -1534,39 +1636,13 @@ app.get('/api/package/description', asyncHandler(async (req, res) => {
     }
 
     try {
-        // Query destsel table by pkg_code2 (or similar field name)
-        // Note: Field names may vary - try multiple common patterns
-        const possibleFields = ['pkg_code2', 'pkgCode2', 'code', 'package_code', 'cert_code'];
-        let records = [];
+        // Query destsel table by pkgcode2 (the correct field name)
+        let records = await queryCaspioTable(
+            CASPIO_CONFIG.tables.destsel,
+            `pkgcode2='${pkg_code2.toUpperCase()}'`
+        );
 
-        for (const field of possibleFields) {
-            try {
-                records = await queryCaspioTable(
-                    CASPIO_CONFIG.tables.destsel,
-                    `${field}='${pkg_code2}'`
-                );
-                if (records.length > 0) break;
-            } catch (e) {
-                // Field doesn't exist, try next
-                continue;
-            }
-        }
-
-        // If exact match not found, try prefix match
-        if (records.length === 0) {
-            const prefix = pkg_code2.substring(0, 3).toUpperCase();
-            for (const field of possibleFields) {
-                try {
-                    records = await queryCaspioTable(
-                        CASPIO_CONFIG.tables.destsel,
-                        `${field} LIKE '${prefix}%'`
-                    );
-                    if (records.length > 0) break;
-                } catch (e) {
-                    continue;
-                }
-            }
-        }
+        console.log(`[Package Description] Query for pkgcode2='${pkg_code2.toUpperCase()}' returned ${records.length} records`);
 
         if (records.length === 0) {
             // Fall back to deriving from code prefix

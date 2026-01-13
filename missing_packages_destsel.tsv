@@ -1,0 +1,1116 @@
+PK_ID	rank	pkgCode	pkgCode2	vacation_type	vaca_desc	depart_city	destination	length_descr	ngts	ref_dep	deposit	dest_notes	v_type	online_dt	dest	dt_notes	dt_notesD	stay21	rrtc	url	pkgCode_url	act_url	fk_updt
+2000		BPR	BPRT	Air + Hotel	Air Round Trip Package	Los Angeles	RENO			100.00	95.00			False				False	False			https://activatemytrip.com	
+2001		BRF	BRF	Air + Cruise	Air + Cruise Package	Los Angeles	SAN FRANCISCO			100.00	95.00			False				False	False			https://activatemytrip.com	
+2002		BRT	BRT	Air + Hotel	Air Round Trip Package	Los Angeles	RENO			100.00	95.00			False				False	False			https://activatemytrip.com	
+2003		BRV	BRV	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2004		BRW	BRWB	Air + Cruise	Air + Cruise Package	Baltimore	NAPA VALLEY AREA			100.00	95.00			False				False	False			https://activatemytrip.com	
+2005		BRW	BRWL	Air + Cruise	Air + Cruise Package	Los Angeles	NAPA VALLEY AREA			100.00	95.00			False				False	False			https://activatemytrip.com	
+2006		BRW	BRWO	Air + Cruise	Air + Cruise Package	Los Angeles	NAPA VALLEY AREA			100.00	95.00			False				False	False			https://activatemytrip.com	
+2007		CBS	CBSBO	Cruise w/Air	7 Night Cruise w/Air	Boston	CARIBBEAN	7 Nights	7	100.00	888.00			False				False	False			https://activatemytrip.com	
+2008		CCAG	CCAGAF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	ALASKA	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2009		CCAG	CCAGAL	Cruise w/Air	7 Night Cruise w/Air	Los Angeles	ALASKA	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2010		CCAG	CCAGAS	Cruise w/Air	7 Night Cruise w/Air	Sacramento	ALASKA	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2011		CCAG	CCAGMF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	MEXICO	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2012		CCAG	CCAGML	Cruise w/Air	7 Night Cruise w/Air	Long Beach	MEXICO	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2013		CCAG	CCAGMS	Cruise w/Air	7 Night Cruise w/Air	San Francisco	MEXICO	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2014		CCAH	CCAHAL	Cruise w/Air	7 Night Cruise w/Air	Los Angeles	ALASKA	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2015		CCAH	CCAHAS	Cruise w/Air	7 Night Cruise w/Air	San Francisco	ALASKA	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2016		CCAH	CCAHMF	Cruise w/Air	7 Night Cruise w/Air	Fort Lauderdale	MEXICO	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2017		CCAH	CCAHML	Cruise w/Air	7 Night Cruise w/Air	Long Beach	MEXICO	7 Nights	7	50.00	698.00			False				False	False			https://activatemytrip.com	
+2018		CCAH	CCAHMS	Cruise w/Air	7 Night Cruise w/Air	San Francisco	MEXICO	7 Nights	7	50.00	0.00			False				False	False			https://activatemytrip.com	
+2019		CCG	CCGBF	Cruise w/Air	4 Night Cruise w/Air	San Francisco Bay Area	MEXICO	4 Nights	4	100.00	392.00			False				False	False			https://activatemytrip.com	
+2020		CCG	CCGBS	Cruise w/Air	4 Night Cruise w/Air	Sacramento	MEXICO	4 Nights	4	100.00	392.00			False				False	False			https://activatemytrip.com	
+2021		CCG	CCGCF	Cruise w/Air	4 Night Cruise w/Air	San Francisco Bay Area	MEXICO	4 Nights	4	150.00	588.00			False				False	False			https://activatemytrip.com	
+2022		CCG	CCGCS	Cruise w/Air	4 Night Cruise w/Air	Sacramento	MEXICO	4 Nights	4	150.00	588.00			False				False	False			https://activatemytrip.com	
+2023		CCG	CCGDF	Cruise w/Air	4 Night Cruise w/Air	Fort Lauderdale	MEXICO	4 Nights	4	200.00	784.00			False				False	False			https://activatemytrip.com	
+2024		CCG	CCGDS	Cruise w/Air	4 Night Cruise w/Air	Sacramento	MEXICO	4 Nights	4	200.00	784.00			False				False	False			https://activatemytrip.com	
+2025		CCPA	CCPAF	Cruise w/Air	4 Night Cruise w/Air	San Francisco Bay Area	MEXICO	4 Nights	4	100.00	298.00			False				False	False			https://activatemytrip.com	
+2026		CCPA	CCPAS	Cruise w/Air	4 Night Cruise w/Air	Sacramento	MEXICO	4 Nights	4	100.00	298.00			False				False	False			https://activatemytrip.com	
+2027		CCPB	CCPBF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	ALASKA	7 Nights	7	100.00	648.00			False				False	False			https://activatemytrip.com	
+2028		CCPB	CCPBS	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	ALASKA	7 Nights	7	100.00	648.00			False				False	False			https://activatemytrip.com	
+2029		CCPC	CCPCAF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	ALASKA	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2030		CCPC	CCPCAL	Cruise w/Air	7 Night Cruise w/Air	Los Angeles	ALASKA	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2031		CCPC	CCPCAS	Cruise w/Air	7 Night Cruise w/Air	Sacramento	ALASKA	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2032		CCPC	CCPCMF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	MEXICO	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2033		CCPC	CCPCML	Cruise w/Air	7 Night Cruise w/Air	Long Beach	MEXICO	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2034		CCPC	CCPCMS	Cruise w/Air	7 Night Cruise w/Air	Sacramento	MEXICO	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2035		CCPD	CCPDAS	Cruise	7 Night Cruise	Los Angeles	ALASKA	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2036		CCPD	CCPDML	Cruise	7 Night Cruise	Long Beach	MEXICO	7 Nights	7	50.00	648.00			False				False	False			https://activatemytrip.com	
+2037		CCPE	CCPEAF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	ALASKA	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2038		CCPE	CCPEAL	Cruise w/Air	7 Night Cruise w/Air	Los Angeles	ALASKA	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2039		CCPE	CCPEAS	Cruise w/Air	7 Night Cruise w/Air	Sacramento	ALASKA	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2040		CCPE	CCPEMF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	MEXICO	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2041		CCPE	CCPEML	Cruise w/Air	7 Night Cruise w/Air	Long Beach	MEXICO	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2042		CCPE	CCPEMS	Cruise w/Air	7 Night Cruise w/Air	Sacramento	MEXICO	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2043		CCPF	CCPFAM	Cruise	3 Night Cruise	Miami	MEXICO	3 Nights	3	50.00	118.00			False				False	False			https://activatemytrip.com	
+2044		CCPF	CCPFBF	Cruise w/Air	4 Night Cruise w/Air	San Francisco Bay Area	MEXICO	4 Nights	4	50.00	396.00			False				False	False			https://activatemytrip.com	
+2045		CCPF	CCPFBM	Cruise	Cruise Package	Miami	MEXICO			50.00	198.00			False				False	False			https://activatemytrip.com	
+2046		CCPF	CCPFCF	Cruise w/Air	5 Night Cruise w/Air	San Francisco Bay Area	MEXICO	5 Nights	5	50.00	516.00			False				False	False			https://activatemytrip.com	
+2047		CCPF	CCPFCM	Cruise	5 Night Cruise	Miami	MEXICO	5 Nights	5	50.00	0.00			False				False	False			https://activatemytrip.com	
+2048		CCPF	CCPFCS	Cruise w/Air	5 Night Cruise w/Air	San Francisco	MEXICO	5 Nights	5	100.00	516.00			False				False	False			https://activatemytrip.com	
+2049		CCPF	CCPFDF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	MEXICO	7 Nights	7	50.00	516.00			False				False	False			https://activatemytrip.com	
+2050		CCPF	CCPFDM	Cruise	7 Night Cruise	Miami	MEXICO	7 Nights	7	50.00	318.00			False				False	False			https://activatemytrip.com	
+2051		CCPF	CCPFDS	Cruise w/Air	7 Night Cruise w/Air	San Francisco	MEXICO	7 Nights	7	50.00	516.00			False				False	False			https://activatemytrip.com	
+2052		CCPG	CCPGBM	Cruise	Cruise Package	Miami	MEXICO			50.00	298.00			False				False	False			https://activatemytrip.com	
+2053		CCPG	CCPGCM	Cruise	5 Night Cruise	Miami	MEXICO	5 Nights	5	50.00	398.00			False				False	False			https://activatemytrip.com	
+2054		CCPG	CCPGDM	Cruise	7 Night Cruise	Miami	MEXICO	7 Nights	7	50.00	398.00			False				False	False			https://activatemytrip.com	
+2055		CCPH	CCPHAF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	ALASKA	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2056		CCPH	CCPHAL	Cruise w/Air	7 Night Cruise w/Air	Los Angeles	ALASKA	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2057		CCPH	CCPHAS	Cruise w/Air	7 Night Cruise w/Air	Los Angeles	ALASKA	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2058		CCPH	CCPHMF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	MEXICO	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2059		CCPH	CCPHML	Cruise w/Air	7 Night Cruise w/Air	Long Beach	MEXICO	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2060		CCPH	CCPHMS	Cruise w/Air	7 Night Cruise w/Air	San Francisco	MEXICO	7 Nights	7	50.00	848.00			False				False	False			https://activatemytrip.com	
+2061		CCPM	CCPMAM	Cruise	3 Night Cruise	Miami	MEXICO	3 Nights	3	50.00	198.00			False				False	False			https://activatemytrip.com	
+2062		CCPM	CCPMBM	Cruise	Cruise Package	Miami	MEXICO			50.00	298.00			False				False	False			https://activatemytrip.com	
+2063		CCPM	CCPMCM	Cruise	5 Night Cruise	Miami	MEXICO	5 Nights	5	50.00	398.00			False				False	False			https://activatemytrip.com	
+2064		CCPM	CCPMDM	Cruise	7 Night Cruise	Miami	MEXICO	7 Nights	7	50.00	398.00			False				False	False			https://activatemytrip.com	
+2065		CCS	CCSFM	Cruise w/Air	4 Night Cruise w/Air	Miami	MEXICO	4 Nights	4	100.00	0.00			False				False	False			https://activatemytrip.com	
+2066		CCS	CCSLM	Cruise w/Air	4 Night Cruise w/Air	Miami	MEXICO	4 Nights	4	100.00	392.00			False				False	False			https://activatemytrip.com	
+2067		CCS	CCSPM	Cruise w/Air	4 Night Cruise w/Air	Miami	MEXICO	4 Nights	4	100.00	392.00			False				False	False			https://activatemytrip.com	
+2068		CCT	CCTU	Cruise w/Air	7 Night Cruise w/Air	Tampa	MEXICO	7 Nights	7	100.00	648.00			False				False	False			https://activatemytrip.com	
+2069		CDG	CDGDBS	Cruise w/Air	4 Night Cruise w/Air	San Antonio	BAHAMAS	4 Nights	4	200.00	784.00			False				False	False			https://activatemytrip.com	
+2070		CDG	CDGDMS	Cruise w/Air	4 Night Cruise w/Air	San Antonio	MEXICO	4 Nights	4	200.00	784.00			False				False	False			https://activatemytrip.com	
+2071		CF	CFA	Certificate	Certificate Package	Los Angeles	AIRFARE-2TIX-2NIGHT-STAY			100.00	0.00			False				False	False			https://activatemytrip.com	
+2072		CF	CFC	Certificate	Certificate Package	NA	CRUISE-3-4-7-NIGHTS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2073		CF	CFCBF	Cruise	Cruise Package	Fort Lauderdale	CRUISE-3-4-7-NIGHTS			100.00	498.00			False				False	False			https://activatemytrip.com	
+2074		CF	CFCBT	Cruise	3 Night Cruise	Tampa	CRUISE-3-4-7-NIGHTS	3 Nights	3	100.00	398.00			False				False	False			https://activatemytrip.com	
+2075		CF	CFCCS	Cruise	7 Night Cruise	San Francisco	CRUISE-3-4-7-NIGHTS	7 Nights	7	100.00	698.00			False				False	False			https://activatemytrip.com	
+2076		CF	CFCMF	Cruise	Cruise Package	Fort Lauderdale	CRUISE-3-4-7-NIGHTS			100.00	498.00			False				False	False			https://activatemytrip.com	
+2077		CF	CFCMS	Cruise	7 Night Cruise	San Francisco	CRUISE-3-4-7-NIGHTS	7 Nights	7	100.00	698.00			False				False	False			https://activatemytrip.com	
+2078		CF	CFCMT	Cruise	3 Night Cruise	Tampa	CRUISE-3-4-7-NIGHTS	3 Nights	3	100.00	398.00			False				False	False			https://activatemytrip.com	
+2079		CF	CFCSS	Cruise	7 Night Cruise	San Francisco	CRUISE-3-4-7-NIGHTS	7 Nights	7	100.00	698.00			False				False	False			https://activatemytrip.com	
+2080		CF	CFD	Certificate	Certificate Package	NA	15-DESTINATIONS-7NIGHTS			50.00	100.00			False				False	False			https://activatemytrip.com	
+2081		CF	CFM	Certificate	Certificate Package	NA	MEXICO-STAY-4NIGHTS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2082		CF	CFR	Certificate	Certificate Package	Los Angeles	ROUNDTRIP-2TIXS-7DAYS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2083		CJ	CJA	Certificate	Certificate Package	NA	AIRFARE-2TIX-2NIGHT-STAY			50.00	0.00			False				False	False			https://activatemytrip.com	
+2084		CJ	CJACDE	Certificate	Certificate Package	Denver	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2085		CJ	CJACDT	Certificate	Certificate Package	Detroit	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2086		CJ	CJACLA	Certificate	Certificate Package	Los Angeles	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2087		CJ	CJACMI	Certificate	Certificate Package	NA	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2088		CJ	CJACPX	Certificate	Certificate Package	Phoenix	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2089		CJ	CJACSD	Certificate	Certificate Package	San Diego	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2090		CJ	CJACSE	Certificate	Certificate Package	NA	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2091		CJ	CJACSF	Certificate	Certificate Package	San Francisco Bay Area	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2092		CJ	CJACTP	Certificate	Certificate Package	NA	LOS CABOS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2093		CJ	CJAFDE	Certificate	Certificate Package	NA	SAN FRANCISCO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2094		CJ	CJAFLA	Certificate	Certificate Package	Los Angeles	SAN FRANCISCO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2095		CJ	CJAFSA	Certificate	Certificate Package	NA	SAN FRANCISCO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2096		CJ	CJAFSD	Certificate	Certificate Package	San Diego	SAN FRANCISCO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2097		CJ	CJAFSN	Certificate	Certificate Package	NA	SAN FRANCISCO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2098		CJ	CJAOBD	Certificate	Certificate Package	NA	ORLANDO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2099		CJ	CJAOLA	Certificate	Certificate Package	Los Angeles	ORLANDO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2100		CJ	CJAOMN	Certificate	Certificate Package	NA	ORLANDO			50.00	200.00			False				False	False			https://activatemytrip.com	
+2101		CJ	CJAVBO	Certificate	Certificate Package	NA	LAS VEGAS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2102		CJ	CJAVDW	Certificate	Certificate Package	Dallas	LAS VEGAS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2103		CJ	CJAVLA	Certificate	Certificate Package	Los Angeles	LAS VEGAS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2104		CJ	CJAVNY	Certificate	Certificate Package	NA	LAS VEGAS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2105		CJ	CJAVON	Certificate	Certificate Package	NA	LAS VEGAS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2106		CJ	CJAVSD	Certificate	Certificate Package	NA	LAS VEGAS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2107		CJ	CJAVSF	Certificate	Certificate Package	San Francisco Bay Area	LAS VEGAS			50.00	200.00			False				False	False			https://activatemytrip.com	
+2108		CJ	CJC	Certificate	Certificate Package	NA	CRUISE-3-4-7-NIGHTS			50.00	280.00			False				False	False			https://activatemytrip.com	
+2109		CJ	CJCBF	Cruise	Cruise Package	Fort Lauderdale	CRUISE-3-4-7-NIGHTS			50.00	498.00			False				False	False			https://activatemytrip.com	
+2110		CJ	CJCBT	Cruise	3 Night Cruise	Tampa	CRUISE-3-4-7-NIGHTS	3 Nights	3	50.00	398.00			False				False	False			https://activatemytrip.com	
+2111		CJ	CJCCS	Cruise	7 Night Cruise	San Francisco Bay Area	CRUISE-3-4-7-NIGHTS	7 Nights	7	50.00	598.00			False				False	False			https://activatemytrip.com	
+2112		CJ	CJCMF	Cruise	Cruise Package	Fort Lauderdale	CRUISE-3-4-7-NIGHTS			50.00	498.00			False				False	False			https://activatemytrip.com	
+2113		CJ	CJCMS	Cruise	7 Night Cruise	San Francisco	CRUISE-3-4-7-NIGHTS	7 Nights	7	50.00	598.00			False				False	False			https://activatemytrip.com	
+2114		CJ	CJCMT	Cruise	3 Night Cruise	San Francisco Bay Area	CRUISE-3-4-7-NIGHTS	3 Nights	3	50.00	348.00			False				False	False			https://activatemytrip.com	
+2115		CJ	CJCSS	Cruise	7 Night Cruise	San Francisco	CRUISE-3-4-7-NIGHTS	7 Nights	7	50.00	598.00			False				False	False			https://activatemytrip.com	
+2116		CJ	CJD	Certificate	Certificate Package	NA	15-DESTINATIONS-7NIGHTS			50.00	125.00			False				False	False			https://activatemytrip.com	
+2117		CJ	CJDB	Hotel Stay	7 Night Accommodations	NA	BRANSON	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2118		CJ	CJDC	Hotel Stay	7 Night Accommodations	NA	CANCUN	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2119		CJ	CJDD	Hotel Stay	7 Night Accommodations	NA	SAN DIEGO	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2120		CJ	CJDF	Hotel Stay	7 Night Accommodations	NA	SAN FRANCISCO	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2121		CJ	CJDH	Hotel Stay	7 Night Accommodations	NA	OAHU	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2122		CJ	CJDJ	Hotel Stay	7 Night Accommodations	NA	JAMAICA	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2123		CJ	CJDK	Hotel Stay	7 Night Accommodations	NA	SMOKY MOUNTAINS, TN	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2124		CJ	CJDL	Hotel Stay	7 Night Accommodations	Sacramento	LOS CABOS	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2125		CJ	CJDM	Hotel Stay	7 Night Accommodations	NA	MYRTLE BEACH, SC	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2126		CJ	CJDN	Hotel Stay	7 Night Accommodations	NA	NEW ORLEANS	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2127		CJ	CJDO	Hotel Stay	7 Night Accommodations	NA	ORLANDO	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2128		CJ	CJDP	Hotel Stay	7 Night Accommodations	NA	PUERTO RICO	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2129		CJ	CJDV	Hotel Stay	7 Night Accommodations	NA	LAS VEGAS	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2130		CJ	CJDW	Hotel Stay	7 Night Accommodations	NA	WISCONSIN DELLS	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2131		CJ	CJDY	Hotel Stay	7 Night Accommodations	NA	ATLANTIC CITY	7 Nights	7	50.00	125.00			False				False	False			https://activatemytrip.com	
+2132		CJ	CJM	Certificate	Certificate Package	NA	MEXICO-STAY-4NIGHTS			50.00	0.00			False				False	False			https://activatemytrip.com	
+2133		CJ	CJMC	Hotel Stay	4 Night Accommodations	NA	CANCUN	4 Nights	4	50.00	100.00			False				False	False			https://activatemytrip.com	
+2134		CJ	CJML	Hotel Stay	4 Night Accommodations	NA	LOS CABOS	4 Nights	4	50.00	100.00			False				False	False			https://activatemytrip.com	
+2135		CJ	CJMM	Hotel Stay	4 Night Accommodations	NA	MAZATLAN	4 Nights	4	50.00	100.00			False				False	False			https://activatemytrip.com	
+2136		CJ	CJMP	Hotel Stay	4 Night Accommodations	NA	PUERTO VALLARTA	4 Nights	4	50.00	100.00			False				False	False			https://activatemytrip.com	
+2137		CJ	CJMV	Hotel Stay	4 Night Accommodations	NA	PUERTO VALLARTA	4 Nights	4	50.00	100.00			False				False	False			https://activatemytrip.com	
+2138		CJ	CJR	Certificate	Certificate Package	Los Angeles	ROUNDTRIP-2TIXS-7DAYS			50.00	158.00			False				False	False			https://activatemytrip.com	
+2139		CJ	CJRMC	Certificate	Certificate Package	Boston	ORLANDO			50.00	158.00			False				False	False			https://activatemytrip.com	
+2140		CLR	CLR			NA	REGISTRATION			5.00	0.00			False				False	False			https://activatemytrip.com	
+2141		CLZ	CLZC	Cruise	7 Night Cruise	Long Beach	CARIBBEAN	7 Nights	7	100.00	537.00			False				False	False			https://activatemytrip.com	
+2142		CPC	CPC	Cruise	5 Night Cruise	Port Canaveral	BAHAMAS	5 Nights	5	100.00	458.00			False				False	False			https://activatemytrip.com	
+2143		CPR	CPRB	Cruise	Cruise Package	Baltimore	BAHAMAS			300.00	300.00			False				False	False			https://activatemytrip.com	
+2144		CPR	CPRM	Cruise	Cruise Package	Miami	MEXICO			300.00	300.00			False				False	False			https://activatemytrip.com	
+2145		CPU	CPUB	Cruise	Cruise Package	Baltimore	BAHAMAS			100.00	254.00			False				False	False			https://activatemytrip.com	
+2146		CPV	CPVB	Cruise	Cruise Package	Baltimore	BAHAMAS			50.00	354.00			False				False	False			https://activatemytrip.com	
+2147		CPV	CPVM	Cruise	Cruise Package	Miami	MEXICO			50.00	354.00			False				False	False			https://activatemytrip.com	
+2148		CPZ	CPZB	Cruise	Cruise Package	Baltimore	BAHAMAS			0.00	354.00			False				False	False			https://activatemytrip.com	
+2149		CPZ	CPZM	Cruise	Cruise Package	Miami	MEXICO			354.00	354.00			False				False	False			https://activatemytrip.com	
+2150		CRCD	CRCD	Hotel Stay	2 Night Accommodations	NA	CATALINA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2151		CRCI	CRCI	Hotel Stay	2 Night Accommodations	NA	CATALINA	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+2152		CTC	CTCCF	Cruise w/Air	7 Night Cruise w/Air	San Francisco Bay Area	W. CARIBBEAN	7 Nights	7	50.00	530.00			False				False	False			https://activatemytrip.com	
+2153		CTC	CTCCL	Cruise w/Air	7 Night Cruise w/Air	Los Angeles	W. CARIBBEAN	7 Nights	7	50.00	530.00			False				False	False			https://activatemytrip.com	
+2154		CTC	CTCCS	Cruise w/Air	7 Night Cruise w/Air	San Francisco	W. CARIBBEAN	7 Nights	7	50.00	530.00			False				False	False			https://activatemytrip.com	
+2155		CTL	CTLC			NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2156		CTL	CTLV			NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2157		CTS	CTS			NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2158		DA	DAWAU	Air + Hotel	Air Package	NA	AUSTIN, TX			50.00	0.00			False				False	False			https://activatemytrip.com	
+2159		DA	DAWDC	Air + Hotel	Air Package	Los Angeles	WASHINGTON DC			50.00	198.00			False				False	False			https://activatemytrip.com	
+2160		DA	DAWLV	Air + Hotel	Air Package	NA	LAS VEGAS			50.00	198.00			False				False	False			https://activatemytrip.com	
+2161		DA	DAWMI	Air + Hotel	Air Package	NA	MIAMI			50.00	0.00			False				False	False			https://activatemytrip.com	
+2162		DA	DAWPD	Air + Hotel	Air Package	NA	PORLAND, OR			50.00	198.00			False				False	False			https://activatemytrip.com	
+2163		DA	DAWPH	Air + Hotel	Air Package	NA	PHILADELPHIA, PA			50.00	198.00			False				False	False			https://activatemytrip.com	
+2164		DA	DAWPX	Air + Hotel	Air Package	NA	PHOENIX			50.00	198.00			False				False	False			https://activatemytrip.com	
+2165		DA	DAWSD	Air + Hotel	Air Package	San Francisco Bay Area	SAN DIEGO			50.00	198.00			False				False	False			https://activatemytrip.com	
+2166		DA	DAWSF	Air + Hotel	Air Package	NA	SAN FRANCISCO			50.00	0.00			False				False	False			https://activatemytrip.com	
+2167		DB	DBEDF	Air + Hotel	Air Package	NA	DALLAS			100.00	198.00			False				False	False			https://activatemytrip.com	
+2168		DL	DLEBN	Air + Hotel	Air Package	NA	NASHVILLE, TN			100.00	0.00			False				False	False			https://activatemytrip.com	
+2169		DL	DLESE	Air + Hotel	Air Package	NA	SEATTLE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2170		DL	DLSBO	Air + Hotel	Air Package	NA	BOSTON, MA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2171		DL	DLSDC	Air + Hotel	Air Package	NA	WASHINGTON, DC			100.00	0.00			False				False	False			https://activatemytrip.com	
+2172		DL	DLSDE	Air + Hotel	Air Package	NA	DENVER, CO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2173		DL	DLSLV	Air + Hotel	Air Package	Orlando	LAS VEGAS			100.00	198.00			False				False	False			https://activatemytrip.com	
+2174		DL	DLSON	Air + Hotel	Air Package	NA	ONTARIO, CA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2175		DL	DLWCL	Air + Hotel	Air Package	NA	CLEVELAND, OH			100.00	0.00			False				False	False			https://activatemytrip.com	
+2176		DL	DLWLA	Air + Hotel	Air Package	NA	LOS ANGELES AREA			100.00	198.00			False				False	False			https://activatemytrip.com	
+2177		DL	DLWLV	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2178		DL	DLWME	Air + Hotel	Air Package	NA	MEMPHIS, TN			100.00	0.00			False				False	False			https://activatemytrip.com	
+2179		DS	DSLA	Air + Hotel	Air Package	Las Vegas	SAN DIEGO			100.00	95.00			False				False	False			https://activatemytrip.com	
+2180		DS	DSPD	Air + Hotel	Air Package	Portland	SAN DIEGO			100.00	95.00			False				False	False			https://activatemytrip.com	
+2181		DV	DVEBN	Air + Hotel	Air Package	Hartford	NASHVILLE, TN			100.00	200.00			False				False	False			https://activatemytrip.com	
+2182		DV	DVEFL	Air + Hotel	Air Package	Hartford	FT LAUDERDVLE			100.00	200.00			False				False	False			https://activatemytrip.com	
+2183		DV	DVELV	Air + Hotel	Air Package	Boston	LAS VEGAS			100.00	200.00			False				False	False			https://activatemytrip.com	
+2184		DX	DXSDF	Air + Hotel	Air Package	Tampa	DALLAS			100.00	150.00			False				False	False			https://activatemytrip.com	
+2185		DX	DXSHU	Air + Hotel	Air Package	Raleigh-Durham	HOUSTON AREA			100.00	150.00			False				False	False			https://activatemytrip.com	
+2186		DX	DXSRN	Air + Hotel	Air Package	Nashville	RENO			100.00	150.00			False				False	False			https://activatemytrip.com	
+2187		DX	DXSTU	Air + Hotel	Air Package	NA	TUCSON, AZ			100.00	0.00			False				False	False			https://activatemytrip.com	
+2188		DX	DXWDF	Air + Hotel	Air Package	NA	DALLAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2189		DZ	DZWLT	Air + Hotel	Air Package	Las Vegas	LAKE TAHOE			100.00	200.00			False				False	False			https://activatemytrip.com	
+2190		EBA	EBAK	Hotel Stay	1 Night Accommodations	NA	SMOKY MOUNTAINS, TN	1 Nights	1	25.00	25.00			False				False	False			https://activatemytrip.com	
+2191		EBA	EBAL	Hotel Stay	1 Night Accommodations	NA	WISCONSIN DELLS	1 Nights	1	25.00	25.00			False				False	False			https://activatemytrip.com	
+2192		EBA	EBAM	Hotel Stay	1 Night Accommodations	NA	MYRTLE BEACH, SC	1 Nights	1	25.00	25.00			False				False	False			https://activatemytrip.com	
+2193		EBA	EBAO	Hotel Stay	1 Night Accommodations	NA	ORLANDO	1 Nights	1	25.00	25.00			False				False	False			https://activatemytrip.com	
+2194		EBA	EBAP	Hotel Stay	1 Night Accommodations	NA	ST PETE BEACH	1 Nights	1	25.00	25.00			False				False	False			https://activatemytrip.com	
+2195		EBA	EBAV	Hotel Stay	1 Night Accommodations	NA	LAS VEGAS	1 Nights	1	25.00	25.00			False				False	False			https://activatemytrip.com	
+2196		EBF	EBFNA	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2197		ECA	ECACLI	Cruise	6 Night Cruise	Long Beach	MEXICO	6 Nights	6	100.00	0.00			False				False	False			https://activatemytrip.com	
+2198		ECA	ECACPV	Cruise	5 Night Cruise	Port Canaveral	BAHAMAS	5 Nights	5	100.00	0.00			False				False	False			https://activatemytrip.com	
+2199		ECA	ECARHU	Air + Hotel	Air Package	Salt Lake City	HOUSTON AREA			100.00	250.00			False				False	False			https://activatemytrip.com	
+2200		ECA	ECASNY	Hotel Stay	7 Night Accommodations	NA	NEW YORK AREA	7 Nights	7	100.00	0.00			False				False	False			https://activatemytrip.com	
+2201		ECB	ECBEN	Air + Hotel	Air Package	NA	ENSENADA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2202		ECG	ECGRDF	Air + Hotel	Air Package	NA	DALLAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2203		ECX	ECXRHU	Air + Hotel	Air Package	NA	HOUSTON AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2204		EKH	EKHBXX			NA	VOID			100.00	0.00			False				False	False			https://activatemytrip.com	
+2205		EMM	EMMB	Hotel Stay	2 Night Accommodations	NA	MYRTLE BEACH, SC	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2206		ERA	ERALC	Hotel Stay	2 Night Accommodations	NA	LOS CABOS	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2207		ERA	ERANY	Hotel Stay	2 Night Accommodations	NA	NEW YORK AREA	2 Nights	2	50.00	0.00			False				False	False			https://activatemytrip.com	
+2208		ESC	ESCDF	Hotel Stay	2 Night Accommodations	NA	DALLAS	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+2209		ESC	ESCDR	Hotel Stay	2 Night Accommodations	NA	DOMINICAN REPUBLIC	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+2210		ESC	ESCPR	Hotel Stay	2 Night Accommodations	NA	PUERTO RICO	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+2211		ETG	ETG	Hotel Stay	2 Night Accommodations	NA	REGISTRATION	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2212		ETG	ETGL	Hotel Stay	2 Night Accommodations	NA	LAUGHLIN	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2213		ETG	ETGR	Hotel Stay	2 Night Accommodations	NA	RENO	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2214		ETP	ETPA	Hotel Stay	2 Night Accommodations	NA	PLAZA HOTEL	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2215		ETR	ETRA	Hotel Stay	2 Night Accommodations	NA	RIVIERA VEGAS	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2216		ETR	ETRB	Hotel Stay	2 Night Accommodations	NA	RIVIERA VEGAS	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2217		ETR	ETRC	Hotel Stay	2 Night Accommodations	NA	RIVIERA VEGAS	2 Nights	2	25.00	0.00			False				False	False			https://activatemytrip.com	
+2218		ETV	ETV	Hotel Stay	2 Night Accommodations	NA	E-VEGAS	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2219		ETX	ETX	Hotel Stay	2 Night Accommodations	NA	REGISTRATION	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2220		ETX	ETXO	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2221		ETX	ETXV	Hotel Stay	2 Night Accommodations	NA	E-VEGAS	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2222		EVA	EVA	Hotel Stay	2 Night Accommodations	NA	E-VEGAS	2 Nights	2	100.00	25.00			False				False	False			https://activatemytrip.com	
+2223		EVL	EVL	Hotel Stay	2 Night Accommodations	NA	LAS VEGAS	2 Nights	2	100.00	25.00			False				False	False			https://activatemytrip.com	
+2224		EVR	EVR	Hotel Stay	2 Night Accommodations	NA	RIVIERA VEGAS	2 Nights	2	100.00	25.00			False				False	False			https://activatemytrip.com	
+2225		EXA	EXAD	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2226		EXJ	EXJA	Hotel Stay	2 Night Accommodations	NA	E-VEGAS	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2227		EZF	EZFBX	Hotel Stay	2 Night Accommodations	NA	BILOXI	2 Nights	2	100.00	70.00			False				False	False			https://activatemytrip.com	
+2228		EZF	EZFJX	Hotel Stay	2 Night Accommodations	NA	JACKSONVILLE, FL	2 Nights	2	100.00	70.00			False				False	False			https://activatemytrip.com	
+2229		EZF	EZFOR	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	100.00	70.00			False				False	False			https://activatemytrip.com	
+2230		EZH	EZHJX	Hotel Stay	2 Night Accommodations	NA	JACKSONVILLE, FL	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2231		EZT	EZTDF	Hotel Stay	2 Night Accommodations	NA	DALLAS	2 Nights	2	100.00	75.00			False				False	False			https://activatemytrip.com	
+2232		HCF	HCFF	Hotel Stay	3 Night Accommodations	NA	SAN FRANCISCO	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2233		HCF	HCFH	Hotel Stay	3 Night Accommodations	NA	OAHU	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2234		HCF	HCFL	Hotel Stay	3 Night Accommodations	NA	LAUGHLIN	3 Nights	3	30.00	50.00			False				False	False			https://activatemytrip.com	
+2235		HCF	HCFM	Hotel Stay	3 Night Accommodations	NA	PUERTO VALLARTA	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2236		HCF	HCFN	Hotel Stay	3 Night Accommodations	NA	NEW ORLEANS	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2237		HCF	HCFO	Hotel Stay	3 Night Accommodations	NA	ORLANDO	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2238		HCF	HCFP	Hotel Stay	3 Night Accommodations	NA	PALM SPRINGS	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2239		HCF	HCFR	Hotel Stay	3 Night Accommodations	NA	RENO	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2240		HCF	HCFS	Hotel Stay	3 Night Accommodations	NA	SAN DIEGO	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2241		HCF	HCFV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2242		HTB	HTB	Hotel Stay	2 Night Accommodations	NA	BRANSON	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+2243		ICR	ICRV	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2244		JTO	JTO	Air + Hotel	Air Package	Dallas	ORLANDO			100.00	95.00			False				False	False			https://activatemytrip.com	
+2245		KCN	KCNCM	Air + Hotel	Air Package	Columbus	LAS VEGAS			100.00	150.00			False				False	False			https://activatemytrip.com	
+2246		KCN	KCNEW	Air + Hotel	Air + Hotel Package	New York Area	LAS VEGAS			100.00	150.00			False				False	False			https://activatemytrip.com	
+2247		KCV	KCVF	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			50.00	120.00			False				False	False			https://activatemytrip.com	
+2248		KCV	KCVL	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			50.00	120.00			False				False	False			https://activatemytrip.com	
+2249		KCV	KCVO	Air + Cruise	Air + Cruise Bahamas	NA	LAS VEGAS			50.00	120.00			False				False	False			https://activatemytrip.com	
+2250		KCV	KCVS	Air + Cruise	Air + Cruise Bahamas	Sacramento	LAS VEGAS			50.00	120.00			False				False	False			https://activatemytrip.com	
+2251		KDF	KDFST	Air + Hotel	Air Package	St. Louis	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2252		KDH	KDHDL	Air + Hotel	Air Package	Los Angeles	ORLANDO			100.00	300.00			False				False	False			https://activatemytrip.com	
+2253		KDH	KDHSL	Air + Hotel	Air Package	Ontario	ORLANDO			100.00	300.00			False				False	False			https://activatemytrip.com	
+2254		KDH	KDHUD	Air + Hotel	Air Package	Dallas	ORLANDO			100.00	300.00			False				False	False			https://activatemytrip.com	
+2255		KDH	KDHUL	Air + Hotel	Air Package	Los Angeles	ORLANDO			100.00	300.00			False				False	False			https://activatemytrip.com	
+2256		KDO	KDOD	Air + Hotel	Air Package	Dallas	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2257		KDO	KDOH	Air + Hotel	Air Package	Houston	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2258		KDO	KDOL	Air + Hotel	Air + Hotel Package	NA	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2259		KDO	KDOS	Air + Hotel	Air Package	San Antonio	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2260		KDR	KDRBD	Air + Hotel	Air Package	Hartford	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2261		KDR	KDRBO	Air + Hotel	Air Package	Boston	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2262		KDR	KDRNY	Air + Hotel	Air Package	NA	ORLANDO			100.00	250.00			False				False	False			https://activatemytrip.com	
+2263		KDW	KDWDD	Air + Hotel	Air + Hotel Package	Denver	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2264		KDW	KDWDU	Air + Hotel	Air + Hotel Package	Salt Lake City	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2265		KDW	KDWUD	Air + Hotel	Air + Hotel Package	Denver	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2266		KDX	KDXAT	Air + Hotel	Air Package	NA	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2267		KDX	KDXBD	Air + Hotel	Air Package	Hartford	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2268		KDX	KDXBN	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2269		KDX	KDXBO	Air + Hotel	Air Package	Boston	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2270		KDX	KDXBW	Air + Hotel	Air Package	Baltimore	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2271		KDX	KDXCH	Air + Hotel	Air Package	Chicago	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2272		KDX	KDXDC	Air + Hotel	Air Package	Washington DC Area	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2273		KDX	KDXDW	Air + Hotel	Air Package	Dallas	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2274		KDX	KDXHU	Air + Hotel	Air Package	Houston	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2275		KDX	KDXME	Air + Hotel	Air Package	NA	ORLANDO			100.00	300.00			False				False	False			https://activatemytrip.com	
+2276		KDX	KDXMK			Chicago	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2277		KDX	KDXMS	Air + Hotel	Air Package	NA	ORLANDO			100.00	400.00			False				False	False			https://activatemytrip.com	
+2278		KDX	KDXSA	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2279		KDZ	KDZAE	Air + Hotel	Air Package	NA	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2280		KDZ	KDZBD	Air + Hotel	Air Package	Hartford	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2281		KDZ	KDZCM	Air + Hotel	Air Package	Columbus	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2282		KDZ	KDZDW	Air + Hotel	Air Package	Kansas City	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2283		KDZ	KDZHU	Air + Hotel	Air Package	NA	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2284		KDZ	KDZPI	Air + Hotel	Air Package	NA	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2285		KDZ	KDZRI	Air + Hotel	Air Package	NA	ORLANDO			100.00	250.00			False				False	False			https://activatemytrip.com	
+2286		KDZ	KDZSA	Air + Hotel	Air Package	San Antonio	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2287		KDZ	KDZSF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2288		KDZ	KDZSY	Air + Hotel	Air Package	NA	ORLANDO			100.00	500.00			False				False	False			https://activatemytrip.com	
+2289		KFO	KFOF	Air + Cruise	Air + Cruise Package	Ontario	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2290		KHC	KHCH	Air + Hotel	Air + Hotel Package	Chicago	HONOLULU, HI			50.00	150.00			False				False	False			https://activatemytrip.com	
+2291		KHG	KHGF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	HONOLULU, HI			50.00	170.00			False				False	False			https://activatemytrip.com	
+2292		KHG	KHGL	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			50.00	170.00			False				False	False			https://activatemytrip.com	
+2293		KHM	KHMF	Air + Hotel	Air + Hotel Package	NA	HONOLULU, HI			100.00	198.00			False				False	False			https://activatemytrip.com	
+2294		KHM	KHML	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			100.00	198.00			False				False	False			https://activatemytrip.com	
+2295		KHM	KHMP	Air + Hotel	Air + Hotel Package	Chicago	HONOLULU, HI			100.00	198.00			False				False	False			https://activatemytrip.com	
+2296		KHM	KHMS	Air + Hotel	Air + Hotel Package	Seattle	HONOLULU, HI			100.00	198.00			False				False	False			https://activatemytrip.com	
+2297		KHM	KHMU	Air + Hotel	Air + Hotel Package	Salt Lake City	HONOLULU, HI			100.00	198.00			False				False	False			https://activatemytrip.com	
+2298		KHX	KHXDS	Air + Hotel	Air Package	NA	SAN DIEGO			50.00	0.00			False				False	False			https://activatemytrip.com	
+2299		KHX	KHXHF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	HONOLULU, HI			50.00	98.00			False				False	False			https://activatemytrip.com	
+2300		KHX	KHXVF	Air + Hotel	Air Package	NA	LAS VEGAS			50.00	50.00			False				False	False			https://activatemytrip.com	
+2301		KHX	KHXVS	Air + Hotel	Air Package	NA	LAS VEGAS			50.00	0.00			False				False	False			https://activatemytrip.com	
+2302		KLD	KLDDD	Air + Hotel	Air Package	Denver	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2303		KLD	KLDDF	Air + Hotel	Air Package	San Francisco Bay Area	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2304		KLD	KLDDS	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2305		KLD	KLDDU	Air + Hotel	Air Package	Salt Lake City	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2306		KLD	KLDLU	Air + Hotel	Air Package	NA	LOS ANGELES AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2307		KLD	KLDSD	Air + Hotel	Air Package	Denver	SAN DIEGO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2308		KLD	KLDSF	Air + Hotel	Air Package	Sacramento	SAN DIEGO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2309		KLD	KLDSS	Air + Hotel	Air Package	NA	SAN DIEGO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2310		KLD	KLDSU	Air + Hotel	Air Package	Salt Lake City	SAN DIEGO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2311		KLD	KLDUD	Air + Hotel	Air Package	Denver	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2312		KLD	KLDUF	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2313		KLD	KLDUS	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2314		KLD	KLDUU	Air + Hotel	Air Package	Salt Lake City	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2315		KLG	KLGD	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2316		KLG	KLGL	Air + Hotel	Air Package	Sacramento	SAN DIEGO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2317		KLG	KLGS	Air + Hotel	Air Package	San Francisco Bay Area	SAN DIEGO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2318		KLG	KLGU	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2319		KLG	KLGZ	Air + Hotel	Air Package	Sacramento	SAN DIEGO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2320		KLN	KLNDD	Air + Hotel	Air Package	Denver	LOS ANGELES AREA			240.00	240.00			False				False	False			https://activatemytrip.com	
+2321		KLN	KLNDF	Air + Hotel	Air Package	San Francisco Bay Area	LOS ANGELES AREA			240.00	240.00			False				False	False			https://activatemytrip.com	
+2322		KLN	KLNDM	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2323		KLN	KLNDU	Air + Hotel	Air Package	Salt Lake City	LOS ANGELES AREA			240.00	240.00			False				False	False			https://activatemytrip.com	
+2324		KLN	KLNSD	Air + Hotel	Air Package	Denver	SAN DIEGO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2325		KLN	KLNSF	Air + Hotel	Air Package	San Francisco Bay Area	SAN DIEGO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2326		KLN	KLNSU	Air + Hotel	Air Package	Salt Lake City	SAN DIEGO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2327		KLN	KLNUD	Air + Hotel	Air Package	Salt Lake City	LOS ANGELES AREA			240.00	240.00			False				False	False			https://activatemytrip.com	
+2328		KLN	KLNUF	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	240.00			False				False	False			https://activatemytrip.com	
+2329		KLN	KLNUU	Air + Hotel	Air Package	Salt Lake City	LOS ANGELES AREA			240.00	240.00			False				False	False			https://activatemytrip.com	
+2330		KLV	KLVDF	Air + Hotel	Air Package	San Francisco Bay Area	LOS ANGELES AREA			50.00	120.00			False				False	False			https://activatemytrip.com	
+2331		KLV	KLVDS	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			50.00	120.00			False				False	False			https://activatemytrip.com	
+2332		KLV	KLVLF	Air + Hotel	Air Package	San Francisco Bay Area	SAN DIEGO			50.00	120.00			False				False	False			https://activatemytrip.com	
+2333		KLV	KLVLS	Air + Hotel	Air Package	NA	SAN DIEGO			50.00	120.00			False				False	False			https://activatemytrip.com	
+2334		KLV	KLVSF	Air + Hotel	Air Package	NA	SAN DIEGO			50.00	120.00			False				False	False			https://activatemytrip.com	
+2335		KLV	KLVSS	Air + Hotel	Air Package	NA	SAN DIEGO			50.00	0.00			False				False	False			https://activatemytrip.com	
+2336		KLV	KLVUF	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			50.00	120.00			False				False	False			https://activatemytrip.com	
+2337		KLV	KLVUS	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			50.00	120.00			False				False	False			https://activatemytrip.com	
+2338		KLV	KLVVF	Air + Hotel	Air Package	NA	LAS VEGAS			50.00	120.00			False				False	False			https://activatemytrip.com	
+2339		KLV	KLVVS	Air + Hotel	Air Package	Sacramento	LAS VEGAS			50.00	120.00			False				False	False			https://activatemytrip.com	
+2340		KLV	KLVZF	Air + Hotel	Air Package	NA	SAN DIEGO			50.00	0.00			False				False	False			https://activatemytrip.com	
+2341		KLV	KLVZS	Air + Hotel	Air Package	NA	SAN DIEGO			50.00	0.00			False				False	False			https://activatemytrip.com	
+2342		KLW	KLWFD	Air + Cruise	Air + Cruise Package	San Diego	SAN FRANCISCO			100.00	110.00			False				False	False			https://activatemytrip.com	
+2343		KLW	KLWFL	Air + Cruise	Air + Cruise Package	Long Beach	SAN FRANCISCO			100.00	110.00			False				False	False			https://activatemytrip.com	
+2344		KLW	KLWND	Air + Cruise	Air + Cruise Package	New Orleans	NAPA VALLEY AREA			100.00	190.00			False				False	False			https://activatemytrip.com	
+2345		KLW	KLWNL	Air + Cruise	Air + Cruise Package	Los Angeles	NAPA VALLEY AREA			100.00	190.00			False				False	False			https://activatemytrip.com	
+2346		KLX	KLXLV	Air + Hotel	Air + Hotel Package	Las Vegas	LOS ANGELES AREA			100.00	400.00			False				False	False			https://activatemytrip.com	
+2347		KLX	KLXPX	Air + Hotel	Air + Hotel Package	Phoenix	LOS ANGELES AREA			100.00	400.00			False				False	False			https://activatemytrip.com	
+2348		KLX	KLXSE	Air + Hotel	Air + Hotel Package	Seattle	LOS ANGELES AREA			100.00	400.00			False				False	False			https://activatemytrip.com	
+2349		KLX	KLXSF	Air + Hotel	Air Package	San Francisco Bay Area	LOS ANGELES AREA			100.00	400.00			False				False	False			https://activatemytrip.com	
+2350		KLX	KLXSL	Air + Hotel	Air Package	Salt Lake City	LOS ANGELES AREA			100.00	400.00			False				False	False			https://activatemytrip.com	
+2351		KLX	KLXSM	Air + Hotel	Air Package	NA	LOS ANGELES AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2352		KMN	KMNCM	Air + Hotel	Air Package	NA	NEW ORLEANS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2353		KMN	KMNST	Air + Hotel	Air Package	NA	NEW ORLEANS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2354		KMO	KMOCL	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2355		KMO	KMOMC	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2356		KMV	KMVAT	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2357		KMV	KMVCL	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2358		KMV	KMVCM	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2359		KMV	KMVCV	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2360		KMV	KMVMC	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2361		KND	KNDF	Air + Hotel	Air Package	San Francisco Bay Area	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2362		KND	KNDS	Air + Hotel	Air Package	Sacramento	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2363		KND	KNDU	Air + Hotel	Air Package	Salt Lake City	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2364		KNV	KNVF	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2365		KNV	KNVS	Air + Hotel	Air Package	Sacramento	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2366		KPD	KPDA	Air + Hotel	Air Package	Atlanta	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2367		KPD	KPDB	Air + Hotel	Air Package	Boston	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2368		KPD	KPDC	Air + Hotel	Air Package	Chicago	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2369		KPD	KPDD	Air + Hotel	Air Package	Dallas	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2370		KPD	KPDF	Air + Hotel	Air Package	Hartford	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2371		KPD	KPDH	Air + Hotel	Air Package	Houston	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2372		KPD	KPDK	Air + Hotel	Air Package	NA	ORLANDO			120.00	0.00			False				False	False			https://activatemytrip.com	
+2373		KPD	KPDL	Air + Hotel	Air Package	NA	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2374		KPD	KPDN	Air + Hotel	Air Package	New York Area	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2375		KPD	KPDP	Air + Hotel	Air Package	Philadelphia	ORLANDO			100.00	240.00			False				False	False			https://activatemytrip.com	
+2376		KPD	KPDS	Air + Hotel	Air Package	San Antonio	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2377		KPD	KPDU	Air + Hotel	Air Package	Austin	ORLANDO			240.00	240.00			False				False	False			https://activatemytrip.com	
+2378		KPO	KPOA	Air + Hotel	Air Package	Atlanta	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2379		KPO	KPOB	Air + Hotel	Air Package	Boston	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2380		KPO	KPOC	Air + Hotel	Air Package	Chicago	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2381		KPO	KPOD	Air + Hotel	Air Package	Dallas	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2382		KPO	KPOF	Air + Hotel	Air Package	Hartford	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2383		KPO	KPOH	Air + Hotel	Air Package	Houston	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2384		KPO	KPOK	Air + Hotel	Air Package	Kansas City	ORLANDO			100.00	200.00			False				False	False			https://activatemytrip.com	
+2385		KPO	KPOL	Air + Hotel	Air Package	NA	ORLANDO			100.00	200.00			False				False	False			https://activatemytrip.com	
+2386		KPO	KPON	Air + Hotel	Air Package	New York Area	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2387		KPO	KPOS	Air + Hotel	Air Package	San Antonio	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2388		KPO	KPOU	Air + Hotel	Air Package	Austin	ORLANDO			200.00	200.00			False				False	False			https://activatemytrip.com	
+2389		KPV	KPVA	Air + Hotel	Air Package	Atlanta	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2390		KPV	KPVB	Air + Hotel	Air Package	Boston	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2391		KPV	KPVC	Air + Hotel	Air Package	Chicago	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2392		KPV	KPVD	Air + Hotel	Air Package	Dallas	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2393		KPV	KPVF	Air + Hotel	Air Package	New York Area	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2394		KPV	KPVH	Air + Hotel	Air Package	Houston	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2395		KPV	KPVK	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	150.00			False				False	False			https://activatemytrip.com	
+2396		KPV	KPVL	Air + Hotel	Air Package	St. Louis	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2397		KPV	KPVN	Air + Hotel	Air Package	New York Area	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2398		KPV	KPVP	Air + Hotel	Air Package	NA	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2399		KPV	KPVS	Air + Hotel	Air Package	San Antonio	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2400		KPV	KPVU	Air + Hotel	Air Package	Austin	LAS VEGAS			150.00	150.00			False				False	False			https://activatemytrip.com	
+2401		KSD	KSDF	Air + Hotel	Air Package	NA	SAN DIEGO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2402		KSD	KSDP	Air + Hotel	Air Package	NA	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2403		KSD	KSDV	Air + Hotel	Air Package	Las Vegas	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2404		KSL	KSLF	Air + Hotel	Air + Hotel Package	NA	LOS ANGELES AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2405		KSL	KSLS	Air + Hotel	Air + Hotel Package	NA	LOS ANGELES AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2406		KSL	KSLV	Air + Hotel	Air + Hotel Package	Las Vegas	LOS ANGELES AREA			100.00	100.00			False				False	False			https://activatemytrip.com	
+2407		KSS	KSSV	Air + Hotel	Air + Hotel Package	NA	ORANGE COUNTY AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2408		KVO	KVOA	Air + Hotel	Air Package	Atlanta	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2409		KVO	KVOB	Air + Hotel	Air Package	Boston	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2410		KVO	KVOC	Air + Hotel	Air Package	Chicago	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2411		KVO	KVOD	Air + Hotel	Air Package	Dallas	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2412		KVO	KVOF	Air + Hotel	Air Package	Hartford	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2413		KVO	KVOH	Air + Hotel	Air Package	Houston	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2414		KVO	KVOK	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2415		KVO	KVON	Air + Hotel	Air Package	New York Area	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2416		KVO	KVOP	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2417		KVO	KVOS	Air + Hotel	Air Package	San Antonio	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2418		KVO	KVOU	Air + Hotel	Air Package	Austin	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2419		KVT	KVTYY	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	198.00			False				False	False			https://activatemytrip.com	
+2420		KVV	KVVA	Air + Hotel	Air Package	Atlanta	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2421		KVV	KVVB	Air + Hotel	Air Package	Boston	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2422		KVV	KVVC	Air + Hotel	Air Package	Chicago	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2423		KVV	KVVD	Air + Hotel	Air Package	Dallas	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2424		KVV	KVVF	Air + Hotel	Air Package	Hartford	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2425		KVV	KVVH	Air + Hotel	Air Package	Houston	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2426		KVV	KVVK	Air + Hotel	Air Package	Kansas City	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2427		KVV	KVVL	Air + Hotel	Air Package	St. Louis	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2428		KVV	KVVN	Air + Hotel	Air Package	New York Area	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2429		KVV	KVVP	Air + Hotel	Air Package	Philadelphia	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2430		KVV	KVVS	Air + Hotel	Air Package	San Antonio	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2431		KVV	KVVU	Air + Hotel	Air Package	Austin	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2432		KVX	KVXLA	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2433		KVX	KVXSF	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			100.00	120.00			False				False	False			https://activatemytrip.com	
+2434		KVX	KVXYY	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	178.00			False				False	False			https://activatemytrip.com	
+2435		LMC	LMCT	Hotel Stay	2 Night Accommodations	NA	LAKE TAHOE	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+2436		LMV	LMVC	Hotel Stay	3 Night Accommodations	NA	CANCUN	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2437		LMV	LMVH	Hotel Stay	3 Night Accommodations	NA	OAHU	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2438		LMV	LMVJ	Hotel Stay	3 Night Accommodations	NA	JAMAICA	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2439		LMV	LMVL	Hotel Stay	3 Night Accommodations	NA	LOS CABOS	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2440		LMV	LMVM	Hotel Stay	3 Night Accommodations	NA	MAUI	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2441		LMV	LMVO	Hotel Stay	3 Night Accommodations	NA	ORLANDO	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2442		LMV	LMVS	Hotel Stay	3 Night Accommodations	NA	SAN JUAN, PUERTO RICO	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2443		LMV	LMVV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2444		LPB	LPBB	Hotel Stay	3 Night Accommodations	NA	BRANSON	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2445		LPB	LPBD	Hotel Stay	3 Night Accommodations	NA	SAN DIEGO	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2446		LPB	LPBF	Hotel Stay	3 Night Accommodations	NA	SAN FRANCISCO	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2447		LPB	LPBH	Hotel Stay	3 Night Accommodations	NA	OAHU	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2448		LPB	LPBK	Hotel Stay	3 Night Accommodations	NA	SMOKY MOUNTAINS, TN	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2449		LPB	LPBL	Hotel Stay	3 Night Accommodations	NA	WISCONSIN DELLS	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2450		LPB	LPBM	Hotel Stay	3 Night Accommodations	NA	MYRTLE BEACH, SC	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2451		LPB	LPBN	Hotel Stay	3 Night Accommodations	NA	NEW ORLEANS	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2452		LPB	LPBO	Hotel Stay	3 Night Accommodations	NA	ORLANDO	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2453		LPB	LPBV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2454		LPB	LPBY	Hotel Stay	3 Night Accommodations	NA	ATLANTIC CITY	3 Nights	3	50.00	50.00			False				False	False			https://activatemytrip.com	
+2455		LPD	LPDC	Hotel Stay	3 Night Accommodations	NA	CANCUN	3 Nights	3	100.00	0.00			False				False	False			https://activatemytrip.com	
+2456		LPD	LPDD	Hotel Stay	3 Night Accommodations	NA	SAN DIEGO	3 Nights	3	100.00	100.00			False				False	False			https://activatemytrip.com	
+2457		LPD	LPDF	Hotel Stay	3 Night Accommodations	NA	SAN FRANCISCO	3 Nights	3	100.00	100.00			False				False	False			https://activatemytrip.com	
+2458		LPD	LPDH	Hotel Stay	3 Night Accommodations	NA	OAHU	3 Nights	3	100.00	100.00			False				False	False			https://activatemytrip.com	
+2459		LPD	LPDJ	Hotel Stay	3 Night Accommodations	NA	JAMAICA	3 Nights	3	100.00	100.00			False				False	False			https://activatemytrip.com	
+2460		LPD	LPDK	Hotel Stay	3 Night Accommodations	NA	SMOKY MOUNTAINS, TN	3 Nights	3	100.00	0.00			False				False	False			https://activatemytrip.com	
+2461		LPD	LPDL	Hotel Stay	3 Night Accommodations	NA	LOS CABOS	3 Nights	3	100.00	100.00			False				False	False			https://activatemytrip.com	
+2462		LPD	LPDN	Hotel Stay	3 Night Accommodations	NA	NEW ORLEANS	3 Nights	3	100.00	100.00			False				False	False			https://activatemytrip.com	
+2463		LPD	LPDO	Hotel Stay	3 Night Accommodations	NA	ORLANDO	3 Nights	3	100.00	0.00			False				False	False			https://activatemytrip.com	
+2464		LPD	LPDP	Hotel Stay	3 Night Accommodations	NA	PUERTO RICO	3 Nights	3	100.00	0.00			False				False	False			https://activatemytrip.com	
+2465		LPD	LPDV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	100.00	100.00			False				False	False			https://activatemytrip.com	
+2466		LPM	LPMC	Hotel Stay	4 Night Accommodations	NA	CANCUN	4 Nights	4	100.00	0.00			False				False	False			https://activatemytrip.com	
+2467		LPM	LPML	Hotel Stay	4 Night Accommodations	NA	LOS CABOS	4 Nights	4	100.00	0.00			False				False	False			https://activatemytrip.com	
+2468		LPM	LPMN	Hotel Stay	4 Night Accommodations	NA	NASSAU, BH	4 Nights	4	100.00	100.00			False				False	False			https://activatemytrip.com	
+2469		LPM	LPMP	Hotel Stay	4 Night Accommodations	NA	PUERTO VALLARTA	4 Nights	4	100.00	100.00			False				False	False			https://activatemytrip.com	
+2470		LRA	LRA	Hotel Stay	2 Night Accommodations	NA	RIVIERA VEGAS	2 Nights	2	100.00	15.00			False				False	False			https://activatemytrip.com	
+2471		LRC	LRCD	Hotel Stay	1 Night Accommodations	NA	DURANT, OK	1 Nights	1	50.00	0.00			False				False	False			https://activatemytrip.com	
+2472		LRH	LRHB	Hotel Stay	1 Night Accommodations	NA	BOSSIER CITY, LA	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2473		LRH	LRHD	Hotel Stay	1 Night Accommodations	NA	DURANT, OK	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2474		LRH	LRHS	Hotel Stay	1 Night Accommodations	NA	SHREVEPORT	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2475		LRK	LRKC	Hotel Stay	2 Night Accommodations	NA	CONNECTICUT CASINO	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2476		LRK	LRKN	Hotel Stay	2 Night Accommodations	NA	NEW YORK CASINO	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2477		LRK	LRKX	Hotel Stay	2 Night Accommodations	NA	CUST-TO-DECIDE	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2478		LRL	LRLC	Hotel Stay	2 Night Accommodations	NA	LAKE CHARLES, LA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2479		LRL	LRLE	Hotel Stay	2 Night Accommodations	NA	EAGLE PASS, TX	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2480		LRL	LRLL	Hotel Stay	2 Night Accommodations	NA	LAS VEGAS	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2481		LRN	LRNHT	Hotel Stay	1 Night Accommodations	NA	SOUTH LAKE TAHOE CASINO	1 Nights	1	100.00	0.00			False				False	False			https://activatemytrip.com	
+2482		LRN	LRNTC	Hotel Stay	1 Night Accommodations	NA	TEMECULA AREA CASINO	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+2483		LRP	LRPC	Hotel Stay	2 Night Accommodations	NA	CHEROKEE, NC	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2484		LRP	LRPM	Hotel Stay	2 Night Accommodations	NA	MARYLAND CASINO	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2485		LRP	LRPP	Hotel Stay	2 Night Accommodations	NA	PENNSYLVANIA CASINO	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2486		LRS	LRSO	Hotel Stay	1 Night Accommodations	NA	PORTLAND AREA CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2487		LRS	LRSW	Hotel Stay	1 Night Accommodations	NA	SEATTLE AREA CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2488		LRT	LRTB	Hotel Stay	2 Night Accommodations	NA	BOSSIER CITY, LA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2489		LRT	LRTT	Hotel Stay	2 Night Accommodations	NA	THACKERVILLE, OK	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2490		LRW	LRWN	Hotel Stay	2 Night Accommodations	NA	NEMACOLIN, PA	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2491		LRW	LRWP	Hotel Stay	2 Night Accommodations	NA	PITTSBURGH, PA	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2492		LRW	LRWW	Hotel Stay	2 Night Accommodations	NA	WASHINGTON, PA	2 Nights	2	100.00	60.00			False				False	False			https://activatemytrip.com	
+2493		LRZ	LRZT	Hotel Stay	1 Night Accommodations	NA	SOUTH LAKE TAHOE CASINO	1 Nights	1	100.00	0.00			False				False	False			https://activatemytrip.com	
+2494		LSC	LSCR	Hotel Stay	2 Night Accommodations	NA	RIVIERA VEGAS	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2495		LSP	LSPH	Hotel Stay	2 Night Accommodations	NA	PLAZA HOTEL	2 Nights	2	25.00	25.00			False				False	False			https://activatemytrip.com	
+2496		LTV	LTVA	Hotel Stay	2 Night Accommodations	NA	VANCOUVER, BC	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2497		LTV	LTVC	Hotel Stay	2 Night Accommodations	NA	VICTORIA, BC	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2498		LTV	LTVD	Hotel Stay	2 Night Accommodations	NA	COEUR D'ALENE	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2499		LTV	LTVL	Hotel Stay	2 Night Accommodations	NA	LAS VEGAS	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2500		LTV	LTVN	Hotel Stay	2 Night Accommodations	NA	NEWPORT, OR	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2501		LTV	LTVS	Hotel Stay	2 Night Accommodations	NA	SEASIDE	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2502		LVC	LVC	Hotel Stay	3 Night Accommodations	NA	VANCOUVER, BC	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2503		LWC	LWCC	Hotel Stay	1 Night Accommodations	NA	CENTRAL MICHIGAN CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2504		LWC	LWCD	Hotel Stay	1 Night Accommodations	NA	DETROIT AREA CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2505		LWC	LWCW	Hotel Stay	1 Night Accommodations	NA	MICHIGAN WATERPARK	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2506		LWN	LWNAC	Hotel Stay	1 Night Accommodations	NA	ATLANTIC CITY AREA CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2507		LWN	LWNCC	Hotel Stay	1 Night Accommodations	NA	MT. LAUREL, NJ	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2508		LWN	LWNHT	Hotel Stay	1 Night Accommodations	NA	LAKE HARMONY, PA	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2509		LWN	LWNLC	Hotel Stay	1 Night Accommodations	NA	LONG ISLAND-CT AREA CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2510		LWN	LWNPC	Hotel Stay	1 Night Accommodations	NA	PENNSYLVANIA CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2511		LWN	LWNSS	Hotel Stay	1 Night Accommodations	NA	WEST BERLIN, NJ	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2512		LWN	LWNUN	Hotel Stay	1 Night Accommodations	NA	UPSTATE NY AREA CASINO	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+2513		LX	LXR	Hotel Stay	3 Night Accommodations	NA	RENO	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2514		LX	LXV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	100.00	50.00			False				False	False			https://activatemytrip.com	
+2515		MIT	MITDF	Air + Hotel	Air + Hotel Package	Dallas	RIVERA MAYA			290.00	290.00			False				False	False			https://activatemytrip.com	
+2516		OSO	OSOB	Air + Hotel	Air Package	Buffalo	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2517		OSV	OSVB	Air + Hotel	Air Package	Buffalo	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2518		OSV	OSVD	Air + Hotel	Air Package	Detroit	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2519		QZH	QZHW	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			100.00	100.00			False				False	False			https://activatemytrip.com	
+2520		RPHA	RPHA	Hotel Stay	2 Night Accommodations	NA	PLAZA HOTEL	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2521		RPHB	RPHB	Hotel Stay	2 Night Accommodations	NA	PLAZA HOTEL	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2522		RRBA	RRBA	Hotel Stay	2 Night Accommodations	NA	SR-RENO	2 Nights	2	50.00	0.00			False				False	False			https://activatemytrip.com	
+2523		RRC	RRCA	Hotel Stay	3 Night Accommodations	NA	SR-RENO	3 Nights	3	100.00	0.00			False				False	False			https://activatemytrip.com	
+2524		RVBA	RVBA	Hotel Stay	2 Night Accommodations	NA	RIVIERA VEGAS	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2525		RVC	RVCA	Hotel Stay	3 Night Accommodations	NA	RIVIERA VEGAS	3 Nights	3	100.00	0.00			False				False	False			https://activatemytrip.com	
+2526		RVD	RVDA	Hotel Stay	4 Night Accommodations	NA	RIVIERA VEGAS	4 Nights	4	150.00	0.00			False				False	False			https://activatemytrip.com	
+2527		SCP	SCPS			NA	PALM SPRINGS			100.00	30.00			False				False	False			https://activatemytrip.com	
+2528		SGA	SGABB	Hotel Stay	3 Night Accommodations	NA	BIG BEAR	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2529		SGA	SGABC	Hotel Stay	3 Night Accommodations	NA	VANCOUVER, BC	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2530		SGA	SGACI	Hotel Stay	3 Night Accommodations	NA	CATALINA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2531		SGA	SGALA	Hotel Stay	3 Night Accommodations	NA	LOS ANGELES AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2532		SGA	SGALG	Hotel Stay	3 Night Accommodations	NA	LAUGHLIN	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2533		SGA	SGALT	Hotel Stay	3 Night Accommodations	NA	LAKE TAHOE	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2534		SGA	SGAMB	Hotel Stay	3 Night Accommodations	NA	MONTEREY	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2535		SGA	SGANO	Hotel Stay	3 Night Accommodations	NA	NEWPORT, OR	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2536		SGA	SGAOS	Hotel Stay	3 Night Accommodations	NA	LOS CABOS	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2537		SGA	SGAPS	Hotel Stay	3 Night Accommodations	NA	PALM SPRINGS	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2538		SGA	SGARN	Hotel Stay	3 Night Accommodations	NA	RENO	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2539		SGA	SGASE	Hotel Stay	3 Night Accommodations	NA	SEATTLE	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2540		SGA	SGASO	Hotel Stay	3 Night Accommodations	NA	SAN LUIS OBISPO	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2541		SGB	SGBBB	Hotel Stay	3 Night Accommodations	NA	BIG BEAR	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2542		SGB	SGBBC	Hotel Stay	3 Night Accommodations	NA	VANCOUVER, BC	3 Nights	3	100.00	75.00			False				False	False			https://activatemytrip.com	
+2543		SGB	SGBLG	Hotel Stay	3 Night Accommodations	NA	LAUGHLIN	3 Nights	3	75.00	0.00			False				False	False			https://activatemytrip.com	
+2544		SGB	SGBLT	Hotel Stay	3 Night Accommodations	NA	LAKE TAHOE	3 Nights	3	100.00	75.00			False				False	False			https://activatemytrip.com	
+2545		SGB	SGBLV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	75.00	0.00			False				False	False			https://activatemytrip.com	
+2546		SGB	SGBMB	Hotel Stay	3 Night Accommodations	NA	MONTEREY	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2547		SGB	SGBOS	Hotel Stay	3 Night Accommodations	NA	LOS CABOS	3 Nights	3	75.00	0.00			False				False	False			https://activatemytrip.com	
+2548		SGB	SGBPS	Hotel Stay	3 Night Accommodations	NA	PALM SPRINGS	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2549		SGB	SGBSE	Hotel Stay	3 Night Accommodations	NA	SEATTLE	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2550		SGB	SGBSO	Hotel Stay	3 Night Accommodations	NA	SAN LUIS OBISPO	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+2551		SGT	SGTAU	Hotel Stay	2 Night Accommodations	NA	AUSTIN, TX	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2552		SGT	SGTGL	Hotel Stay	2 Night Accommodations	NA	GALVESTON	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2553		SGT	SGTHO	Hotel Stay	2 Night Accommodations	NA	HOUSTON AREA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2554		SGT	SGTLC	Hotel Stay	2 Night Accommodations	NA	LAKE CHARLES, LA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2555		SGT	SGTNO	Hotel Stay	2 Night Accommodations	NA	NEW ORLEANS	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2556		SGT	SGTSA	Hotel Stay	2 Night Accommodations	NA	SAN ANTONIO, TX	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2557		SGT	SGTSH	Hotel Stay	2 Night Accommodations	NA	SHREVEPORT	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2558		SGW	SGWAF	Hotel Stay	3 Night Accommodations	NA	SAN FRANCISCO	3 Nights	3	50.00	45.00			False				False	False			https://activatemytrip.com	
+2559		SGW	SGWAN	Hotel Stay	3 Night Accommodations	NA	NAPA VALLEY AREA	3 Nights	3	50.00	45.00			False				False	False			https://activatemytrip.com	
+2560		SGW	SGWAT	Hotel Stay	3 Night Accommodations	NA	LAKE TAHOE	3 Nights	3	50.00	45.00			False				False	False			https://activatemytrip.com	
+2561		SGW	SGWBC	Hotel Stay	3 Night Accommodations	NA	CARMEL VALLEY	3 Nights	3	50.00	40.00			False				False	False			https://activatemytrip.com	
+2562		SGW	SGWBM	Hotel Stay	3 Night Accommodations	NA	MONTEREY	3 Nights	3	50.00	40.00			False				False	False			https://activatemytrip.com	
+2563		SGW	SGWBS	Hotel Stay	3 Night Accommodations	NA	SANTA BARBARA	3 Nights	3	50.00	40.00			False				False	False			https://activatemytrip.com	
+2564		SGW	SGWCDC	Hotel Stay	3 Night Accommodations	NA	WASHINGTON, DC	3 Nights	3	100.00	110.00			False				False	False			https://activatemytrip.com	
+2565		SGW	SGWCLV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS, NV	3 Nights	3	50.00	0.00			False				False	False			https://activatemytrip.com	
+2566		SGW	SGWCXX	Hotel Stay	3 Night Accommodations	NA	CUST-TO-DECIDE	3 Nights	3	50.00	0.00			False				False	False			https://activatemytrip.com	
+2567		SGW	SGWV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	50.00	45.00			False				False	False			https://activatemytrip.com	
+2568		SX	SXBB	Hotel Stay	2 Night Accommodations	NA	BIG BEAR	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2569		SX	SXBC	Hotel Stay	2 Night Accommodations	NA	VANCOUVER, BC	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2570		SX	SXCI	Hotel Stay	2 Night Accommodations	NA	CATALINA	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2571		SX	SXL	Hotel Stay	2 Night Accommodations	NA	LAUGHLIN	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2572		SX	SXME	Hotel Stay	2 Night Accommodations	NA	ENSENADA	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2573		SX	SXMR	Hotel Stay	2 Night Accommodations	NA	ROSARITO	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2574		SX	SXOS	Hotel Stay	2 Night Accommodations	NA	LOS CABOS	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2575		SX	SXP	Hotel Stay	2 Night Accommodations	NA	PALM SPRINGS	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2576		SX	SXR	Hotel Stay	2 Night Accommodations	NA	RENO	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2577		SX	SXT	Hotel Stay	2 Night Accommodations	NA	LAKE TAHOE	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2578		SX	SXV	Hotel Stay	2 Night Accommodations	NA	LAS VEGAS	2 Nights	2	100.00	30.00			False				False	False			https://activatemytrip.com	
+2579		TB	TBOAU	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2580		TB	TBOBO	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2581		TB	TBOBW	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2582		TB	TBOCM	Air + Hotel	Air Package	Columbus	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2583		TB	TBODE	Air + Hotel	Air Package	Denver	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2584		TB	TBODF	Air + Hotel	Air Package	Dallas	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2585		TB	TBODT	Air + Hotel	Air Package	Detroit	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2586		TB	TBOHU	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2587		TB	TBOKC	Air + Hotel	Air Package	Kansas City	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2588		TB	TBOLA	Air + Hotel	Air + Hotel Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2589		TB	TBOME	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2590		TB	TBOMS	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2591		TB	TBONY	Air + Hotel	Air Package	New York Area	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2592		TB	TBOPH	Air + Hotel	Air Package	Philadelphia	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2593		TB	TBOSL	Air + Hotel	Air + Hotel Package	Salt Lake City	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2594		TB	TBOST	Air + Hotel	Air Package	St. Louis	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2595		TB	TBOWA	Air + Hotel	Air Package	Washington DC Area	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2596		TB	TBVAT	Air + Hotel	Air Package	Atlanta	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2597		TB	TBVAU	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2598		TB	TBVBD	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2599		TB	TBVBN	Air + Hotel	Air Package	Nashville	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2600		TB	TBVBO	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2601		TB	TBVBW	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2602		TB	TBVCH	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2603		TB	TBVCL	Air + Hotel	Air Package	Columbus	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2604		TB	TBVCM	Air + Hotel	Air Package	Columbus	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2605		TB	TBVCT	Air + Hotel	Air Package	Charlotte	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2606		TB	TBVCV	Air + Hotel	Air Package	Cincinnati	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2607		TB	TBVDE	Air + Cruise	Air + Cruise Package	Denver	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2608		TB	TBVDF	Air + Hotel	Air Package	Dallas	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2609		TB	TBVDT	Air + Hotel	Air Package	Detroit	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2610		TB	TBVIN	Air + Hotel	Air Package	Indianapolis	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2611		TB	TBVKC			Kansas City	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2612		TB	TBVLA	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2613		TB	TBVMC	Air + Hotel	Air Package	Jacksonville	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2614		TB	TBVNO	Air + Hotel	Air Package	New Orleans	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2615		TB	TBVNY	Air + Hotel	Air Package	New York Area	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2616		TB	TBVPH	Air + Hotel	Air Package	Philadelphia	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2617		TB	TBVPI	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2618		TB	TBVSE	Air + Hotel	Air + Hotel Package	Seattle	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2619		TB	TBVSF	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2620		TB	TBVSL	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2621		TB	TBVST	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2622		TB	TBVTP	Air + Hotel	Air Package	Tampa	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2623		TB	TBVWA	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2624		TD	TDNO	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2625		TD	TDTU	Air + Hotel	Air Package	Tulsa	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2626		TD	TDWA	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2627		TF	TFFD	Air + Cruise	Air + Cruise Package	Fort Lauderdale	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2628		TF	TFFL	Air + Cruise	Air + Cruise Package	Los Angeles	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2629		TF	TFFO	Air + Cruise	Air + Cruise Package	Ontario	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2630		TF	TFFU	Air + Hotel	Air + Hotel Package	Salt Lake City	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2631		TF	TFVD	Air + Cruise	Air + Cruise Bahamas	San Diego	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2632		TF	TFVL	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2633		TF	TFVO	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2634		TF	TFVU	Air + Hotel	Air Package	Salt Lake City	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2635		TG	TGDD			NA	SAN DIEGO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2636		TG	TGDF	Air + Hotel	Air Package	San Francisco Bay Area	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2637		TG	TGDO	Air + Hotel	Air + Hotel Package	NA	SAN DIEGO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2638		TG	TGFD	Air + Cruise	Air + Cruise Package	Fort Lauderdale	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2639		TG	TGFL	Air + Cruise	Air + Cruise Package	Orange County	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2640		TG	TGFO	Air + Cruise	Air + Cruise Package	Los Angeles	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2641		TG	TGND	Air + Cruise	Air + Cruise Package	Los Angeles	NAPA/SONOMA WINE COUNTRY, C			100.00	100.00			False				False	False			https://activatemytrip.com	
+2642		TG	TGNL	Air + Cruise	Air + Cruise Package	Los Angeles	NAPA/SONOMA WINE COUNTRY, C			100.00	100.00			False				False	False			https://activatemytrip.com	
+2643		TG	TGNO	Air + Cruise	Air + Cruise Package	Los Angeles	NAPA/SONOMA WINE COUNTRY, C			100.00	100.00			False				False	False			https://activatemytrip.com	
+2644		TG	TGOD	Air + Hotel	Air + Hotel Package	Los Angeles	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2645		TG	TGOF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2646		TG	TGOL	Air + Hotel	Air + Hotel Package	Los Angeles	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2647		TG	TGOO	Air + Hotel	Air + Hotel Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2648		TG	TGRF	Air + Hotel	Air + Hotel Package	NA	RENO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2649		TG	TGRL	Air + Hotel	Air Round Trip Package	NA	RENO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2650		TG	TGRO	Air + Hotel	Air Round Trip Package	Long Beach	RENO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2651		TG	TGTD	Air + Hotel	Air Round Trip Package	NA	LAKE TAHOE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2652		TG	TGTL	Air + Hotel	Air Round Trip Package	NA	LAKE TAHOE			100.00	100.00			False				False	False			https://activatemytrip.com	
+2653		TG	TGTO	Air + Hotel	Air Round Trip Package	NA	LAKE TAHOE			100.00	100.00			False				False	False			https://activatemytrip.com	
+2654		TG	TGVD	Air + Cruise	Air + Cruise Bahamas	Galveston	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2655		TG	TGVF	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2656		TG	TGVL	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2657		TG	TGVO	Air + Cruise	Air + Cruise Bahamas	Ontario	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2658		TI	TIBW	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2659		TI	TINO	Air + Hotel	Air Package	New Orleans	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2660		TI	TIOR	Air + Hotel	Air Package	Orlando	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2661		TI	TIWA	Air + Hotel	Air Package	Baltimore	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2662		TO	TOBF	Air + Hotel	Air Package	Buffalo	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2663		TO	TOLA	Air + Hotel	Air + Hotel Package	Los Angeles	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2664		TO	TOLV	Air + Hotel	Air + Hotel Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2665		TO	TOMS	Air + Hotel	Air Package	Minneapolis	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2666		TO	TONY	Air + Hotel	Air Package	NA	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2667		TO	TOPD	Air + Hotel	Air + Hotel Package	Portland	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2668		TO	TOPX	Air + Hotel	Air + Hotel Package	Phoenix	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2669		TO	TOSA	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2670		TO	TOSD	Air + Hotel	Air + Hotel Package	San Diego	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2671		TO	TOSE	Air + Hotel	Air + Hotel Package	Seattle	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2672		TO	TOSM	Air + Hotel	Air + Hotel Package	Sacramento	ORLANDO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2673		TS	TSDF	Air + Hotel	Air Package	San Francisco Bay Area	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2674		TS	TSDG	Air + Hotel	Air Package	Spokane	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2675		TS	TSDI	Air + Hotel	Air Package	Boise	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2676		TS	TSDP	Air + Hotel	Air Package	NA	SAN DIEGO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2677		TS	TSDS	Air + Hotel	Air Package	Sacramento	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2678		TS	TSDU	Air + Hotel	Air Package	Salt Lake City	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2679		TS	TSV	Hotel Stay	2 Night Accommodations	NA	LAS VEGAS	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2680		TT	TTPZA	Hotel Stay	2 Night Accommodations	NA	PLAZA HOTEL	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+2681		TV	TVAT	Air + Hotel	Air Package	Atlanta	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2682		TV	TVAU	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2683		TV	TVBD	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2684		TV	TVBF	Air + Hotel	Air Package	Buffalo	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2685		TV	TVBO	Air + Hotel	Air Package	Boston	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2686		TV	TVBW	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2687		TV	TVCH	Air + Hotel	Air Package	Chicago	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2688		TV	TVCL	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2689		TV	TVCV	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2690		TV	TVDC	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2691		TV	TVDE	Air + Cruise	Air + Cruise Package	Denver	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2692		TV	TVDF	Air + Hotel	Air Package	Dallas	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2693		TV	TVDT	Air + Hotel	Air Package	Detroit	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2694		TV	TVFL	Air + Hotel	Air Package	Fort Lauderdale	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2695		TV	TVGR	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2696		TV	TVHU	Air + Hotel	Air Package	Houston	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2697		TV	TVLA	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2698		TV	TVMC	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2699		TV	TVMS	Air + Hotel	Air Package	Minneapolis	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2700		TV	TVNO	Air + Hotel	Air Package	New Orleans	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2701		TV	TVNY	Air + Hotel	Air Package	New York Area	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2702		TV	TVON	Air + Cruise	Air + Cruise Bahamas	San Diego	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2703		TV	TVOR	Air + Hotel	Air Package	Orlando	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2704		TV	TVPD	Air + Hotel	Air Package	Portland	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2705		TV	TVPH	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2706		TV	TVPX	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2707		TV	TVSA	Air + Hotel	Air Package	Sacramento	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2708		TV	TVSD	Air + Cruise	Air + Cruise Bahamas	San Diego	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2709		TV	TVSE	Air + Hotel	Air Package	Seattle	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2710		TV	TVSF	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2711		TV	TVSL	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2712		TV	TVSM	Air + Hotel	Air Package	Sacramento	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2713		TW	TWDS	Air + Hotel	Air Package	NA	SAN DIEGO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2714		TW	TWDU	Air + Hotel	Air Package	NA	SAN DIEGO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2715		TW	TWLS	Air + Hotel	Air + Hotel Package	NA	LOS ANGELES AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2716		TW	TWLU	Air + Hotel	Air Package	NA	LOS ANGELES AREA			100.00	100.00			False				False	False			https://activatemytrip.com	
+2717		TW	TWVF	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2718		TW	TWVS	Air + Hotel	Air Package	Sacramento	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2719		TW	TWVU			NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2720		TX	TXH	Hotel Stay	3 Night Accommodations	NA	OAHU	3 Nights	3	100.00	30.00			False				False	False			https://activatemytrip.com	
+2721		TX	TXL	Hotel Stay	3 Night Accommodations	NA	LAUGHLIN	3 Nights	3	100.00	30.00			False				False	False			https://activatemytrip.com	
+2722		TX	TXO	Hotel Stay	3 Night Accommodations	NA	ORLANDO	3 Nights	3	100.00	30.00			False				False	False			https://activatemytrip.com	
+2723		TX	TXOS	Hotel Stay	3 Night Accommodations	NA	LOS CABOS	3 Nights	3	100.00	30.00			False				False	False			https://activatemytrip.com	
+2724		TX	TXR	Hotel Stay	3 Night Accommodations	NA	RENO	3 Nights	3	100.00	30.00			False				False	False			https://activatemytrip.com	
+2725		TX	TXV	Hotel Stay	3 Night Accommodations	NA	LAS VEGAS	3 Nights	3	100.00	30.00			False				False	False			https://activatemytrip.com	
+2726		VA	VAOYC	Air + Hotel	Air Package	NA	ORLANDO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2727		VA	VAOYE	Air + Hotel	Air Package	NA	ORLANDO			100.00	280.00			False				False	False			https://activatemytrip.com	
+2728		VA	VAOYY	Air + Hotel	Air Package	NA	ORLANDO			100.00	280.00			False				False	False			https://activatemytrip.com	
+2729		VA	VAVYC	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	280.00			False				False	False			https://activatemytrip.com	
+2730		VA	VAVYY	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2731		VG	VGAB	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2732		VG	VGAT	Air + Hotel	Air Package	Atlanta	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2733		VG	VGAU	Air + Hotel	Air Package	Austin	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2734		VG	VGBD	Air + Hotel	Air Package	Boston	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2735		VG	VGBF	Air + Hotel	Air Package	Buffalo	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2736		VG	VGBI	Air + Hotel	Air Package	Boise	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2737		VG	VGBN	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2738		VG	VGBO	Air + Hotel	Air Package	Boston	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2739		VG	VGBW	Air + Hotel	Air Package	Baltimore	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2740		VG	VGCH	Air + Hotel	Air Package	Chicago	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2741		VG	VGCL	Air + Hotel	Air Package	Cleveland	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2742		VG	VGDE	Air + Cruise	Air + Cruise Package	Denver	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2743		VG	VGDF	Air + Hotel	Air Package	Dallas	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2744		VG	VGDT	Air + Hotel	Air Package	Detroit	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2745		VG	VGGE	Air + Hotel	Air + Hotel Package	Spokane	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2746		VG	VGHO	Air + Hotel	Air Package	Houston	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2747		VG	VGIN	Air + Hotel	Air Package	Chicago	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2748		VG	VGLA	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2749		VG	VGLI	Air + Hotel	Air Package	Little Rock	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2750		VG	VGMC	Air + Hotel	Air Package	Kansas City	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2751		VG	VGMK	Air + Hotel	Air Package	Chicago	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2752		VG	VGMN	Air + Hotel	Air Package	Minneapolis	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2753		VG	VGMS	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2754		VG	VGNY	Air + Hotel	Air Package	New York Area	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2755		VG	VGOA	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2756		VG	VGOK	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2757		VG	VGOM	Air + Hotel	Air Package	Omaha	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2758		VG	VGPD	Air + Hotel	Air Package	Portland	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2759		VG	VGPH	Air + Hotel	Air Package	Phoenix	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2760		VG	VGPI	Air + Hotel	Air Package	Pittsburgh	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2761		VG	VGPV	Air + Hotel	Air Package	Los Angeles	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2762		VG	VGRD	Air + Hotel	Air Package	Raleigh-Durham	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2763		VG	VGSA	Air + Hotel	Air Package	San Antonio	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2764		VG	VGSD	Air + Cruise	Air + Cruise Bahamas	San Diego	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2765		VG	VGSE	Air + Hotel	Air + Hotel Package	Seattle	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2766		VG	VGSF	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2767		VG	VGSL	Air + Hotel	Air Package	Salt Lake City	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2768		VG	VGSM	Air + Hotel	Air Package	Sacramento	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2769		VG	VGST	Air + Hotel	Air Package	St. Louis	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2770		VG	VGTL	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2771		VG	VGTU	Air + Hotel	Air Package	NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+2772		VG	VGWA	Air + Hotel	Air Package	Washington DC Area	LAS VEGAS			100.00	95.00			False				False	False			https://activatemytrip.com	
+2773		VHH	VHHH	Air + Hotel	Air + Hotel Package	NA	HONOLULU, HI			100.00	150.00			False				False	False			https://activatemytrip.com	
+2774		VIC	VICDB	Air + Hotel	Air Package	NA	DOMINICAN REPUBLIC			100.00	0.00			False				False	False			https://activatemytrip.com	
+2775		VIG	VIGCM	Air + Hotel	Air Package	Nashville	CANCUN			100.00	350.00			False				False	False			https://activatemytrip.com	
+2776		VIG	VIGDL	Air + Hotel	Air Package	NA	DOMINICAN REPUBLIC			100.00	350.00			False				False	False			https://activatemytrip.com	
+2777		VIG	VIGDM	Air + Hotel	Air Package	NA	DOMINICAN REPUBLIC			100.00	350.00			False				False	False			https://activatemytrip.com	
+2778		VIG	VIGJO	Air + Hotel	Air Package	NA	JAMAICA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2779		VIH	VIHCA	Air + Hotel	Air Package	NA	CANCUN			100.00	350.00			False				False	False			https://activatemytrip.com	
+2780		VIH	VIHCD	Air + Hotel	Air Package	Dallas	CANCUN			100.00	350.00			False				False	False			https://activatemytrip.com	
+2781		VIH	VIHCH	Air + Hotel	Air Package	Houston	CANCUN			100.00	350.00			False				False	False			https://activatemytrip.com	
+2782		VIH	VIHCS	Air + Hotel	Air Package	San Antonio	CANCUN			100.00	350.00			False				False	False			https://activatemytrip.com	
+2783		VIH	VIHHA	Air + Hotel	Air Package	Austin	HONOLULU, HI			100.00	350.00			False				False	False			https://activatemytrip.com	
+2784		VIH	VIHHD	Air + Hotel	Air Package	Dallas	HONOLULU, HI			100.00	350.00			False				False	False			https://activatemytrip.com	
+2785		VIH	VIHHH	Air + Hotel	Air Package	Houston	HONOLULU, HI			100.00	350.00			False				False	False			https://activatemytrip.com	
+2786		VIH	VIHHS	Air + Hotel	Air Package	San Antonio	HONOLULU, HI			100.00	350.00			False				False	False			https://activatemytrip.com	
+2787		VIH	VIHXA	Air + Hotel	Air Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2788		VIH	VIHXD	Air + Hotel	Air Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2789		VIH	VIHXH	Air + Hotel	Air Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2790		VIH	VIHXS	Air + Hotel	Air Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2791		VIJ	VIJCD	Air + Hotel	Air + Hotel Package	Dallas	CANCUN			100.00	390.00			False				False	False			https://activatemytrip.com	
+2792		VIJ	VIJCH	Air + Hotel	Air + Hotel Package	Houston	CANCUN			100.00	390.00			False				False	False			https://activatemytrip.com	
+2793		VIJ	VIJCL	Air + Hotel	Air + Hotel Package	Los Angeles	CANCUN			100.00	390.00			False				False	False			https://activatemytrip.com	
+2794		VIJ	VIJCS	Air + Hotel	Air + Hotel Package	San Antonio	CANCUN			100.00	390.00			False				False	False			https://activatemytrip.com	
+2795		VIJ	VIJHD	Air + Hotel	Air + Hotel Package	Dallas	HONOLULU, HI			100.00	390.00			False				False	False			https://activatemytrip.com	
+2796		VIJ	VIJHH	Air + Hotel	Air + Hotel Package	Houston	HONOLULU, HI			100.00	390.00			False				False	False			https://activatemytrip.com	
+2797		VIJ	VIJHL	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			100.00	390.00			False				False	False			https://activatemytrip.com	
+2798		VIJ	VIJHS	Air + Hotel	Air + Hotel Package	San Antonio	HONOLULU, HI			100.00	390.00			False				False	False			https://activatemytrip.com	
+2799		VIJ	VIJXD	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2800		VIJ	VIJXH	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2801		VIJ	VIJXL	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2802		VIJ	VIJXS	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2803		VIW	VIWHD	Air + Hotel	Air + Hotel Package	San Diego	HONOLULU, HI			100.00	370.00			False				False	False			https://activatemytrip.com	
+2804		VIW	VIWHF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	HONOLULU, HI			100.00	370.00			False				False	False			https://activatemytrip.com	
+2805		VIW	VIWHL	Air + Hotel	Air + Hotel Package	Los Angeles	CUST-TO-DECIDE			100.00	370.00			False				False	False			https://activatemytrip.com	
+2806		VIW	VIWHP	Air + Hotel	Air + Hotel Package	Phoenix	HONOLULU, HI			100.00	370.00			False				False	False			https://activatemytrip.com	
+2807		VIW	VIWHS	Air + Hotel	Air + Hotel Package	Seattle	HONOLULU, HI			100.00	370.00			False				False	False			https://activatemytrip.com	
+2808		VIW	VIWHV	Air + Hotel	Air + Hotel Package	Las Vegas	HONOLULU, HI			100.00	370.00			False				False	False			https://activatemytrip.com	
+2809		VIW	VIWLD	Air + Hotel	Air + Hotel Package	San Diego	LOS CABOS			100.00	370.00			False				False	False			https://activatemytrip.com	
+2810		VIW	VIWLF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	LOS CABOS			100.00	370.00			False				False	False			https://activatemytrip.com	
+2811		VIW	VIWLL	Air + Hotel	Air + Hotel Package	Los Angeles	LOS CABOS			100.00	370.00			False				False	False			https://activatemytrip.com	
+2812		VIW	VIWLP	Air + Hotel	Air + Hotel Package	Phoenix	LOS CABOS			100.00	370.00			False				False	False			https://activatemytrip.com	
+2813		VIW	VIWLS	Air + Hotel	Air + Hotel Package	Seattle	LOS CABOS			100.00	370.00			False				False	False			https://activatemytrip.com	
+2814		VIW	VIWLV	Air + Hotel	Air + Hotel Package	Las Vegas	LOS CABOS			100.00	370.00			False				False	False			https://activatemytrip.com	
+2815		VIW	VIWVD	Air + Hotel	Air + Hotel Package	San Diego	PUERTO VALLARTA			100.00	370.00			False				False	False			https://activatemytrip.com	
+2816		VIW	VIWVF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	PUERTO VALLARTA			100.00	370.00			False				False	False			https://activatemytrip.com	
+2817		VIW	VIWVL	Air + Hotel	Air + Hotel Package	Los Angeles	PUERTO VALLARTA			100.00	370.00			False				False	False			https://activatemytrip.com	
+2818		VIW	VIWVP	Air + Hotel	Air + Hotel Package	Phoenix	PUERTO VALLARTA			100.00	370.00			False				False	False			https://activatemytrip.com	
+2819		VIW	VIWVS	Air + Hotel	Air + Hotel Package	Seattle	PUERTO VALLARTA			100.00	370.00			False				False	False			https://activatemytrip.com	
+2820		VIW	VIWVV	Air + Hotel	Air + Hotel Package	Las Vegas	PUERTO VALLARTA			100.00	370.00			False				False	False			https://activatemytrip.com	
+2821		VIW	VIWXD	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2822		VIW	VIWXF	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	370.00			False				False	False			https://activatemytrip.com	
+2823		VIW	VIWXL	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2824		VIW	VIWXP	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	370.00			False				False	False			https://activatemytrip.com	
+2825		VIW	VIWXS	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	370.00			False				False	False			https://activatemytrip.com	
+2826		VIW	VIWXV	Air + Hotel	Air + Hotel Package	Las Vegas	CUST-TO-DECIDE			100.00	370.00			False				False	False			https://activatemytrip.com	
+2827		VLH	VLHI	Air + Hotel	Air + Hotel Package	Honolulu	LAS VEGAS			50.00	170.00			False				False	False			https://activatemytrip.com	
+2828		VLH	VLHL	Air + Hotel	Air + Hotel Package	NA	LOS ANGELES AREA			50.00	170.00			False				False	False			https://activatemytrip.com	
+2829		VM	VMPF	Air + Hotel	Air Package	Portland	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2830		VM	VMPL	Air + Hotel	Air Package	Portland	LOS ANGELES AREA			100.00	100.00			False				False	False			https://activatemytrip.com	
+2831		VM	VMPP	Air + Hotel	Air + Hotel Package	Portland	PHOENIX			100.00	100.00			False				False	False			https://activatemytrip.com	
+2832		VM	VMPR	Air + Hotel	Air Package	Portland	RENO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2833		VM	VMPV	Air + Hotel	Air Package	Portland	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2834		VM	VMSF	Air + Hotel	Air Package	Seattle	SAN FRANCISCO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2835		VM	VMSL	Air + Hotel	Air Package	Seattle	LOS ANGELES AREA			100.00	100.00			False				False	False			https://activatemytrip.com	
+2836		VM	VMSP	Air + Hotel	Air + Hotel Package	Seattle	PHOENIX			100.00	100.00			False				False	False			https://activatemytrip.com	
+2837		VM	VMSR	Air + Hotel	Air Package	Seattle	RENO			100.00	100.00			False				False	False			https://activatemytrip.com	
+2838		VM	VMSV	Air + Hotel	Air + Hotel Package	Seattle	LAS VEGAS			100.00	100.00			False				False	False			https://activatemytrip.com	
+2839		VN	VNDA	Air + Hotel	Air + Hotel Package	NA	AUSTIN, TX			100.00	120.00			False				False	False			https://activatemytrip.com	
+2840		VN	VNDB	Air + Hotel	Air + Hotel Package	Denver	BRANSON			100.00	120.00			False				False	False			https://activatemytrip.com	
+2841		VN	VNDD	Air + Hotel	Air + Hotel Package	Denver	DENVER, CO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2842		VN	VNDF	Air + Hotel	Air + Hotel Package	Denver	SAN FRANCISCO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2843		VN	VNDL	Air + Hotel	Air + Hotel Package	Denver	LOS ANGELES AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2844		VN	VNDM	Air + Hotel	Air + Hotel Package	Denver	NEW ORLEANS			100.00	120.00			False				False	False			https://activatemytrip.com	
+2845		VN	VNDN	Air + Hotel	Air + Hotel Package	Denver	NASHVILLE, TN			100.00	120.00			False				False	False			https://activatemytrip.com	
+2846		VN	VNDO	Air + Hotel	Air + Hotel Package	Denver	ORLANDO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2847		VN	VNDP	Air + Hotel	Air + Hotel Package	NA	PHOENIX			100.00	120.00			False				False	False			https://activatemytrip.com	
+2848		VN	VNDS	Air + Hotel	Air + Hotel Package	Denver	SAN DIEGO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2849		VN	VNDV	Air + Cruise	Air + Cruise Package	Denver	LAS VEGAS			100.00	120.00			False				False	False			https://activatemytrip.com	
+2850		VN	VNDY	Air + Hotel	Air + Hotel Package	Denver	NEW YORK AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2851		VN	VNFA	Air + Hotel	Air + Hotel Package	NA	AUSTIN, TX			100.00	120.00			False				False	False			https://activatemytrip.com	
+2852		VN	VNFB	Air + Hotel	Air + Hotel Package	NA	BRANSON			100.00	120.00			False				False	False			https://activatemytrip.com	
+2853		VN	VNFD	Air + Hotel	Air + Hotel Package	NA	DENVER			100.00	120.00			False				False	False			https://activatemytrip.com	
+2854		VN	VNFL	Air + Hotel	Air Package	Sacramento	LOS ANGELES AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2855		VN	VNFM	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	NEW ORLEANS			100.00	120.00			False				False	False			https://activatemytrip.com	
+2856		VN	VNFN	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	NASHVILLE, TN			100.00	120.00			False				False	False			https://activatemytrip.com	
+2857		VN	VNFO	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	ORLANDO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2858		VN	VNFP	Air + Hotel	Air + Hotel Package	NA	PHOENIX			100.00	120.00			False				False	False			https://activatemytrip.com	
+2859		VN	VNFS	Air + Hotel	Air Package	Sacramento	SAN DIEGO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2860		VN	VNFV	Air + Hotel	Air Package	San Francisco Bay Area	LAS VEGAS			100.00	120.00			False				False	False			https://activatemytrip.com	
+2861		VN	VNFY	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	NEW YORK AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2862		VN	VNUA	Air + Hotel	Air + Hotel Package	Salt Lake City	AUSTIN, TX			100.00	120.00			False				False	False			https://activatemytrip.com	
+2863		VN	VNUB	Air + Hotel	Air + Hotel Package	Salt Lake City	BRANSON			100.00	120.00			False				False	False			https://activatemytrip.com	
+2864		VN	VNUD	Air + Hotel	Air + Hotel Package	Salt Lake City	DENVER, CO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2865		VN	VNUF	Air + Hotel	Air + Hotel Package	Salt Lake City	SAN FRANCISCO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2866		VN	VNUL	Air + Hotel	Air Package	Salt Lake City	LOS ANGELES AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2867		VN	VNUM	Air + Hotel	Air + Hotel Package	Salt Lake City	NEW ORLEANS			100.00	120.00			False				False	False			https://activatemytrip.com	
+2868		VN	VNUN	Air + Hotel	Air + Hotel Package	Salt Lake City	NASHVILLE, TN			100.00	120.00			False				False	False			https://activatemytrip.com	
+2869		VN	VNUO	Air + Hotel	Air + Hotel Package	Salt Lake City	ORLANDO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2870		VN	VNUP	Air + Hotel	Air + Hotel Package	NA	PORTLAND			100.00	120.00			False				False	False			https://activatemytrip.com	
+2871		VN	VNUS	Air + Hotel	Air Package	Salt Lake City	SAN DIEGO			100.00	120.00			False				False	False			https://activatemytrip.com	
+2872		VN	VNUV	Air + Hotel	Air Package	Salt Lake City	LAS VEGAS			100.00	120.00			False				False	False			https://activatemytrip.com	
+2873		VN	VNUY	Air + Hotel	Air + Hotel Package	Salt Lake City	NEW YORK AREA			100.00	120.00			False				False	False			https://activatemytrip.com	
+2874		VSF	VSFL	Air + Cruise	Air + Cruise Package	Long Beach	SAN FRANCISCO			50.00	100.00			False				False	False			https://activatemytrip.com	
+2875		VSF	VSFO	Air + Cruise	Air + Cruise Package	Ontario	SAN FRANCISCO			50.00	100.00			False				False	False			https://activatemytrip.com	
+2876		VUD	VUDAN	Air + Hotel	Air Package	Dallas	ANCHORAGE, AS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2877		VUD	VUDAT	Air + Hotel	Air Package	Detroit	ATLANTA, GA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2878		VUD	VUDAU	Air + Hotel	Air Package	NA	AUSTIN, TX			100.00	138.00			False				False	False			https://activatemytrip.com	
+2879		VUD	VUDBN	Air + Hotel	Air Package	San Antonio	NASHVILLE, TN			100.00	138.00			False				False	False			https://activatemytrip.com	
+2880		VUD	VUDBO	Air + Hotel	Air Package	Houston	BOSTON, MA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2881		VUD	VUDBW	Air + Hotel	Air Package	NA	BALTIMORE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2882		VUD	VUDCH	Air + Hotel	Air Package	Houston	CHICAGO AREA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2883		VUD	VUDCL	Air + Hotel	Air Package	NA	CLEVELAND, OH			100.00	138.00			False				False	False			https://activatemytrip.com	
+2884		VUD	VUDCT	Air + Hotel	Air Package	Dallas	CHARLOTTE, NC			100.00	138.00			False				False	False			https://activatemytrip.com	
+2885		VUD	VUDDC	Air + Hotel	Air Package	San Antonio	WASHINGTON, DC			100.00	138.00			False				False	False			https://activatemytrip.com	
+2886		VUD	VUDDE	Air + Hotel	Air Package	Dallas	DENVER, CO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2887		VUD	VUDDT	Air + Hotel	Air Package	NA	DETROIT, MI			139.00	0.00			False				False	False			https://activatemytrip.com	
+2888		VUD	VUDDW	Air + Hotel	Air Package	Dallas	DALLAS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2889		VUD	VUDFL	Air + Hotel	Air Package	Dallas	FT LAUDERDALE			100.00	138.00			False				False	False			https://activatemytrip.com	
+2890		VUD	VUDHU	Air + Hotel	Air Package	Houston	HOUSTON AREA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2891		VUD	VUDIN	Air + Hotel	Air Package	NA	INDIANAPOLIS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2892		VUD	VUDLA	Air + Hotel	Air Package	Houston	LOS ANGELES AREA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2893		VUD	VUDLV	Air + Hotel	Air Package	Houston	LAS VEGAS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2894		VUD	VUDMC	Air + Hotel	Air Package	Dallas	ORLANDO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2895		VUD	VUDME	Air + Hotel	Air Package	Dallas	MEMPHIS, TN			100.00	138.00			False				False	False			https://activatemytrip.com	
+2896		VUD	VUDMI	Air + Hotel	Air Package	Houston	MIAMI			100.00	138.00			False				False	False			https://activatemytrip.com	
+2897		VUD	VUDMN	Air + Hotel	Air Package	Dallas	MINNEAPOLIS, MN			100.00	138.00			False				False	False			https://activatemytrip.com	
+2898		VUD	VUDMS	Air + Hotel	Air Package	Dallas	NEW ORLEANS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2899		VUD	VUDNY	Air + Hotel	Air Package	Dallas	NEW YORK AREA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2900		VUD	VUDPD	Air + Hotel	Air Package	Houston	PORTLAND, OR			100.00	138.00			False				False	False			https://activatemytrip.com	
+2901		VUD	VUDPH	Air + Hotel	Air Package	NA	PHILADELPHIA, PA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2902		VUD	VUDPI	Air + Hotel	Air Package	NA	PITTSBURGH, PA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2903		VUD	VUDPX	Air + Hotel	Air Package	Houston	PHOENIX			100.00	138.00			False				False	False			https://activatemytrip.com	
+2904		VUD	VUDRS	Air + Hotel	Air Package	NA	FORT MYERS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2905		VUD	VUDSA	Air + Hotel	Air Package	NA	SAN ANTONIO, TX			100.00	138.00			False				False	False			https://activatemytrip.com	
+2906		VUD	VUDSD	Air + Hotel	Air Package	Dallas	SAN DIEGO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2907		VUD	VUDSE	Air + Hotel	Air Package	Dallas	SEATTLE			100.00	138.00			False				False	False			https://activatemytrip.com	
+2908		VUD	VUDSF	Air + Hotel	Air Package	Dallas	SAN FRANCISCO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2909		VUD	VUDSL	Air + Hotel	Air Package	Dallas	SALT LAKE CITY			100.00	138.00			False				False	False			https://activatemytrip.com	
+2910		VUD	VUDSM	Air + Hotel	Air Package	Dallas	SACRAMENTO, CA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2911		VUD	VUDTP	Air + Hotel	Air Package	NA	TAMPA, FL			100.00	138.00			False				False	False			https://activatemytrip.com	
+2912		VUL	VULAN	Air + Hotel	Air + Hotel Package	Los Angeles	ANCHORAGE, AS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2913		VUL	VULAT	Air + Hotel	Air + Hotel Package	Los Angeles	ATLANTA, GA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2914		VUL	VULAU	Air + Hotel	Air + Hotel Package	Los Angeles	AUSTIN, TX			100.00	138.00			False				False	False			https://activatemytrip.com	
+2915		VUL	VULBD	Air + Hotel	Air + Hotel Package	NA	HARTFORD, CT			100.00	138.00			False				False	False			https://activatemytrip.com	
+2916		VUL	VULBN	Air + Hotel	Air + Hotel Package	Los Angeles	NASHVILLE, TN			100.00	138.00			False				False	False			https://activatemytrip.com	
+2917		VUL	VULBO	Air + Hotel	Air + Hotel Package	Los Angeles	BOSTON, MA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2918		VUL	VULBW	Air + Hotel	Air + Hotel Package	NA	BALTIMORE			100.00	138.00			False				False	False			https://activatemytrip.com	
+2919		VUL	VULCH	Air + Hotel	Air + Hotel Package	Los Angeles	CHICAGO AREA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2920		VUL	VULCL	Air + Hotel	Air + Hotel Package	NA	CLEVELAND, OH			100.00	138.00			False				False	False			https://activatemytrip.com	
+2921		VUL	VULCM	Air + Hotel	Air + Hotel Package	NA	COLUMBUS, OH			100.00	0.00			False				False	False			https://activatemytrip.com	
+2922		VUL	VULCT	Air + Hotel	Air + Hotel Package	Los Angeles	CHARLOTTE, NC			100.00	138.00			False				False	False			https://activatemytrip.com	
+2923		VUL	VULCV	Air + Hotel	Air + Hotel Package	NA	CINCINNATI, OH			100.00	138.00			False				False	False			https://activatemytrip.com	
+2924		VUL	VULDC	Air + Hotel	Air + Hotel Package	Los Angeles	WASHINGTON, DC			100.00	138.00			False				False	False			https://activatemytrip.com	
+2925		VUL	VULDE	Air + Hotel	Air + Hotel Package	Los Angeles	DENVER, CO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2926		VUL	VULDT	Air + Hotel	Air + Hotel Package	Los Angeles	DETROIT, MI			100.00	138.00			False				False	False			https://activatemytrip.com	
+2927		VUL	VULDW	Air + Hotel	Air + Hotel Package	NA	DALLAS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2928		VUL	VULEW	Air + Hotel	Air + Hotel Package	NA	NEWARK, NJ			100.00	0.00			False				False	False			https://activatemytrip.com	
+2929		VUL	VULFL	Air + Hotel	Air + Hotel Package	Los Angeles	FT LAUDERDALE			100.00	138.00			False				False	False			https://activatemytrip.com	
+2930		VUL	VULHN	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			100.00	138.00			False				False	False			https://activatemytrip.com	
+2931		VUL	VULHU	Air + Hotel	Air + Hotel Package	Los Angeles	HOUSTON AREA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2932		VUL	VULIN	Air + Hotel	Air + Hotel Package	Los Angeles	INDIANAPOLIS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2933		VUL	VULKC	Air + Hotel	Air + Hotel Package	NA	KANSAS CITY, KS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2934		VUL	VULLV	Air + Cruise	Air + Cruise Bahamas	Los Angeles	LAS VEGAS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2935		VUL	VULMC	Air + Hotel	Air + Hotel Package	Los Angeles	ORLANDO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2936		VUL	VULME	Air + Hotel	Air + Hotel Package	Los Angeles	MEMPHIS, TN			100.00	138.00			False				False	False			https://activatemytrip.com	
+2937		VUL	VULMI	Air + Hotel	Air + Hotel Package	Los Angeles	MIAMI			100.00	138.00			False				False	False			https://activatemytrip.com	
+2938		VUL	VULMN	Air + Hotel	Air + Hotel Package	Los Angeles	MINNEAPOLIS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2939		VUL	VULMS	Air + Hotel	Air + Hotel Package	Los Angeles	NEW ORLEANS			100.00	138.00			False				False	False			https://activatemytrip.com	
+2940		VUL	VULNY	Air + Hotel	Air + Hotel Package	Los Angeles	NEW YORK AREA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2941		VUL	VULPD	Air + Hotel	Air + Hotel Package	Los Angeles	PORTLAND, OR			100.00	138.00			False				False	False			https://activatemytrip.com	
+2942		VUL	VULPH	Air + Hotel	Air + Hotel Package	Los Angeles	PHILADELPHIA, PA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2943		VUL	VULPI	Air + Hotel	Air + Hotel Package	Los Angeles	PITTSBURGH, PA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2944		VUL	VULPX	Air + Hotel	Air + Hotel Package	NA	PHOENIX			100.00	138.00			False				False	False			https://activatemytrip.com	
+2945		VUL	VULRD	Air + Hotel	Air + Hotel Package	NA	RALEIGH-DURHAM, NC			100.00	138.00			False				False	False			https://activatemytrip.com	
+2946		VUL	VULSA	Air + Hotel	Air + Hotel Package	Los Angeles	SAN ANTONIO, TX			100.00	138.00			False				False	False			https://activatemytrip.com	
+2947		VUL	VULSD	Air + Hotel	Air + Hotel Package	NA	SAN DIEGO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2948		VUL	VULSE	Air + Hotel	Air + Hotel Package	Los Angeles	SEATTLE			100.00	138.00			False				False	False			https://activatemytrip.com	
+2949		VUL	VULSF	Air + Hotel	Air + Hotel Package	Los Angeles	SAN FRANCISCO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2950		VUL	VULSJ	Air + Cruise	Air + Cruise Package	Los Angeles	SAN JOSE			100.00	138.00			False				False	False			https://activatemytrip.com	
+2951		VUL	VULSL	Air + Hotel	Air + Hotel Package	Los Angeles	SALT LAKE CITY			100.00	138.00			False				False	False			https://activatemytrip.com	
+2952		VUL	VULSM	Air + Cruise	Air + Cruise Package	Los Angeles	SACRAMENTO, CA			100.00	138.00			False				False	False			https://activatemytrip.com	
+2953		VUL	VULST	Air + Hotel	Air + Hotel Package	Orange County	ST LOUIS, MO			100.00	138.00			False				False	False			https://activatemytrip.com	
+2954		VUL	VULTP	Air + Hotel	Air + Hotel Package	Ontario	TAMPA, FL			100.00	138.00			False				False	False			https://activatemytrip.com	
+2955		VUL	VULXXX	Air + Hotel	Air + Hotel Package	NA	SAN FRANCISCO			100.00	0.00			False				False	False			https://activatemytrip.com	
+2956		VYB	VYBU	Air + Hotel	Air + Hotel Package	NA	BERMUDA			100.00	350.00			False				False	False			https://activatemytrip.com	
+2957		VYC	VYCF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	CANCUN			100.00	350.00			False				False	False			https://activatemytrip.com	
+2958		VYH	VYHF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	HONOLULU, HI			100.00	350.00			False				False	False			https://activatemytrip.com	
+2959		VYH	VYHU	Air + Hotel	Air + Hotel Package	NA	HONOLULU, HI			100.00	350.00			False				False	False			https://activatemytrip.com	
+2960		VYL	VYLF	Air + Hotel	Air Package	NA	LOS CABOS			100.00	350.00			False				False	False			https://activatemytrip.com	
+2961		VYR	VYRF	Air + Hotel	Air + Hotel Package	NA	PUERTO RICO			100.00	350.00			False				False	False			https://activatemytrip.com	
+2962		VYX	VYXD	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2963		VYX	VYXF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	CUST-TO-DECIDE			100.00	350.00			False				False	False			https://activatemytrip.com	
+2964		VYX	VYXU	Air + Hotel	Air + Hotel Package	NA	CUST-TO-DECIDE			100.00	0.00			False				False	False			https://activatemytrip.com	
+2965		VZB	VZBF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	BERMUDA			100.00	390.00			False				False	False			https://activatemytrip.com	
+2966		VZC	VZCAT	Air + Hotel	Air Package	Kansas City	CANCUN			300.00	300.00			False				False	False			https://activatemytrip.com	
+2967		VZC	VZCF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	CANCUN			100.00	390.00			False				False	False			https://activatemytrip.com	
+2968		VZC	VZCJA	Air + Hotel	Air Package	NA	CANCUN			100.00	0.00			False				False	False			https://activatemytrip.com	
+2969		VZC	VZCMC	Air + Hotel	Air Package	Orlando	CANCUN			300.00	300.00			False				False	False			https://activatemytrip.com	
+2970		VZC	VZCMI	Air + Hotel	Air Package	Miami	CANCUN			300.00	300.00			False				False	False			https://activatemytrip.com	
+2971		VZC	VZCTP	Air + Hotel	Air Package	Tampa	CANCUN			300.00	300.00			False				False	False			https://activatemytrip.com	
+2972		VZG	VZGF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	HONOLULU, HI			100.00	120.00			False				False	False			https://activatemytrip.com	
+2973		VZG	VZGL	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			100.00	120.00			False				False	False			https://activatemytrip.com	
+2974		VZH	VZHF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	HONOLULU, HI			100.00	390.00			False				False	False			https://activatemytrip.com	
+2975		VZH	VZHW	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			50.00	100.00			False				False	False			https://activatemytrip.com	
+2976		VZR	VZRF	Air + Hotel	Air + Hotel Package	NA	PUERTO RICO			100.00	390.00			False				False	False			https://activatemytrip.com	
+2977		VZT	VZTD	Air + Hotel	Air + Hotel Package	NA	HONOLULU, HI			100.00	170.00			False				False	False			https://activatemytrip.com	
+2978		VZT	VZTL	Air + Hotel	Air + Hotel Package	NA	HONOLULU, HI			170.00	170.00			False				False	False			https://activatemytrip.com	
+2979		VZV	VZVF	Air + Hotel	Air + Hotel Package	Sacramento	PUERTO VALLARTA			100.00	390.00			False				False	False			https://activatemytrip.com	
+2980		VZW	VZWD	Air + Hotel	Air + Hotel Package	San Diego	HONOLULU, HI			150.00	150.00			False				False	False			https://activatemytrip.com	
+2981		VZW	VZWF	Air + Hotel	Air + Hotel Package	San Francisco Bay Area	HONOLULU, HI			150.00	150.00			False				False	False			https://activatemytrip.com	
+2982		VZW	VZWL	Air + Hotel	Air + Hotel Package	Los Angeles	HONOLULU, HI			150.00	150.00			False				False	False			https://activatemytrip.com	
+2983		VZW	VZWP	Air + Hotel	Air + Hotel Package	NA	HONOLULU, HI			100.00	150.00			False				False	False			https://activatemytrip.com	
+2984		VZX	VZXF	Air + Hotel	Air + Hotel Package	NA	BERMUDA			100.00	0.00			False				False	False			https://activatemytrip.com	
+2985		XBC	XBCD	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2986		XBC	XBCK	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2987		XBC	XBCL	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2988		XBC	XBCM	Hotel Stay	1 Night Accommodations	NA	VALENCIA/SANTA CLARITA AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2989		XBC	XBCP	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2990		XBC	XBCS	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2991		XBC	XBCU	Hotel Stay	1 Night Accommodations	NA	NORTH HOLLYWOOD AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2992		XBC	XBCZ	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+2993		XBD	XBDA	Hotel Stay	2 Night Accommodations	NA	ANAHEIM AREA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2994		XBD	XBDO	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+2995		XBE	XBEBG	Hotel Stay	1 Night Accommodations	NA	WILLIAMSBURG, VA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+2996		XBE	XBECP	Hotel Stay	1 Night Accommodations	NA	SANDUSKY, OH	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+2997		XBE	XBECW	Hotel Stay	1 Night Accommodations	NA	CHARLOTTE, NC	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+2998		XBE	XBEDL	Hotel Stay	1 Night Accommodations	NA	BUFFALO, NY AREA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+2999		XBE	XBEDP	Hotel Stay	1 Night Accommodations	NA	ALLENTOWN, PA AREA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3000		XBE	XBEGA	Hotel Stay	1 Night Accommodations	NA	WRIGHTSTOWN/SEASIDE HTS, NJ	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3001		XBE	XBEGE	Hotel Stay	1 Night Accommodations	NA	LAKE GEORGE, NY	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3002		XBE	XBEHP	Hotel Stay	1 Night Accommodations	NA	HARRISBURG, PA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3003		XBE	XBEKD	Hotel Stay	1 Night Accommodations	NA	RICHMOND, VA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3004		XBE	XBEKI	Hotel Stay	1 Night Accommodations	NA	CINCINNATI, OH	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3005		XBE	XBEKW	Hotel Stay	1 Night Accommodations	NA	PITTSBURGH, PA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3006		XBE	XBEMA	Hotel Stay	1 Night Accommodations	NA	MUSKEGON, MI	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3007		XBE	XBEOG	Hotel Stay	1 Night Accommodations	NA	ATLANTA, GA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3008		XBE	XBEWC	Hotel Stay	1 Night Accommodations	NA	WILLIAMSBURG, VA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3009		XBF	XBFA	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3010		XBF	XBFB	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3011		XBF	XBFE	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3012		XBF	XBFH	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3013		XBF	XBFM	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3014		XBF	XBFS	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3015		XBF	XBFT	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3016		XBF	XBFU	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3017		XBG	XBGD	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3018		XBG	XBGK	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3019		XBG	XBGL	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3020		XBG	XBGM	Hotel Stay	1 Night Accommodations	NA	VALENCIA/SANTA CLARITA AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3021		XBG	XBGP	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3022		XBG	XBGS	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3023		XBG	XBGU	Hotel Stay	1 Night Accommodations	NA	NORTH HOLLYWOOD AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3024		XBG	XBGZ	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3025		XBH	XBHA	Hotel Stay	2 Night Accommodations	NA	ANAHEIM AREA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3026		XBH	XBHO	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3027		XBJ	XBJA	Hotel Stay	2 Night Accommodations	NA	ANAHEIM AREA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3028		XBJ	XBJO	Hotel Stay	2 Night Accommodations	NA	ORLANDO	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3029		XBK	XBKD	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3030		XBK	XBKL	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	50.00	0.00			False				False	False			https://activatemytrip.com	
+3031		XBK	XBKU	Hotel Stay	1 Night Accommodations	NA	NORTH HOLLYWOOD AREA	1 Nights	1	50.00	60.00			False				False	False			https://activatemytrip.com	
+3032		XBM	XBMAR	Hotel Stay	1 Night Accommodations	NA	ARLINGTON, TX	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+3033		XBM	XBMSA	Hotel Stay	1 Night Accommodations	NA	SAN ANTONIO, TX	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+3034		XBN	XBND	Hotel Stay	3 Night Accommodations	NA	ANAHEIM AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3035		XBN	XBNG	Hotel Stay	3 Night Accommodations	NA	SANTA CLARA AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3036		XBN	XBNK	Hotel Stay	3 Night Accommodations	NA	ANAHEIM AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3037		XBN	XBNL	Hotel Stay	3 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3038		XBN	XBNM	Hotel Stay	3 Night Accommodations	NA	VALENCIA/SANTA CLARITA AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3039		XBN	XBNP	Hotel Stay	3 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3040		XBN	XBNR	Hotel Stay	3 Night Accommodations	NA	SAN DIMAS AREA	3 Nights	3	100.00	0.00			False				False	False			https://activatemytrip.com	
+3041		XBN	XBNS	Hotel Stay	3 Night Accommodations	NA	SAN DIEGO	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3042		XBN	XBNU	Hotel Stay	3 Night Accommodations	NA	NORTH HOLLYWOOD AREA	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3043		XBN	XBNZ	Hotel Stay	3 Night Accommodations	NA	SAN DIEGO	3 Nights	3	75.00	75.00			False				False	False			https://activatemytrip.com	
+3044		XBR	XBRA	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	100.00	50.00			False				False	False			https://activatemytrip.com	
+3045		XBR	XBRO	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	100.00	50.00			False				False	False			https://activatemytrip.com	
+3046		XBR	XBRU	Hotel Stay	1 Night Accommodations	NA	NORTH HOLLYWOOD AREA	1 Nights	1	100.00	50.00			False				False	False			https://activatemytrip.com	
+3047		XBS	XBSG	Hotel Stay	3 Night Accommodations	NA	SANTA CLARA AREA	3 Nights	3	50.00	75.00			False				False	False			https://activatemytrip.com	
+3048		XBW	XBWD	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3049		XBW	XBWG	Hotel Stay	1 Night Accommodations	NA	SANTA CLARA AREA	1 Nights	1	50.00	0.00			False				False	False			https://activatemytrip.com	
+3050		XBW	XBWK	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3051		XBW	XBWL	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3052		XBW	XBWM	Hotel Stay	1 Night Accommodations	NA	VALENCIA/SANTA CLARITA AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3053		XBW	XBWP	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3054		XBW	XBWR	Hotel Stay	1 Night Accommodations	NA	SAN DIMAS AREA	1 Nights	1	100.00	50.00			False				False	False			https://activatemytrip.com	
+3055		XBW	XBWS	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3056		XBW	XBWU	Hotel Stay	1 Night Accommodations	NA	NORTH HOLLYWOOD AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3057		XBW	XBWZ	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3058		XBX	XBXD	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3059		XBX	XBXG	Hotel Stay	1 Night Accommodations	NA	SANTA CLARA AREA	1 Nights	1	50.00	0.00			False				False	False			https://activatemytrip.com	
+3060		XBX	XBXK	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3061		XBX	XBXL	Hotel Stay	1 Night Accommodations	NA	NORTHERN SAN DIEGO AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3062		XBX	XBXM	Hotel Stay	1 Night Accommodations	NA	VALENCIA/SANTA CLARITA AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3063		XBX	XBXS	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3064		XBX	XBXU	Hotel Stay	1 Night Accommodations	NA	NORTH HOLLYWOOD AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3065		XEZ	XEZFFK	Hotel Stay	2 Night Accommodations	NA	VOID	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+3066		XGC	XGCBM	Hotel Stay	2 Night Accommodations	NA	BIG BEAR	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3067		XGC	XGCBO	Hotel Stay	2 Night Accommodations	NA	LAKE TAHOE	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3068		XGC	XGCDP	Hotel Stay	2 Night Accommodations	NA	LAKE TAHOE	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3069		XGC	XGCDS	Hotel Stay	2 Night Accommodations	NA	LAKE TAHOE	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+3070		XGC	XGCSS	Hotel Stay	2 Night Accommodations	NA	BIG BEAR	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3071		XGN	XGNCH	Hotel Stay	2 Night Accommodations	NA	CHILLIWACK, WA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3072		XGN	XGNDA	Hotel Stay	2 Night Accommodations	NA	DALLES, OR	2 Nights	2	100.00	50.00			False				False	False			https://activatemytrip.com	
+3073		XGN	XGNEN	Hotel Stay	2 Night Accommodations	NA	ENUMCLAW, WA	2 Nights	2	50.00	0.00			False				False	False			https://activatemytrip.com	
+3074		XGN	XGNLE	Hotel Stay	2 Night Accommodations	NA	LEAVENWORTH	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3075		XGN	XGNRB	Hotel Stay	2 Night Accommodations	NA	REDMOND BEND-OR	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3076		XGN	XGNWW	Hotel Stay	2 Night Accommodations	NA	WALLA WALLA, WA	2 Nights	2	50.00	50.00			False				False	False			https://activatemytrip.com	
+3077		XHG	XHGL	Hotel Stay	1 Night Accommodations	NA	LONG BEACH, CA	1 Nights	1	30.00	30.00			False				False	False			https://activatemytrip.com	
+3078		XHG	XHGN	Hotel Stay	1 Night Accommodations	NA	NEWPORT, CA	1 Nights	1	30.00	30.00			False				False	False			https://activatemytrip.com	
+3079		XHS	XHSA	Hotel Stay	1 Night Accommodations	NA	ANAHEIM AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3080		XHS	XHSD	Hotel Stay	1 Night Accommodations	NA	SAN DIEGO	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3081		XHS	XHSL	Hotel Stay	1 Night Accommodations	NA	LOS ANGELES AREA	1 Nights	1	100.00	50.00			False				False	False			https://activatemytrip.com	
+3082		XHT	XHTG	Hotel Stay	1 Night Accommodations	NA	GALVESTON	1 Nights	1	30.00	30.00			False				False	False			https://activatemytrip.com	
+3083		XHT	XHTS	Hotel Stay	1 Night Accommodations	NA	SAN ANTONIO, TX	1 Nights	1	30.00	30.00			False				False	False			https://activatemytrip.com	
+3084		XHX	XHXD	Hotel Stay	1 Night Accommodations	NA	DALLAS	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3085		XHX	XHXH	Hotel Stay	1 Night Accommodations	NA	HOUSTON AREA	1 Nights	1	50.00	50.00			False				False	False			https://activatemytrip.com	
+3086		XRE	XRET			NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+3087		XWA	XWAC	Hotel Stay	1 Night Accommodations	NA	CORPUS CHRISTI, TX	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3088		XWA	XWAG	Hotel Stay	1 Night Accommodations	NA	GALVESTON	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3089		XWA	XWAH	Hotel Stay	1 Night Accommodations	NA	HOUSTON AREA	1 Nights	1	100.00	0.00			False				False	False			https://activatemytrip.com	
+3090		XWA	XWAN	Hotel Stay	1 Night Accommodations	NA	NEW BRAUNSFELS, TX	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3091		XWD	XWDB	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3092		XWD	XWDC	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3093		XWD	XWDG	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3094		XWD	XWDK	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3095		XWD	XWDV	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	50.00	80.00			False				False	False			https://activatemytrip.com	
+3096		XWE	XWETA	Hotel Stay	1 Night Accommodations	NA	THEME PARK	1 Nights	1	100.00	90.00			False				False	False			https://activatemytrip.com	
+3097		XWE	XWETS	Hotel Stay	1 Night Accommodations	NA	THEME PARK	1 Nights	1	100.00	90.00			False				False	False			https://activatemytrip.com	
+3098		XWE	XWEWB	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	100.00	90.00			False				False	False			https://activatemytrip.com	
+3099		XWE	XWEWC	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	100.00	90.00			False				False	False			https://activatemytrip.com	
+3100		XWE	XWEWG	Hotel Stay	1 Night Accommodations	NA	WATE RPARK	1 Nights	1	100.00	90.00			False				False	False			https://activatemytrip.com	
+3101		XWE	XWEWV	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	100.00	90.00			False				False	False			https://activatemytrip.com	
+3102		XWM	XWMB	Hotel Stay	1 Night Accommodations	NA	BOSTON, MA WATERPARK	1 Nights	1	100.00	100.00			False				False	False			https://activatemytrip.com	
+3103		XWM	XWMW	Hotel Stay	1 Night Accommodations	NA	SEVIERVILLE, TN WATERPARK	1 Nights	1	80.00	100.00			False				False	False			https://activatemytrip.com	
+3104		XWN	XWNMN	Hotel Stay	1 Night Accommodations	NA	MINNEAPOLIS, MN	1 Nights	1	100.00	60.00			False				False	False			https://activatemytrip.com	
+3105		XWT	XWTC	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	80.00	100.00			False				False	False			https://activatemytrip.com	
+3106		XWT	XWTG	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	80.00	80.00			False				False	False			https://activatemytrip.com	
+3107		XWT	XWTN	Hotel Stay	1 Night Accommodations	NA	WATER PARK	1 Nights	1	80.00	100.00			False				False	False			https://activatemytrip.com	
+3108		XXE	XXEMOH	Hotel Stay	2 Night Accommodations	NA	OAHU	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+3109		XXE	XXEMSC	Hotel Stay	2 Night Accommodations	NA	SCOTTSDALE, AZ	2 Nights	2	100.00	0.00			False				False	False			https://activatemytrip.com	
+3110		XXE	XXEVSD			NA	SAN DIEGO			100.00	0.00			False				False	False			https://activatemytrip.com	
+3111		XXP	XXPD	Air + Hotel	Air Package	NA	LOS ANGELES AREA			100.00	0.00			False				False	False			https://activatemytrip.com	
+3112		XXR	XXRCMS			NA	W. CARIBBEAN			100.00	0.00			False				False	False			https://activatemytrip.com	
+3113		XXR	XXRET			NA	LAS VEGAS			100.00	0.00			False				False	False			https://activatemytrip.com	
+3114		XXV	XXVZC			NA	CANCUN			100.00	0.00			False				False	False			https://activatemytrip.com	

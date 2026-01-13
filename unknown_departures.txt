@@ -1,0 +1,196 @@
+PACKAGES WITH UNKNOWN DEPARTURE CITY (192)
+============================================================
+
+pkg_code2	vacation_type	destination	ngts	from_cities
+DAWAU	Air + Hotel	AUSTIN, TX		
+DAWLV	Air + Hotel	LAS VEGAS		
+DAWMI	Air + Hotel	MIAMI		
+DAWPD	Air + Hotel	PORLAND, OR		
+DAWPH	Air + Hotel	PHILADELPHIA, PA		
+DAWPX	Air + Hotel	PHOENIX		
+DAWSF	Air + Hotel	SAN FRANCISCO		
+DBEDF	Air + Hotel	DALLAS		
+DLEBN	Air + Hotel	NASHVILLE, TN		
+DLESE	Air + Hotel	SEATTLE		
+DLSBO	Air + Hotel	BOSTON, MA		
+DLSDC	Air + Hotel	WASHINGTON, DC		
+DLSDE	Air + Hotel	DENVER, CO		
+DLSON	Air + Hotel	ONTARIO, CA		
+DLWCL	Air + Hotel	CLEVELAND, OH		
+DLWLA	Air + Hotel	LOS ANGELES AREA		
+DLWLV	Air + Hotel	LAS VEGAS		
+DLWME	Air + Hotel	MEMPHIS, TN		
+DXSTU	Air + Hotel	TUCSON, AZ		
+DXWDF	Air + Hotel	DALLAS		
+ECBEN	Air + Hotel	ENSENADA		
+ECGRDF	Air + Hotel	DALLAS		
+ECXRHU	Air + Hotel	HOUSTON AREA		
+KCVO	Air + Cruise	LAS VEGAS		
+KDOL	Air + Hotel	ORLANDO		
+KDRNY	Air + Hotel	ORLANDO		
+KDXAT	Air + Hotel	ORLANDO		
+KDXBN	Air + Hotel	ORLANDO		
+KDXME	Air + Hotel	ORLANDO		
+KDXMS	Air + Hotel	ORLANDO		
+KDXSA	Air + Hotel	ORLANDO		
+KDZAE	Air + Hotel	ORLANDO		
+KDZHU	Air + Hotel	ORLANDO		
+KDZPI	Air + Hotel	ORLANDO		
+KDZRI	Air + Hotel	ORLANDO		
+KDZSY	Air + Hotel	ORLANDO		
+KHMF	Air + Hotel	HONOLULU, HI		
+KHXDS	Air + Hotel	SAN DIEGO		
+KHXVF	Air + Hotel	LAS VEGAS		
+KHXVS	Air + Hotel	LAS VEGAS		
+KLDLU	Air + Hotel	LOS ANGELES AREA		
+KLDSS	Air + Hotel	SAN DIEGO		
+KLVLS	Air + Hotel	SAN DIEGO		
+KLVSF	Air + Hotel	SAN DIEGO		
+KLVSS	Air + Hotel	SAN DIEGO		
+KLVVF	Air + Hotel	LAS VEGAS		
+KLVZF	Air + Hotel	SAN DIEGO		
+KLVZS	Air + Hotel	SAN DIEGO		
+KLXSM	Air + Hotel	LOS ANGELES AREA		
+KMNCM	Air + Hotel	NEW ORLEANS		
+KMNST	Air + Hotel	NEW ORLEANS		
+KMOCL	Air + Hotel	ORLANDO		
+KMOMC	Air + Hotel	ORLANDO		
+KMVAT	Air + Hotel	LAS VEGAS		
+KMVCL	Air + Hotel	LAS VEGAS		
+KMVCM	Air + Hotel	LAS VEGAS		
+KMVCV	Air + Hotel	LAS VEGAS		
+KMVMC	Air + Hotel	LAS VEGAS		
+KPDK	Air + Hotel	ORLANDO		
+KPDL	Air + Hotel	ORLANDO		
+KPOL	Air + Hotel	ORLANDO		
+KPVK	Air + Hotel	LAS VEGAS		
+KPVP	Air + Hotel	LAS VEGAS		
+KSDF	Air + Hotel	SAN DIEGO		
+KSDP	Air + Hotel	SAN DIEGO		
+KSLF	Air + Hotel	LOS ANGELES AREA		
+KSLS	Air + Hotel	LOS ANGELES AREA		
+KSSV	Air + Hotel	ORANGE COUNTY AREA		
+KVOK	Air + Hotel	ORLANDO		
+KVOP	Air + Hotel	ORLANDO		
+KVTYY	Air + Hotel	LAS VEGAS		YYZ
+KVXYY	Air + Hotel	LAS VEGAS		
+TBOAU	Air + Hotel	ORLANDO		
+TBOBO	Air + Hotel	ORLANDO		
+TBOBW	Air + Hotel	ORLANDO		
+TBOHU	Air + Hotel	ORLANDO		
+TBOLA	Air + Hotel	ORLANDO		
+TBOME	Air + Hotel	ORLANDO		
+TBOMS	Air + Hotel	ORLANDO		
+TBVAU	Air + Hotel	LAS VEGAS		
+TBVBD	Air + Hotel	LAS VEGAS		
+TBVBO	Air + Hotel	LAS VEGAS		
+TBVBW	Air + Hotel	LAS VEGAS		
+TBVCH	Air + Hotel	LAS VEGAS		
+TBVPI	Air + Hotel	LAS VEGAS		
+TBVSF	Air + Hotel	LAS VEGAS		
+TBVSL	Air + Hotel	LAS VEGAS		
+TBVST	Air + Hotel	LAS VEGAS		
+TBVWA	Air + Hotel	LAS VEGAS		
+TDNO	Air + Hotel	ORLANDO		
+TDWA	Air + Hotel	ORLANDO		
+TGDO	Air + Hotel	SAN DIEGO		
+TGOO	Air + Hotel	ORLANDO		
+TGRF	Air + Hotel	RENO		
+TGRL	Air + Hotel	RENO		
+TGTD	Air + Hotel	LAKE TAHOE		
+TGTL	Air + Hotel	LAKE TAHOE		
+TGTO	Air + Hotel	LAKE TAHOE		
+TIBW	Air + Hotel	LAS VEGAS		
+TOLV	Air + Hotel	ORLANDO		
+TONY	Air + Hotel	ORLANDO		
+TOSA	Air + Hotel	ORLANDO		
+TSDP	Air + Hotel	SAN DIEGO		
+TVAU	Air + Hotel	LAS VEGAS		
+TVBD	Air + Hotel	LAS VEGAS		
+TVBW	Air + Hotel	LAS VEGAS		
+TVCL	Air + Hotel	LAS VEGAS		
+TVCV	Air + Hotel	LAS VEGAS		
+TVDC	Air + Hotel	LAS VEGAS		
+TVGR	Air + Hotel	LAS VEGAS		DTW,GRR
+TVMC	Air + Hotel	LAS VEGAS		
+TVPH	Air + Hotel	LAS VEGAS		
+TVPX	Air + Hotel	LAS VEGAS		
+TVSL	Air + Hotel	LAS VEGAS		
+TWDS	Air + Hotel	SAN DIEGO		
+TWDU	Air + Hotel	SAN DIEGO		
+TWLS	Air + Hotel	LOS ANGELES AREA		
+TWLU	Air + Hotel	LOS ANGELES AREA		
+TWVF	Air + Hotel	LAS VEGAS		
+VAOYC	Air + Hotel	ORLANDO		
+VAOYE	Air + Hotel	ORLANDO		
+VAOYY	Air + Hotel	ORLANDO		
+VAVYC	Air + Hotel	LAS VEGAS		
+VAVYY	Air + Hotel	LAS VEGAS		
+VGAB	Air + Hotel	LAS VEGAS		
+VGBN	Air + Hotel	LAS VEGAS		
+VGMS	Air + Hotel	LAS VEGAS		
+VGOK	Air + Hotel	LAS VEGAS		
+VGTL	Air + Hotel	LAS VEGAS		
+VGTU	Air + Hotel	LAS VEGAS		
+VHHH	Air + Hotel	HONOLULU, HI		
+VICDB	Air + Hotel	DOMINICAN REPUBLIC		
+VIGDL	Air + Hotel	DOMINICAN REPUBLIC		
+VIGDM	Air + Hotel	DOMINICAN REPUBLIC		
+VIGJO	Air + Hotel	JAMAICA		
+VIHCA	Air + Hotel	CANCUN		
+VIHXA	Air + Hotel	CUST-TO-DECIDE		
+VIHXD	Air + Hotel	CUST-TO-DECIDE		
+VIHXH	Air + Hotel	CUST-TO-DECIDE		
+VIHXS	Air + Hotel	CUST-TO-DECIDE		
+VIJXD	Air + Hotel	CUST-TO-DECIDE		
+VIJXH	Air + Hotel	CUST-TO-DECIDE		
+VIJXL	Air + Hotel	CUST-TO-DECIDE		
+VIJXS	Air + Hotel	CUST-TO-DECIDE		
+VIWXD	Air + Hotel	CUST-TO-DECIDE		
+VIWXF	Air + Hotel	CUST-TO-DECIDE		
+VIWXL	Air + Hotel	CUST-TO-DECIDE		
+VIWXP	Air + Hotel	CUST-TO-DECIDE		
+VIWXS	Air + Hotel	CUST-TO-DECIDE		
+VLHL	Air + Hotel	LOS ANGELES AREA		
+VNDA	Air + Hotel	AUSTIN, TX		
+VNDP	Air + Hotel	PHOENIX		
+VNFA	Air + Hotel	AUSTIN, TX		
+VNFB	Air + Hotel	BRANSON		
+VNFD	Air + Hotel	DENVER		
+VNFP	Air + Hotel	PHOENIX		
+VNUP	Air + Hotel	PORTLAND		
+VUDAU	Air + Hotel	AUSTIN, TX		
+VUDBW	Air + Hotel	BALTIMORE		
+VUDCL	Air + Hotel	CLEVELAND, OH		
+VUDDT	Air + Hotel	DETROIT, MI		
+VUDIN	Air + Hotel	INDIANAPOLIS		
+VUDPH	Air + Hotel	PHILADELPHIA, PA		
+VUDPI	Air + Hotel	PITTSBURGH, PA		
+VUDRS	Air + Hotel	FORT MYERS		
+VUDSA	Air + Hotel	SAN ANTONIO, TX		
+VUDTP	Air + Hotel	TAMPA, FL		
+VULBD	Air + Hotel	HARTFORD, CT		
+VULBW	Air + Hotel	BALTIMORE		
+VULCL	Air + Hotel	CLEVELAND, OH		
+VULCM	Air + Hotel	COLUMBUS, OH		
+VULCV	Air + Hotel	CINCINNATI, OH		
+VULDW	Air + Hotel	DALLAS		
+VULEW	Air + Hotel	NEWARK, NJ		
+VULKC	Air + Hotel	KANSAS CITY, KS		
+VULPX	Air + Hotel	PHOENIX		
+VULRD	Air + Hotel	RALEIGH-DURHAM, NC		
+VULSD	Air + Hotel	SAN DIEGO		
+VULXXX	Air + Hotel	SAN FRANCISCO		
+VYBU	Air + Hotel	BERMUDA		
+VYHU	Air + Hotel	HONOLULU, HI		
+VYLF	Air + Hotel	LOS CABOS		
+VYRF	Air + Hotel	PUERTO RICO		
+VYXD	Air + Hotel	CUST-TO-DECIDE		
+VYXU	Air + Hotel	CUST-TO-DECIDE		
+VZCJA	Air + Hotel	CANCUN		
+VZRF	Air + Hotel	PUERTO RICO		
+VZTD	Air + Hotel	HONOLULU, HI		
+VZTL	Air + Hotel	HONOLULU, HI		
+VZWP	Air + Hotel	HONOLULU, HI		
+VZXF	Air + Hotel	BERMUDA		
+XXPD	Air + Hotel	LOS ANGELES AREA		
