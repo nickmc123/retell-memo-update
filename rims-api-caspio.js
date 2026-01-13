@@ -1377,6 +1377,285 @@ app.get('/api/customer/lookup', asyncHandler(async (req, res) => {
 }));
 
 /**
+ * GET /api/customer/status
+ * Combined caller ID lookup + status check for Retell AI
+ * Uses caller's phone number to look up customer and return full status
+ */
+app.get('/api/customer/status', asyncHandler(async (req, res) => {
+    const { phone } = req.query;
+
+    if (!phone) {
+        return res.json({
+            found: false,
+            status: 'unknown',
+            agent_message: 'No phone number provided'
+        });
+    }
+
+    // Check business hours (Pacific Time: M-F 9am-5pm)
+    function isBusinessHours() {
+        const now = new Date();
+        const pst = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+        const day = pst.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+        const hour = pst.getHours();
+        return day >= 1 && day <= 5 && hour >= 9 && hour < 17;
+    }
+
+    // Helper to calculate days until a date
+    function daysUntilDate(dateString) {
+        if (!dateString) return null;
+        const target = new Date(dateString);
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        target.setHours(0, 0, 0, 0);
+        return Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+    }
+
+    // Clean phone number
+    const cleanPhone = phone.replace(/\D/g, '').replace(/^1/, '');
+    console.log(`[Caller ID Status] Looking up phone: ${cleanPhone}`);
+
+    if (USE_MOCK_DATA) {
+        return res.json({
+            found: false,
+            status: 'unknown',
+            status_label: 'Unknown',
+            agent_message: 'Mock mode - customer not found',
+            is_business_hours: isBusinessHours()
+        });
+    }
+
+    try {
+        // Look up customer by phone
+        const customers = await queryCaspioTable(
+            CASPIO_CONFIG.tables.rims_data,
+            `phn1='${cleanPhone}' OR phn2='${cleanPhone}'`
+        );
+
+        if (!customers || customers.length === 0) {
+            console.log(`[Caller ID Status] Customer not found for phone: ${cleanPhone}`);
+            return res.json({
+                found: false,
+                status: 'unknown',
+                status_label: 'Unknown Caller',
+                agent_message: 'Customer not found in our system',
+                is_business_hours: isBusinessHours()
+            });
+        }
+
+        // Sort all records by val_entered_on (most recent first)
+        customers.sort((a, b) => {
+            const dateA = a.val_entered_on ? new Date(a.val_entered_on) : new Date(0);
+            const dateB = b.val_entered_on ? new Date(b.val_entered_on) : new Date(0);
+            return dateB - dateA; // Most recent first
+        });
+
+        // If multiple records found, return list for agent to verify with customer
+        if (customers.length > 1) {
+            console.log(`[Caller ID Status] Found ${customers.length} records for phone ${cleanPhone}`);
+
+            // Build list of all packages for verification
+            const allRecords = customers.map((c, index) => ({
+                index: index,
+                vac_id: c.vac_id,
+                pkg_code2: c.pkg_code2,
+                destination: c.dest,
+                full_name: `${c.p1F || ''} ${c.p1L || ''}`.trim() || 'Valued Customer',
+                val_entered_on: c.val_entered_on
+            }));
+
+            const mostRecent = customers[0];
+            const mostRecentDest = mostRecent.dest || 'your vacation';
+            const fullName = `${mostRecent.p1F || ''} ${mostRecent.p1L || ''}`.trim() || 'Valued Customer';
+
+            return res.json({
+                found: true,
+                multiple_records: true,
+                record_count: customers.length,
+                status: 'verification_needed',
+                status_label: 'Multiple Packages',
+                agent_message: `Are you calling about your package to ${mostRecentDest}?`,
+                customer: {
+                    full_name: fullName,
+                    first_name: mostRecent.p1F || '',
+                    last_name: mostRecent.p1L || '',
+                    phone: mostRecent.phn1 ? '+1' + mostRecent.phn1 : phone
+                },
+                all_records: allRecords,
+                most_recent: {
+                    vac_id: mostRecent.vac_id,
+                    pkg_code2: mostRecent.pkg_code2,
+                    destination: mostRecent.dest
+                },
+                is_business_hours: isBusinessHours()
+            });
+        }
+
+        // Single record - proceed with full status check
+        const customer = customers[0];
+        console.log(`[Caller ID Status] Single record found: vac_id=${customer.vac_id}`);
+
+        const {
+            vac_id,
+            p1F, p1L,
+            email,
+            phn1,
+            pkg_code2,
+            dest,
+            val_dep,
+            conf_deposit,
+            asgn_trv_dt,
+            arv_date,
+            tm,
+            conf_valid_code,
+            cash_back_amt,
+            Fnl_Doc_MO_Date,
+            date_print_enc,
+            decReady,
+            date_htl_book,
+            date_agncy_book
+        } = customer;
+
+        const fullName = `${p1F || ''} ${p1L || ''}`.trim() || 'Valued Customer';
+
+        // Look up package info from destsel
+        const packageInfo = await getPackageFromDestsel(pkg_code2);
+
+        // Calculate deposit status
+        const expectedRefDep = packageInfo ? packageInfo.ref_dep : null;
+        const expectedConfDep = packageInfo ? packageInfo.deposit : null;
+        const expectedTotal = packageInfo ? packageInfo.total_expected : null;
+        const paidValDep = val_dep || 0;
+        const paidConfDep = conf_deposit || 0;
+        const totalPaid = paidValDep + paidConfDep;
+        const depositsComplete = expectedTotal !== null ? totalPaid >= expectedTotal : (paidValDep > 0 || paidConfDep > 0);
+        const remaining = expectedTotal !== null ? Math.max(0, expectedTotal - totalPaid) : null;
+
+        const daysUntilTravel = asgn_trv_dt ? daysUntilDate(asgn_trv_dt) : null;
+
+        // Determine status using same logic as /api/rims/customer-status
+        let status, statusLabel, agentMessage;
+
+        // 1. REFUND PENDING
+        if (cash_back_amt && cash_back_amt > 0 && !Fnl_Doc_MO_Date) {
+            status = 'Refund Pending';
+            statusLabel = 'Refund Pending';
+            agentMessage = 'I see there is a pending matter on your account.';
+        }
+        // 2. TRIP COMPLETE
+        else if (Fnl_Doc_MO_Date || (daysUntilTravel !== null && daysUntilTravel < -7)) {
+            status = 'Trip Complete';
+            statusLabel = 'Trip Complete';
+            agentMessage = 'I can see you have already traveled with us.';
+        }
+        // 3. TRAVEL PENDING
+        else if (date_htl_book && date_agncy_book && daysUntilTravel !== null && daysUntilTravel <= 14) {
+            status = 'Travel Pending';
+            statusLabel = 'Travel Pending';
+            agentMessage = 'Your trip is all booked and your itinerary should have been sent.';
+        }
+        // 4. BOOKING PENDING
+        else if (date_print_enc && daysUntilTravel !== null && daysUntilTravel <= 45) {
+            status = 'Booking Pending';
+            statusLabel = 'Booking Pending';
+            agentMessage = 'Your booking is being finalized. Expect a call from our booking agent 7-14 days before your trip.';
+        }
+        // 5. TRAVEL REP ASSIGNED
+        else if (tm && tm.trim() !== '' && daysUntilTravel !== null && daysUntilTravel <= 75) {
+            status = 'Travel Rep Assigned';
+            statusLabel = 'Travel Rep Assigned';
+            agentMessage = 'Your travel rep has been assigned. Be sure to answer calls from the 805 area code.';
+        }
+        // 6. WAITING FOR TRAVEL REP
+        else if (depositsComplete && asgn_trv_dt && (!tm || tm.trim() === '') && daysUntilTravel !== null && daysUntilTravel <= 75) {
+            status = 'Waiting For Travel Rep';
+            statusLabel = 'Waiting for Travel Rep';
+            agentMessage = 'Your travel dates are set and you are waiting for a travel rep to be assigned.';
+        }
+        // 7. READY TO SCHEDULE
+        else if (depositsComplete && !asgn_trv_dt) {
+            status = 'Ready to Schedule';
+            statusLabel = 'Ready to Schedule';
+            agentMessage = 'Great news! Your deposit is all paid up and you are ready to select your travel dates.';
+        }
+        // 8. DATES SCHEDULED (outside TR window)
+        else if (depositsComplete && asgn_trv_dt && (!tm || tm.trim() === '') && conf_valid_code === 'CONFIRM' && daysUntilTravel > 75) {
+            status = 'Dates Scheduled';
+            statusLabel = 'Dates Scheduled';
+            agentMessage = `Your travel dates are all set for ${asgn_trv_dt}. A travel rep will be assigned 45-75 days before your trip.`;
+        }
+        // 9. SCHEDULED NOT CONFIRMED
+        else if (asgn_trv_dt && conf_valid_code !== 'CONFIRM' && decReady !== true) {
+            if (daysUntilTravel <= 75) {
+                status = 'Scheduled Not Confirmed - Must Reschedule';
+                statusLabel = 'Needs Rescheduling';
+                agentMessage = 'Your scheduled dates may no longer be available. Would you like me to transfer you to reschedule?';
+            } else {
+                status = 'Scheduled Not Confirmed - Can Confirm';
+                statusLabel = 'Needs Confirmation';
+                agentMessage = 'Your dates are scheduled but not yet confirmed. Would you like me to transfer you to confirm?';
+            }
+        }
+        // 10. DEPOSIT NEEDED
+        else {
+            status = 'Deposit Needed';
+            statusLabel = 'Deposit Needed';
+            agentMessage = 'I see you have activated your vacation package. It looks like we are just waiting on your deposit.';
+        }
+
+        console.log(`[Caller ID Status] Found: ${fullName}, Status: ${status}`);
+
+        return res.json({
+            found: true,
+            status: status,
+            status_label: statusLabel,
+            agent_message: agentMessage,
+            customer: {
+                full_name: fullName,
+                first_name: p1F || '',
+                last_name: p1L || '',
+                email: email || '',
+                phone: phn1 ? '+1' + phn1 : phone,
+                vac_id: vac_id,
+                pkg_code2: pkg_code2,
+                destination: dest,
+                travel_date: asgn_trv_dt || null,
+                days_until_travel: daysUntilTravel,
+                travel_rep_name: tm || null
+            },
+            deposits: {
+                status: depositsComplete ? 'complete' : 'pending',
+                val_dep_paid: paidValDep,
+                conf_deposit_paid: paidConfDep,
+                total_paid: totalPaid,
+                refundable_deposit_required: expectedRefDep,
+                tax_deposit_required: expectedConfDep,
+                expected_deposit: expectedTotal,
+                remaining: remaining,
+                complete: depositsComplete
+            },
+            package: packageInfo ? {
+                description: packageInfo.vaca_desc,
+                destination: packageInfo.destination,
+                nights: packageInfo.nights,
+                vacation_type: packageInfo.vacation_type
+            } : null,
+            is_business_hours: isBusinessHours()
+        });
+
+    } catch (error) {
+        console.error(`[Caller ID Status] Error:`, error.message);
+        return res.json({
+            found: false,
+            status: 'error',
+            status_label: 'Error',
+            agent_message: 'I had trouble looking up your account. How can I help you today?',
+            is_business_hours: isBusinessHours()
+        });
+    }
+}));
+
+/**
  * GET /api/certificate/:certificate_number
  * Retell AI compatible certificate details endpoint
  */
